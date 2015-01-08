@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "Bobber": {
+            "applicationId": "JhvF9YgLmKVVhXXn0Qd6MiBp60vKLI6PdcG3LXLi", 
+            "masterKey": "i7p7v5CCfNY9PzfbCypXswu39DdXYt6ltuMDGVoV"
+        }, 
+        "_default": {
+            "link": "Bobber"
+        }
+    }
+}

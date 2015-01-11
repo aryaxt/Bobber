@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-public class EventInvitation: PFObject, PFSubclassing {
+public class EventAttendee: PFObject, PFSubclassing {
     
     public enum State: String {
         case Pending = "pending"
@@ -20,7 +20,7 @@ public class EventInvitation: PFObject, PFSubclassing {
     @NSManaged var event: Event
     
     public class func parseClassName() -> String {
-        return "EventInvitation"
+        return "EventAttendee"
     }
     
     override public class func load() {

@@ -14,7 +14,21 @@ class LoginViewController: BaseViewController {
     
     @IBAction func loginSelected(sender: AnyObject) {
         userService.authenticateWithFacebook { error in
-            println(error)
+            if error == nil {
+                
+                if let currentUser = User.currentUser() {
+                    
+                    if currentUser.isPhoneNumberVerified?.boolValue == true {
+                        
+                    }
+                    else {
+                        self.performSegueWithIdentifier("PhoneVerificationViewController", sender: nil)
+                    }
+                }
+            }
+            else {
+                
+            }
         }
     }
 }

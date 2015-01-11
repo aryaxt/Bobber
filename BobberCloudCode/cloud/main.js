@@ -1,18 +1,84 @@
 
 var GOOGLE_AUTOCOMPLETE_API_KEY = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
+var TEILIO_PHONE_VERIFICATION_NUMBER = "+18587719306";
+var twilio = require("twilio")("ACb8e7c20f71bc52e069567bb436edeb30", "03d2d4e99036f661c9fd5ed74b5de9a8");
 
-var twilio = require("twilio");
-twilio.initialize("myAccountSid","myAuthToken");
+
+//Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+//                       
+//});
 
 
-Parse.Cloud.beforeSave("Event", function(request, response) {
-
+Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
+    // TODO: Make sure user doesn't send too many
+    // TODO: Store phone number as md5
+                
+    var md5 = require("cloud/md5.js");
+    var verificationCode = Math.floor(Math.random() * 9999) + 1000
+    var phoneNumber = request.object.get("phoneNumber")
+     
+    twilio.sendSms({
+        from: TEILIO_PHONE_VERIFICATION_NUMBER,
+        to: phoneNumber,
+        body: "Your Bobber verification code is: " + verificationCode
+    },
+        function(error, httpResponse) {
+            if (error) {
+                console.error(error);
+                response.error(error);
+            }
+            else {
+                var h = md5.hex_md5("foo");
+                   
+                request.object.set('verificationCode', verificationCode);
+                request.object.set('phoneNumber', md5.hex_md5(phoneNumber));
+                response.success();
+            }
+    });
+    
 });
- 
-Parse.Cloud.define("inviteWithTwilio", function(request, response) {
+
+Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
+    var md5 = require("cloud/md5.js");
+    var verificationCode = request.params.verificationCode;
+    var phoneNumberHashed = md5.hex_md5(request.params.phoneNumber)
+                   
+    var lastPhoneVerificationQuery = new Parse.Query("PhoneVerification");
+    lastPhoneVerificationQuery.equalTo("user", Parse.User.current());
+    lastPhoneVerificationQuery.equalTo("phoneNumber", phoneNumberHashed);
+    lastPhoneVerificationQuery.limit(1)
+    lastPhoneVerificationQuery.descending("updatedAt");
+                   
+    lastPhoneVerificationQuery.find({
+        success: function(results) {
+            var phoneNumberVerification = results[0];
+                                    
+            if (phoneNumberVerification.get("verificationCode") == verificationCode) {
+                phoneNumberVerification.set('verificationResult', true);
+                phoneNumberVerification.save();
+                response.success();
+            }
+            else {
+                phoneNumberVerification.set('verificationResult', false);
+                phoneNumberVerification.save();
+                response.error("invalide_code");
+            }
+        },
+        error: function(error) {
+            console.error(error);
+            response.error(error);
+        }
+    });
+                   
+});
+
+                       
+Parse.Cloud.define("InviteUser", function(request, response) {
+    // if invite is already sent ignore
+        
 	twilio.sendSMS({
-		From: "myTwilioPhoneNumber",
-		To: request.params.number,
+		From: "(858)771-9306",
+		To: "(760)429-3445",
 		Body: "Start using Parse and Twilio!"
 	}, {
 		success: function(httpResponse) { 
@@ -22,6 +88,20 @@ Parse.Cloud.define("inviteWithTwilio", function(request, response) {
     		response.error("Uh oh, something went wrong"); 
     	}
   	});
+});
+
+
+Parse.Cloud.define("SendPhoneVerificationMessage", function(request, response) {
+    // Make sure user doesn't send too many
+    // Create PhoneVerrification object, check to see if an exisitng exists for the current user
+    // set phone number, and generate code
+});
+
+
+Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
+    // fetch PhoneVerrification object for given user
+    // if code passed is the same as the one stored send success and delete object and set phoneNumberVerified to true on user
+    // else return error, and incremenet invalidAttepts
 });
 
 

@@ -1,27 +1,71 @@
 
-var GOOGLE_AUTOCOMPLETE_API_KEY = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
-var TEILIO_PHONE_VERIFICATION_NUMBER = "+18587719306";
 var twilio = require("twilio")("ACb8e7c20f71bc52e069567bb436edeb30", "03d2d4e99036f661c9fd5ed74b5de9a8");
+var GoogleAutocompleteApiKey = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
+var TwilloPhoneVerificationNumber = "+18587719306";
+var EventStatusPending = "pending";
+var EventStatusActive = "active";
+var EventStatusCanceled = "canceled";
+var EventAttendeeStatusPending = "pending";
+var EventAttendeeStatusAccepted = "accepted";
+var EventAttendeeStatusCanceled = "canceled";
+var FriendStatusPending = "pending";
+var FriendStatusAccepted = "accepted";
+var FriendStatusCanceled = "canceled";
 
 
-//Parse.Cloud.beforeSave(Parse.User, function(request, response) {
-//                       
-//});
+Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+    response.success();
+});
+
+
+Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
+    // TODO: Handle state change and send push notification
+    // TODO: Make sure only creator can modify event
+                       
+    response.success();
+});
+
+
+Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
+	// TODO: Make sure a duplicate doesn't exist when isNew
+	// TODO: If it's new set status to pending   
+	// TODO: If it's not new make sure user are not changing
+	// TODO: If it's not new make sure status is valid
+    // TODO: Make sure only "to" user can update
+
+    response.success();
+});
+
+
+Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
+    // TODO: If phoneNumber MD5 passed check for existing user before sending sms
+    // TODO: Create Friend invitation id doesn't exist
+    // TODO: Check for duplicate and error out
+    // TODO: Send push notification when needed
+    // TODO: Send SMS invitation when needed
+    // TODO: Check for blocked user
+    // TODO: Increment event.inviteeCount
+                    
+    response.success();
+});
 
 
 Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
     // TODO: Make sure user doesn't send too many
-    // TODO: Store phone number as md5
-                
+    if (!request.object.isNew()) {
+        response.success();
+        return;               
+    }
+                       
     var md5 = require("cloud/md5.js");
     var verificationCode = Math.floor(Math.random() * 9999) + 1000
     var phoneNumber = request.object.get("phoneNumber")
      
     twilio.sendSms({
-        from: TEILIO_PHONE_VERIFICATION_NUMBER,
-        to: phoneNumber,
-        body: "Your Bobber verification code is: " + verificationCode
-    },
+        	from: TwilloPhoneVerificationNumber,
+        	to: phoneNumber,
+        	body: "Your Bobber verification code is: " + verificationCode
+   		},
         function(error, httpResponse) {
             if (error) {
                 console.error(error);
@@ -30,36 +74,53 @@ Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
             else {
                 var h = md5.hex_md5("foo");
                    
-                request.object.set('verificationCode', verificationCode);
-                request.object.set('phoneNumber', md5.hex_md5(phoneNumber));
+                request.object.set("verificationCode", verificationCode);
+                request.object.set("phoneNumber", md5.hex_md5(phoneNumber));
                 response.success();
             }
     });
     
 });
 
+
 Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
+    // TODO: after verified set user.phoneNumber
+    // TODO: Make sur pone number is not in use already
+    // TODO: limit number of attempts
+    // TODO: Assing user to friend invitations (bsed on phoneNumber)
+    // TODO: Assing user to event invitations (bsed on phoneNumber)
+    
+    // Users don't have read permission to this table, need to use master key
+    Parse.Cloud.useMasterKey();
+                   
     var md5 = require("cloud/md5.js");
     var verificationCode = request.params.verificationCode;
     var phoneNumberHashed = md5.hex_md5(request.params.phoneNumber)
-                   
-    var lastPhoneVerificationQuery = new Parse.Query("PhoneVerification");
-    lastPhoneVerificationQuery.equalTo("user", Parse.User.current());
-    lastPhoneVerificationQuery.equalTo("phoneNumber", phoneNumberHashed);
-    lastPhoneVerificationQuery.limit(1)
-    lastPhoneVerificationQuery.descending("updatedAt");
-                   
-    lastPhoneVerificationQuery.find({
+               
+    // Find last PhoneVerification for a given user and phone number
+    var query = new Parse.Query("PhoneVerification");
+    query.equalTo("user", Parse.User.current());
+    query.equalTo("phoneNumber", phoneNumberHashed);
+    query.descending("createdAt");
+    query.limit(1);
+
+    query.find({
         success: function(results) {
             var phoneNumberVerification = results[0];
-                                    
+               
+            // If provided verification code is correct
             if (phoneNumberVerification.get("verificationCode") == verificationCode) {
-                phoneNumberVerification.set('verificationResult', true);
-                phoneNumberVerification.save();
-                response.success();
+                phoneNumberVerification.set("verificationResult", true);
+                phoneNumberVerification.save().then(function(verification){
+
+                	// Also save phone number on user object
+					Parse.User.current().set("phoneNumber", phoneNumberHashed);
+					Parse.User.current().save();
+					response.success();
+                });
             }
             else {
-                phoneNumberVerification.set('verificationResult', false);
+                phoneNumberVerification.set("verificationResult", false);
                 phoneNumberVerification.save();
                 response.error("invalide_code");
             }
@@ -72,42 +133,10 @@ Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
                    
 });
 
-                       
-Parse.Cloud.define("InviteUser", function(request, response) {
-    // if invite is already sent ignore
-        
-	twilio.sendSMS({
-		From: "(858)771-9306",
-		To: "(760)429-3445",
-		Body: "Start using Parse and Twilio!"
-	}, {
-		success: function(httpResponse) { 
-    		requestesponse.success("SMS sent!"); 
-    	},
-    	error: function(httpResponse) { 
-    		response.error("Uh oh, something went wrong"); 
-    	}
-  	});
-});
-
-
-Parse.Cloud.define("SendPhoneVerificationMessage", function(request, response) {
-    // Make sure user doesn't send too many
-    // Create PhoneVerrification object, check to see if an exisitng exists for the current user
-    // set phone number, and generate code
-});
-
-
-Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
-    // fetch PhoneVerrification object for given user
-    // if code passed is the same as the one stored send success and delete object and set phoneNumberVerified to true on user
-    // else return error, and incremenet invalidAttepts
-});
-
 
 Parse.Cloud.define("Autocomplete", function(request, response) {
 	var input = request.params.query;
-	var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?types=geocode&input=" + input + "&key=" +  GOOGLE_AUTOCOMPLETE_API_KEY;
+	var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?types=geocode&input=" + input + "&key=" +  GoogleAutocompleteApiKey;
 	url = url.split(" ").join("+");
 	console.log(url);
 
@@ -127,7 +156,7 @@ Parse.Cloud.define("Autocomplete", function(request, response) {
 
 Parse.Cloud.define("PlaceDetail", function(request, response) {
 	var placeId = request.params.placeId;
-	var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=" +  GOOGLE_AUTOCOMPLETE_API_KEY;
+	var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=" +  GoogleAutocompleteApiKey;
 	url = url.split(" ").join("+");
 	console.log(url);
 	

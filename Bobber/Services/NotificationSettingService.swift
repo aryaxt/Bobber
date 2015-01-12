@@ -12,7 +12,7 @@ public class NotificationSettingService {
     
     public func fetchUserNotificationSettings(block: ([UserNotificationSetting]?, NSError?) -> Void) {
         
-        PFCloud.callFunctionInBackground("UserNotificationSetting", withParameters: [String: String]()) { (result, error) in
+        PFCloud.callFunctionInBackground("UserNotificationSetting", withParameters: [String: String]()) { result, error in
             if let recievedError = error {
                 block(nil, error)
             }

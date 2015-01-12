@@ -13,43 +13,43 @@ let BoldFont = "Georgia-Bold"
 
 extension UIFont {
 
-    class func tinyFont() -> UIFont {
+    public class func tinyFont() -> UIFont {
         return UIFont(name: StandardFont, size: 10)!
     }
     
-    class func tinyBoldFont() -> UIFont {
+    public class func tinyBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 10)!
     }
     
-    class func smallFont() -> UIFont {
+    public class func smallFont() -> UIFont {
         return UIFont(name: StandardFont, size: 12)!
     }
     
-    class func smallBoldFont() -> UIFont {
+    public class func smallBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 12)!
     }
     
-    class func mediumFont() -> UIFont {
+    public class func mediumFont() -> UIFont {
         return UIFont(name: StandardFont, size: 14)!
     }
     
-    class func mediumBoldFont() -> UIFont {
+    public class func mediumBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 14)!
     }
     
-    class func largeFont() -> UIFont {
+    public class func largeFont() -> UIFont {
         return UIFont(name: StandardFont, size: 16)!
     }
     
-    class func largeBoldFont() -> UIFont {
+    public class func largeBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 16)!
     }
     
-    class func extraLargeFont() -> UIFont {
+    public class func extraLargeFont() -> UIFont {
         return UIFont(name: StandardFont, size: 18)!
     }
     
-    class func extraLargeBoldFont() -> UIFont {
+    public class func extraLargeBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 18)!
     }
     

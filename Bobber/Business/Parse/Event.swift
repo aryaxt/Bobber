@@ -16,14 +16,20 @@ public class Event: PFObject, PFSubclassing {
     
     @NSManaged var title: String
     @NSManaged var detail: String
-    @NSManaged var state: String
     @NSManaged var startTime: NSDate
     @NSManaged var endTime: NSDate?
+    @NSManaged var allowInvites: NSNumber
+    @NSManaged var inviteeCount: NSNumber
     @NSManaged var attendeeCount: NSNumber
     @NSManaged var creator: User
     @NSManaged var location: Location
     @NSManaged var comments: PFRelation
     @NSManaged var photo: PFFile?
+    @NSManaged var state: String
+    var stateEnum: State {
+        get { return State(rawValue: state)! }
+        set { state = newValue.rawValue }
+    }
     
     public class func parseClassName() -> String {
         return "Event"

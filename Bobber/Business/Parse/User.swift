@@ -18,9 +18,9 @@ public class User: PFUser, PFSubclassing {
     @NSManaged var lastName: String
     @NSManaged var socialId: String?
     @NSManaged var photoUrl: String?
+    @NSManaged var phoneNumber: String?
     @NSManaged var birthday: NSDate?
     @NSManaged var gender: NSNumber?
-    @NSManaged var isPhoneNumberVerified: NSNumber?
     
     override public class func load() {
         registerSubclass()

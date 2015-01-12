@@ -10,7 +10,7 @@ import Foundation
 
 extension NSDictionary {
     
-    func objectForKeyPath(keyPath: String) -> AnyObject? {
+    public func objectForKeyPath(keyPath: String) -> AnyObject? {
         var result: AnyObject? = self as AnyObject?
         var keys = keyPath.componentsSeparatedByString(".")
         

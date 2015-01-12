@@ -10,7 +10,7 @@ import Foundation
 
 extension PFQuery {
     
-    func findObjectsInBackgroundWithCompletion <T> (type:T.Type, closure: ([T]?, NSError?) -> Void) {
+    public func findObjectsInBackgroundWithCompletion <T> (type:T.Type, closure: ([T]?, NSError?) -> Void) {
         findObjectsInBackgroundWithBlock { (result, error) in
             if (error != nil) {
                 closure(nil, error)
@@ -27,7 +27,7 @@ extension PFQuery {
         }
     }
     
-    func findObjectInBackgroundWithCompletion <T> (type:T.Type, closure: (T?, NSError?) -> Void) {
+    public func findObjectInBackgroundWithCompletion <T> (type:T.Type, closure: (T?, NSError?) -> Void) {
         findObjectsInBackgroundWithBlock { (result, error) in
             if (error != nil) {
                 closure(nil, error)

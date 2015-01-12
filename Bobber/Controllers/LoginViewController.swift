@@ -12,22 +12,32 @@ class LoginViewController: BaseViewController {
     
     private lazy var userService = UserService()
     
+    internal override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        checkForLoggedInUser()
+    }
+    
     @IBAction func loginSelected(sender: AnyObject) {
         userService.authenticateWithFacebook { error in
             if error == nil {
                 
-                if let currentUser = User.currentUser() {
-                    
-                    if currentUser.isPhoneNumberVerified?.boolValue == true {
-                        
-                    }
-                    else {
-                        self.performSegueWithIdentifier("PhoneVerificationViewController", sender: nil)
-                    }
-                }
+                self.checkForLoggedInUser()
             }
             else {
-                
+                // TODO: Error out
+            }
+        }
+    }
+    
+    private func checkForLoggedInUser() {
+        if let currentUser = User.currentUser() {
+            
+            if currentUser.phoneNumber != nil {
+                BobberNavigationController.sharedInstance().applyLoggedInState()
+            }
+            else {
+                self.performSegueWithIdentifier("PhoneVerificationViewController", sender: nil)
             }
         }
     }

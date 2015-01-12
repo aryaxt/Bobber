@@ -10,21 +10,21 @@ import Foundation
 
 extension NSDate {
     
-    func isSameDayAs(date: NSDate) -> Bool {
+    public func isSameDayAs(date: NSDate) -> Bool {
         return (self.day() == date.day() && self.month() == date.month() && self.year() == date.year())
     }
     
-    func day() -> Int {
+    public func day() -> Int {
         var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
         return dateComponents.day;
     }
     
-    func month() -> Int {
+    public func month() -> Int {
         var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
         return dateComponents.month;
     }
     
-    func year() -> Int {
+    public func year() -> Int {
         var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
         return dateComponents.year;
     }

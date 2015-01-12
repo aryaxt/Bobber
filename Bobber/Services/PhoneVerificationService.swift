@@ -22,7 +22,11 @@ public class PhoneVerificationService {
         let parameters = ["phoneNumber": phoneNumber, "verificationCode": verificationCode]
         
         PFCloud.callFunctionInBackground("VerifyPhoneNumber", withParameters: parameters) { result, error in
-            completion(error)
+        
+            // Make sure user phoneNumber field is updated on the client
+            User.currentUser().fetchInBackgroundWithBlock() { user, error in
+                completion(error)
+            }
         }
     }
     

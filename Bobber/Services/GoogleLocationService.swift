@@ -36,6 +36,7 @@ public class GoogleLocationService {
     }
     
     public func fetchLocation (placeId: String, block: (GooglePlaceDetail?, NSError?) -> Void) {
+        
         PFCloud.callFunctionInBackground("PlaceDetail", withParameters: ["placeId" : placeId]) { (result, error) in
             if let recievedError = error {
                 block(nil, error)

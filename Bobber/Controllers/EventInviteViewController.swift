@@ -8,11 +8,13 @@
 
 class EventInviteViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var event: Event!
     var contacts = [Contact]()
-    var contactsManager = ContactsManager()
+    lazy var contactsManager = ContactsManager()
+    lazy var eventService = EventService()
     @IBOutlet weak var tableView: UITableView!
     
-    // MARK: UIViewController names
+    // MARK: - UIViewController names -
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +22,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         populateContactList()
     }
 
-    // MARK: UITableView Delegate & Datasource
+    // MARK: - UITableView Delegate & Datasource -
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
@@ -33,6 +35,20 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        eventService.invite(event, toPhoneNumber: contacts[indexPath.row].phoneNumber!) { error in
+            
+        }
+    }
+    
+    // MARK: - Actions -
+    
+    @IBAction func cancelSelected(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: - Private -
     
     private func populateContactList() {
         contactsManager.fetchContactsWithMobileNumber { contacts, error in

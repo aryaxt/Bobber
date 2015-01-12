@@ -8,21 +8,25 @@
 
 public class EventInvitation: PFObject, PFSubclassing {
     
-    public enum State: String {
+    public enum Status: String {
         case Pending = "pending"
         case Accepted = "accepted"
         case Declined = "declined"
     }
     
     // Some kind of phone number in case user is not already a member, in order to later assign events to user when joined
-    @NSManaged var state: String
     @NSManaged var event: Event
     @NSManaged var from: User
     @NSManaged var to: User?
     @NSManaged var toPhoneNumber: String?
+    @NSManaged var status: String
+    var statusEnum: Status {
+        get { return Status(rawValue: status)! }
+        set { status = newValue.rawValue }
+    }
     
     public class func parseClassName() -> String {
-        return "EventInvitee"
+        return "EventInvitation"
     }
     
     override public class func load() {

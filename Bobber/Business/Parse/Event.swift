@@ -15,9 +15,11 @@ public class Event: PFObject, PFSubclassing {
     }
     
     @NSManaged var title: String
-    @NSManaged var detail: String
+    @NSManaged var detail: String?
     @NSManaged var startTime: NSDate
     @NSManaged var endTime: NSDate?
+    @NSManaged var minAttendees: NSNumber
+    @NSManaged var maxAttendees: NSNumber
     @NSManaged var allowInvites: NSNumber
     @NSManaged var inviteeCount: NSNumber
     @NSManaged var attendeeCount: NSNumber

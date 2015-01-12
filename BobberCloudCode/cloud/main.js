@@ -45,6 +45,8 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
     // TODO: Send SMS invitation when needed
     // TODO: Check for blocked user
     // TODO: Increment event.inviteeCount
+    // TODO: Make sure we haven't reached maxNumber
+    // TODO: If we have reached minNumber make active and send text
                     
     response.success();
 });

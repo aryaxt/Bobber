@@ -156,7 +156,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="7pN-RW-aA1" kind="show" id="iw6-3x-dQB"/>
+                                    <action selector="createEventSelected:" destination="J2b-IS-Ruq" eventType="touchUpInside" id="4gP-Fx-bKO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -167,7 +167,22 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Gls-el-WWo" secondAttribute="trailing" constant="-16" id="uMY-zS-jST"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Create Bob" id="qLf-5F-ibg"/>
+                    <navigationItem key="navigationItem" title="Create Bob" id="qLf-5F-ibg">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="4xi-5A-f52">
+                            <connections>
+                                <action selector="cancelSelected:" destination="J2b-IS-Ruq" id="15b-3N-vtj"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dpDate" destination="Gls-el-WWo" id="d4J-Bw-YZe"/>
+                        <outlet property="swtAllowInvites" destination="EBA-fY-nAz" id="Pjo-1y-9Ho"/>
+                        <outlet property="txtDetail" destination="ZnZ-qC-EpQ" id="SAx-fS-SzG"/>
+                        <outlet property="txtMaxAttendees" destination="1bP-Kb-oTw" id="y9m-FN-eq5"/>
+                        <outlet property="txtMinAttendees" destination="l6Z-bu-feW" id="Oww-3t-h4N"/>
+                        <outlet property="txtTitle" destination="v1S-vs-ghU" id="N04-TA-qQY"/>
+                        <segue destination="7pN-RW-aA1" kind="show" identifier="EventInviteViewController" id="QVx-ru-XNe"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7fp-yV-9y8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -202,7 +217,13 @@
                             <constraint firstItem="VfY-z2-BbF" firstAttribute="leading" secondItem="hKn-Qy-ND5" secondAttribute="leadingMargin" constant="-16" id="yUc-Ow-uam"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Invite" id="Fy2-bh-3ic"/>
+                    <navigationItem key="navigationItem" title="Invite" id="Fy2-bh-3ic">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="QTp-MM-eB7">
+                            <connections>
+                                <action selector="cancelSelected:" destination="7pN-RW-aA1" id="igX-7o-u2s"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="VfY-z2-BbF" id="Ldh-hF-LcE"/>
                     </connections>

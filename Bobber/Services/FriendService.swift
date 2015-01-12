@@ -28,7 +28,7 @@ public class FriendService {
                 completion(nil, error)
             }
             else {
-                var friends: [User] = friendRequests!.map { ($0.from.objectId! == User.currentUser().objectId!) ? $0.to! : $0.from }
+                var friends = friendRequests!.map { ($0.from.objectId! == User.currentUser().objectId!) ? $0.to! : $0.from }
                 completion(friends, nil)
             }
         }

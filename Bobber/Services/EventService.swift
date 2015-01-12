@@ -22,7 +22,34 @@ public class EventService {
         invite(event, to: nil, toPhoneNumber: toPhoneNumber, completion: completion)
     }
     
-    public func invite(event: Event, to: User?, toPhoneNumber: String?, completion: (NSError?)->()) {
+    public func cancel(event: Event, completion: (NSError?)->()) {
+        event.stateEnum = .Canceled
+        
+        event.saveInBackgroundWithBlock { success, error in
+            completion(error)
+        }
+    }
+    
+    public func fetchAttendees(event: Event, completion: ([User]?, NSError?)->()) {
+        let query = EventInvitation.query()
+        query.whereKey("event", equalTo: event)
+        query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
+        query.includeKey("to")
+        
+        query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
+            if error == nil {
+                let users = invitations!.map { $0.to! }
+                completion(users, nil)
+            }
+            else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    // MARK: - Private -
+    
+    private func invite(event: Event, to: User?, toPhoneNumber: String?, completion: (NSError?)->()) {
         let invitee = EventInvitation()
         invitee.event = event
         invitee.from = User.currentUser()
@@ -30,14 +57,6 @@ public class EventService {
         invitee.to = to
         
         invitee.saveInBackgroundWithBlock { success, error in
-            completion(error)
-        }
-    }
-    
-    public func cancel(event: Event, completion: (NSError?)->()) {
-        event.stateEnum = .Canceled
-        
-        event.saveInBackgroundWithBlock { success, error in
             completion(error)
         }
     }

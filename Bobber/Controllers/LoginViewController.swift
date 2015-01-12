@@ -12,11 +12,15 @@ class LoginViewController: BaseViewController {
     
     private lazy var userService = UserService()
     
+    // MARK: - ViewController -
+    
     internal override func viewDidLoad() {
         super.viewDidLoad()
         
         checkForLoggedInUser()
     }
+    
+    // MARK: - Actions -
     
     @IBAction func loginSelected(sender: AnyObject) {
         userService.authenticateWithFacebook { error in
@@ -29,6 +33,8 @@ class LoginViewController: BaseViewController {
             }
         }
     }
+    
+    // MARK: - Private -
     
     private func checkForLoggedInUser() {
         if let currentUser = User.currentUser() {

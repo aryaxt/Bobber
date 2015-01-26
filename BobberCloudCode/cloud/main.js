@@ -1,5 +1,4 @@
 
-var GoogleAutocompleteApiKey = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
 var EventStatusPending = "pending";
 var EventStatusActive = "active";
 var EventStatusCanceled = "canceled";
@@ -14,7 +13,6 @@ var FriendStatusCanceled = "canceled";
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
     response.success();
 });
-
 
 
 Parse.Cloud.beforeSave("Comment", function(request, response) {
@@ -60,17 +58,78 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
                       
      // Creating new invite
 	if (request.object.isNew()) {
-		if (request.object.get("toPhoneNumber") != null) {
-
-		}
-		else if (request.object.get("to") != null) {
-
-			var user = request.object.get("to");
-			var installationQuery = new Parse.Query("Installation");
-		    installationQuery.equalTo("user", user);
-            var push = require("cloud/push.js");
                        
-            push.sendPushNotification(installationQuery, { "alert": "Hello dude" }, function(error) {
+        var push = require("cloud/push.js");
+        var sms = require("cloud/sms.js");
+
+        // If attempting to invite a user with phone number
+		if (request.object.get("toPhoneNumber") != null) {
+            var md5 = require("cloud/md5.js");
+            var phoneNumber = request.object.get("toPhoneNumber").replace(/\D/g,"");
+            var phoneNumberHashed = md5.hex_md5(phoneNumber);
+                       
+            console.log(phoneNumber);
+                       
+            var userQuery = new Parse.Query(Parse.User);
+            userQuery.equalTo("phoneNumber", phoneNumberHashed);
+            userQuery.find({success: function(users) {
+                    
+                    // User doesn't exist send sms
+                    if (users.length == 0) {
+                        console.log("========1=======");
+                        sms.sendSms(phoneNumber, "Hello dude", function(error) {
+                            if (error == null) {
+                                response.success();
+                            }
+                            else {
+                                console.error(error)
+                                response.error(error);
+                            }
+                        });
+                    }
+                    // User with phone number exists send a push
+                    else {
+                        // TODO: Try reusing this code
+
+                        var user = users[0];
+
+                        // User is already here remove phone set user to invitation
+                        request.object.set("to", user);
+                        request.object.set("toPhoneNumber", null);
+
+                        console.log("========2=======");
+                        var pushData = { "alert": "Hello dude" };
+                        var installationQuery = new Parse.Query("Installation");
+                        installationQuery.equalTo("user", user);
+                           console.log("USERRRRRR: " + users);
+
+                        push.sendPushNotification(installationQuery, pushData, function(error) {
+                            if (error == null) {
+                                response.success();
+                            }
+                            else {
+                                console.error(error)
+                                response.error(error);
+                            }
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error(error);
+                    response.error(error);
+                }
+            });
+		}
+        // If attempting to invite an existing user
+		else if (request.object.get("to") != null) {
+                    
+            console.log("========3=======");
+            var pushData = { "alert": "Hello dude" };
+            var user = request.object.get("to");
+            var installationQuery = new Parse.Query("Installation");
+            installationQuery.equalTo("user", user);
+
+            push.sendPushNotification(installationQuery, pushData, function(error) {
                 if (error == null) {
                     response.success();
                 }
@@ -80,16 +139,15 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
                 }
             });
 		}
+        // No existing user and no phone number
 		else {
 			console.error("No user or phone provided")
 			response.error("No user or phone provided");
 		}
 	}
 	else {
-                       
+         response.success();
 	}
-                    
-    response.success();
 });
 
 
@@ -114,8 +172,6 @@ Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
             response.error(error);
         }
         else {
-            var h = md5.hex_md5("foo");
-                
             request.object.set("verificationCode", verificationCode);
             request.object.set("phoneNumber", md5.hex_md5(phoneNumber));
             response.success();
@@ -178,102 +234,45 @@ Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
 
 
 Parse.Cloud.define("Autocomplete", function(request, response) {
-	var input = request.params.query;
-	var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json?types=geocode&input=" + input + "&key=" +  GoogleAutocompleteApiKey;
-	url = url.split(" ").join("+");
-	console.log(url);
-
-	Parse.Cloud.httpRequest({
-	  	method: "GET",
-	  	url: url,
-	  	success: function(httpResponse) {
-	    	response.success(httpResponse.text);
-	  	},
-		error: function(error) {
-			console.error(error);
-			response.error("Failed to request autocomplete api ");
-		}
-	});
+    var googleLocation = require("cloud/googleLocation.js");
+    
+    googleLocation.autocomplete(request.params.query, function(result, error) {
+        if (error == null) {
+            response.success(result);
+        }
+        else {
+            console.error(error);
+            response.error("Failed to request autocomplete api");
+        }
+    });
 });
 
 
 Parse.Cloud.define("PlaceDetail", function(request, response) {
-	var placeId = request.params.placeId;
-	var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeId + "&key=" +  GoogleAutocompleteApiKey;
-	url = url.split(" ").join("+");
-	console.log(url);
-	
-	Parse.Cloud.httpRequest({
-	  	method: "GET",
-	  	url: url,
-	  	success: function(httpResponse) {
-	    	response.success(httpResponse.text);
-	  	},
-		error: function(error) {
-			console.error(error);
-			response.error("Failed to request autocomplete api ");
-		}
-	});
+    var googleLocation = require("cloud/googleLocation.js");
+                  
+    googleLocation.placeDetail(request.params.placeId, function(result, error) {
+        if (error == null) {
+            response.success(result);
+        }
+        else {
+            console.error(error);
+            response.error("Failed to request place detail api");
+        }
+    });
 });
 
 
 Parse.Cloud.define("UserNotificationSetting", function(request, response) {
-	Parse.Cloud.useMasterKey();
-	var notificationSettingsQuery = new Parse.Query("NotificationSetting");
-	
-	notificationSettingsQuery.find({
-		success: function(notificationSettings) {
-			
-			var userNotificationSettingsQuery = new Parse.Query("UserNotificationSetting");
-			userNotificationSettingsQuery.equalTo("user", Parse.User.current());
-			userNotificationSettingsQuery.include("notificationSetting");
-			userNotificationSettingsQuery.find({
-				success: function(userSettings) {
-
-					var newUserSettings = [];
-					
-					for (var i=0 ; i<notificationSettings.length ; i++) {
-						var notificationSetting = notificationSettings[i];
-						var userSettingExists = false;
-						
-						for (var j=0 ; j<userSettings.length ; j++) {
-							var userSetting = userSettings[j];
-							if (userSetting.get("notificationSetting").id == notificationSetting.id) {
-								newUserSettings.push(userSetting);
-								userSettingExists = true;
-								break;
-							}
-						}
-						
-						if (userSettingExists == false) {
-							var UserNotificationSetting = Parse.Object.extend("UserNotificationSetting");
-							var userSetting = new UserNotificationSetting();
-							userSetting.set("user", Parse.User.current());
-							userSetting.set("notificationSetting", notificationSetting);
-							userSetting.set("enabled", notificationSetting.get("defaultValue"));
-							newUserSettings.push(userSetting);
-						}
-					}
-					
-					Parse.Object.saveAll(newUserSettings, {
-				    	success: function(list) {
-				      		response.success(newUserSettings);
-				    	},
-				    	error: function(error) {
-				      		console.error(error);
-					    	response.error("Failed to read notification settings");
-				    	}
-					});
-				},
-				error: function(object, error) {
-					console.error(error);
-			    	response.error("Failed to read notification settings");
-				}
-			});
-		},
-		error: function(object, error) {
-			console.error(error);
-	    	response.error("Failed to read notification settings");
-		}
-	});
+    var userNotificationSettings = require("cloud/userNotificationSettings.js");
+    
+    userNotificationSettings.getUserNotificationSettings(user, function(result, error) {
+        if (error == null) {
+            response.success(result);
+        }
+        else {
+            console.error(error);
+            response.error("Failed to get user notitication settings");
+        }
+    });
 });

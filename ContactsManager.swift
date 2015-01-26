@@ -31,13 +31,17 @@ public class ContactsManager {
                     
                     for index in 0..<ABMultiValueGetCount(phones) {
                         let unmanagedPhoneLabel = ABMultiValueCopyLabelAtIndex(phones, index)
-                        let phoneLabel = Unmanaged.fromOpaque(unmanagedPhoneLabel.toOpaque()).takeUnretainedValue() as NSObject as String
                         
-                        if phoneLabel == kABPersonPhoneMobileLabel {
-                            let unmanagedPhone = ABMultiValueCopyValueAtIndex(phones, index)
-                            phoneNumber = Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject as String
-                            break
+                        if unmanagedPhoneLabel != nil {
+                            let phoneLabel = Unmanaged.fromOpaque(unmanagedPhoneLabel.toOpaque()).takeUnretainedValue() as NSObject as String
+                            
+                            if phoneLabel == kABPersonPhoneMobileLabel {
+                                let unmanagedPhone = ABMultiValueCopyValueAtIndex(phones, index)
+                                phoneNumber = Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject as String
+                                break
+                            }
                         }
+
                     }
                     
                     persons.append(Contact(firstName: firstName, lastName: lastNAme, phoneNumber: phoneNumber))

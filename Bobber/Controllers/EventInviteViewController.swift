@@ -49,7 +49,12 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+        if section == 0 {
+            return friends.count
+        }
+        else {
+            return contacts.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -63,7 +68,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         else {
             let identifier = "PersonCell"
             cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
-            cell.textLabel?.text = "\(contacts[indexPath.row].firstName!) \(contacts[indexPath.row].lastName!) \(contacts[indexPath.row].phoneNumber!)"
+            cell.textLabel?.text = "\(contacts[indexPath.row].firstName?) \(contacts[indexPath.row].lastName?) \(contacts[indexPath.row].phoneNumber!)"
         }
         
         return cell

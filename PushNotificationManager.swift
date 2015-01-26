@@ -37,7 +37,7 @@ public class PushNotificationManager {
     }
     
     public func handleNotification(userInfo: [NSObject : AnyObject]) {
-        
+        println(userInfo)
     }
     
     public func tryRegisterDeviceTokenWithParse() {

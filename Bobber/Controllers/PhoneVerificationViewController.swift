@@ -10,27 +10,65 @@ import Foundation
 
 class PhoneVerificationViewController: BaseViewController {
     
+    enum VerificationState {
+        case SendVerification
+        case VerifyCode
+    }
+    
     private lazy var phoneVerificationService = PhoneVerificationService()
     @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtVerificationCode: UITextField!
-    @IBOutlet weak var btnSend: UIButton!
-    @IBOutlet weak var btnVerify: UIButton!
+    @IBOutlet var btnSend: UIButton!
+    @IBOutlet var btnVerify: UIButton!
+    @IBOutlet var lblDescription: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        btnSend.removeFromSuperview()
+        btnVerify.removeFromSuperview()
+        txtPhoneNumber.inputAccessoryView = btnSend
+        txtVerificationCode.inputAccessoryView = btnVerify
+
+        updateVerificationSate(.SendVerification)
+    }
     
     @IBAction func sendVerificationCodeSelected(sender: AnyObject) {
         phoneVerificationService.sendPhoneVerificationCode(txtPhoneNumber.text) { error in
-            println(error)
+            if error == nil {
+                self.updateVerificationSate(.VerifyCode)
+            }
+            else {
+                UIAlertView.show(self, title: "Error", message: "There was a problem sening phone verification")
+            }
         }
     }
     
-    @IBAction func verifyelected(sender: AnyObject) {
+    @IBAction func verifySelected(sender: AnyObject) {
         phoneVerificationService.verifyPhoneVerificationCode(txtPhoneNumber.text, verificationCode: txtVerificationCode.text) { error in
             
             if error == nil {
                 BobberNavigationController.sharedInstance().applyLoggedInState()
             }
             else {
-                // TODO: Error out
+                UIAlertView.show(self, title: "Error", message: "Invalid verification code")
             }
+        }
+    }
+    
+    private func updateVerificationSate(state: VerificationState) {
+    
+        if state == .SendVerification {
+            txtPhoneNumber.hidden = false
+            txtVerificationCode.hidden = true
+            lblDescription.text = "Enter your phone number"
+            txtPhoneNumber.becomeFirstResponder()
+        }
+        else if state == .VerifyCode {
+            txtPhoneNumber.hidden = true
+            txtVerificationCode.hidden = false
+            lblDescription.text = "Enter your verification number"
+            txtVerificationCode.becomeFirstResponder()
         }
     }
     

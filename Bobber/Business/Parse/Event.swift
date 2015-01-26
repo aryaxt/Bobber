@@ -23,9 +23,9 @@ public class Event: PFObject, PFSubclassing {
     @NSManaged var allowInvites: NSNumber
     @NSManaged var inviteeCount: NSNumber
     @NSManaged var attendeeCount: NSNumber
+    @NSManaged var minutesToRespond: NSNumber
     @NSManaged var creator: User
     @NSManaged var location: Location
-    @NSManaged var comments: PFRelation
     @NSManaged var photo: PFFile?
     @NSManaged var state: String
     var stateEnum: State {

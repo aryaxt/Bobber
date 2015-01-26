@@ -25,11 +25,10 @@ class LoginViewController: BaseViewController {
     @IBAction func loginSelected(sender: AnyObject) {
         userService.authenticateWithFacebook { error in
             if error == nil {
-                
                 self.checkForLoggedInUser()
             }
             else {
-                // TODO: Error out
+                UIAlertView.show(self, title: "Error", message: error!.localizedDescription)
             }
         }
     }
@@ -40,6 +39,7 @@ class LoginViewController: BaseViewController {
         if let currentUser = User.currentUser() {
             
             if currentUser.phoneNumber != nil {
+                PushNotificationManager.sharedInstance.tryRegisterDeviceTokenWithParse()
                 BobberNavigationController.sharedInstance().applyLoggedInState()
             }
             else {

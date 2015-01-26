@@ -33,8 +33,13 @@ extension PFQuery {
                 closure(nil, error)
             }
             else {
-                var castedObject = result as T?
-                closure(castedObject, nil)
+                if result.count == 1 {
+                    var castedObject = result[0] as T
+                    closure(castedObject, nil)
+                }
+                else {
+                    closure(nil, NSError(domain: "RetunedMoreThanOneObject", code: 0, userInfo: nil))
+                }
             }
         }
     }

@@ -8,6 +8,15 @@
 
 public class EventService {
     
+    public func fetchEventDetail(eventId: String, completion: (Event?, NSError?)->()) {
+        // TODO: Add attendees to event as PFRelation?
+        let query = Event.query()
+        query.whereKey("objectId", equalTo: eventId)
+        query.includeKey("creator")
+        query.includeKey("invitations")
+        query.findObjectInBackgroundWithCompletion(Event.self, closure: completion)
+    }
+    
     public func createEvent(event: Event, completion: (NSError?)->()) {
         event.saveInBackgroundWithBlock { bool, error in
             completion(error)
@@ -44,6 +53,43 @@ public class EventService {
             else {
                 completion(nil, error)
             }
+        }
+    }
+    
+    public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
+        let query = Event.query()
+        query.whereKey("creator", equalTo: User.currentUser())
+        query.whereKey("startTime", greaterThan: NSDate())
+        query.findObjectsInBackgroundWithCompletion(Event.self, closure: completion)
+    }
+    
+    public func fetchMyAttendingEvents(completion: ([Event]?, NSError?)->()) {
+        // TODO: Accepted and pending, use NSPredicate
+        let query = EventInvitation.query()
+        query.whereKey("to", equalTo: User.currentUser())
+        query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
+        query.whereKey("startDate", greaterThan: NSDate())
+        query.includeKey("event")
+        
+        query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
+            if error == nil {
+                var events = invitations!.map { $0.event }
+                completion(events, nil)
+            }
+            else {
+                completion(nil, error)
+            }
+        }
+    }
+    
+    public func addComment(event: Event, text: String, completion: (NSError?)->()) {
+        let comment = Comment()
+        comment.from = User.currentUser()
+        comment.text = text
+        comment.event = event
+        
+        comment.saveInBackgroundWithBlock { success, error in
+            completion(error)
         }
     }
     

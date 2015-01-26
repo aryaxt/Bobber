@@ -10,7 +10,6 @@ public class PhoneVerificationService {
     
     public func sendPhoneVerificationCode(phoneNumber: String, completion: (NSError?)->()) {
         let phoneVerification = PhoneVerification()
-        phoneVerification.user = User.currentUser()
         phoneVerification.phoneNumber = phoneNumber
         
         phoneVerification.saveInBackgroundWithBlock { bool, error in
@@ -23,8 +22,13 @@ public class PhoneVerificationService {
         
         PFCloud.callFunctionInBackground("VerifyPhoneNumber", withParameters: parameters) { result, error in
         
-            // Make sure user phoneNumber field is updated on the client
-            User.currentUser().fetchInBackgroundWithBlock() { user, error in
+            if (error == nil) {
+                // Make sure user phoneNumber field is updated on the client
+                User.currentUser().fetchInBackgroundWithBlock() { user, error in
+                    completion(error)
+                }
+            }
+            else {
                 completion(error)
             }
         }

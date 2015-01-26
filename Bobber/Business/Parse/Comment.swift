@@ -8,8 +8,9 @@
 
 public class Comment: PFObject, PFSubclassing {
     
-    @NSManaged var user: User
-    @NSManaged var body: String
+    @NSManaged var from: User
+    @NSManaged var event: Event
+    @NSManaged var text: String
     
     public class func parseClassName() -> String {
         return "Comment"

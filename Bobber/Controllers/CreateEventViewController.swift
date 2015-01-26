@@ -13,6 +13,7 @@ class CreateEventViewController: UIViewController {
     @IBOutlet weak var txtTitle: UITextField!
     @IBOutlet weak var txtMinAttendees: UITextField!
     @IBOutlet weak var txtMaxAttendees: UITextField!
+    @IBOutlet weak var txtMinutesToRespond: UITextField!
     @IBOutlet weak var txtDetail: UITextView!
     @IBOutlet weak var swtAllowInvites: UISwitch!
     @IBOutlet weak var dpDate: UIDatePicker!
@@ -37,18 +38,19 @@ class CreateEventViewController: UIViewController {
         event.creator = User.currentUser()
         event.title = txtTitle.text
         event.detail = txtDetail.text?
+        event.detail = txtDetail.text
+        event.startTime = dpDate.date
         event.minAttendees = NSNumber(integer: txtMinAttendees.text.toInt()!)
         event.maxAttendees = NSNumber(integer: txtMaxAttendees.text.toInt()!)
-        event.detail = txtDetail.text
+        event.minutesToRespond = NSNumber(integer: txtMinutesToRespond.text.toInt()!)
         event.allowInvites = NSNumber(bool: swtAllowInvites.on)
-        event.startTime = dpDate.date
         
         eventService.createEvent(event) { error in
             if error == nil {
                 self.performSegueWithIdentifier("EventInviteViewController", sender: self)
             }
             else {
-                // Handle error
+                UIAlertView.show(self, title: "Error", message: "Error creating event")
             }
         }
     }

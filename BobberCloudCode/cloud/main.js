@@ -1,7 +1,5 @@
 
-var twilio = require("twilio")("ACb8e7c20f71bc52e069567bb436edeb30", "03d2d4e99036f661c9fd5ed74b5de9a8");
 var GoogleAutocompleteApiKey = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
-var TwilloPhoneVerificationNumber = "+18587719306";
 var EventStatusPending = "pending";
 var EventStatusActive = "active";
 var EventStatusCanceled = "canceled";
@@ -18,7 +16,16 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 });
 
 
-Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
+
+Parse.Cloud.beforeSave("Comment", function(request, response) {
+    // TODO: Only allow confirmed attendees to make comments
+    // TODO: Send push to confirmed attendees who are registered for this notification
+                       
+    response.success();
+});
+
+
+Parse.Cloud.beforeSave("Event", function(request, response) {
     // TODO: Handle state change and send push notification
     // TODO: Make sure only creator can modify event
                        
@@ -47,6 +54,40 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
     // TODO: Increment event.inviteeCount
     // TODO: Make sure we haven't reached maxNumber
     // TODO: If we have reached minNumber make active and send text
+    // TODO: Handle allowInvites flag
+    // TODO: Don't allow invite after response time is expired
+    // TODO: Send push to confirmed attendees registered for new attendees when someone accepts (send reject to owner only?)
+                      
+     // Creating new invite
+	if (request.object.isNew()) {
+		if (request.object.get("toPhoneNumber") != null) {
+
+		}
+		else if (request.object.get("to") != null) {
+
+			var user = request.object.get("to");
+			var installationQuery = new Parse.Query("Installation");
+		    installationQuery.equalTo("user", user);
+            var push = require("cloud/push.js");
+                       
+            push.sendPushNotification(installationQuery, { "alert": "Hello dude" }, function(error) {
+                if (error == null) {
+                    response.success();
+                }
+                else {
+                    console.error(error)
+                    response.error(error);
+                }
+            });
+		}
+		else {
+			console.error("No user or phone provided")
+			response.error("No user or phone provided");
+		}
+	}
+	else {
+                       
+	}
                     
     response.success();
 });
@@ -54,44 +95,42 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
 
 Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
     // TODO: Make sure user doesn't send too many
+                       
+    // When updating don't send sms(ex: set result of verification or number of attempts)
     if (!request.object.isNew()) {
         response.success();
-        return;               
+        return;
     }
                        
     var md5 = require("cloud/md5.js");
+    var sms = require("cloud/sms.js");
     var verificationCode = Math.floor(Math.random() * 9999) + 1000
-    var phoneNumber = request.object.get("phoneNumber")
+    var phoneNumber = request.object.get("phoneNumber");
+    request.object.set("user", Parse.User.current());
      
-    twilio.sendSms({
-        	from: TwilloPhoneVerificationNumber,
-        	to: phoneNumber,
-        	body: "Your Bobber verification code is: " + verificationCode
-   		},
-        function(error, httpResponse) {
-            if (error) {
-                console.error(error);
-                response.error(error);
-            }
-            else {
-                var h = md5.hex_md5("foo");
-                   
-                request.object.set("verificationCode", verificationCode);
-                request.object.set("phoneNumber", md5.hex_md5(phoneNumber));
-                response.success();
-            }
+    sms.sendSms(phoneNumber, "Your Bobber verification code is: " + verificationCode, function(error) {
+        if (error) {
+            console.error(error);
+            response.error(error);
+        }
+        else {
+            var h = md5.hex_md5("foo");
+                
+            request.object.set("verificationCode", verificationCode);
+            request.object.set("phoneNumber", md5.hex_md5(phoneNumber));
+            response.success();
+        }
     });
     
 });
 
 
 Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
-    // TODO: after verified set user.phoneNumber
-    // TODO: Make sur pone number is not in use already
+    // TODO: Make sure pone number is not in use already
     // TODO: limit number of attempts
     // TODO: Assing user to friend invitations (bsed on phoneNumber)
     // TODO: Assing user to event invitations (bsed on phoneNumber)
-    
+          
     // Users don't have read permission to this table, need to use master key
     Parse.Cloud.useMasterKey();
                    
@@ -101,7 +140,7 @@ Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
                
     // Find last PhoneVerification for a given user and phone number
     var query = new Parse.Query("PhoneVerification");
-    query.equalTo("user", Parse.User.current());
+    query.equalTo("user", request.user);
     query.equalTo("phoneNumber", phoneNumberHashed);
     query.descending("createdAt");
     query.limit(1);
@@ -109,12 +148,14 @@ Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
     query.find({
         success: function(results) {
             var phoneNumberVerification = results[0];
+               phoneNumberVerification.increment("numberOfAttmpts");
                
             // If provided verification code is correct
             if (phoneNumberVerification.get("verificationCode") == verificationCode) {
+               
                 phoneNumberVerification.set("verificationResult", true);
-                phoneNumberVerification.save().then(function(verification){
-
+                phoneNumberVerification.save().then(function(verification) {
+                                                    
                 	// Also save phone number on user object
 					Parse.User.current().set("phoneNumber", phoneNumberHashed);
 					Parse.User.current().save();

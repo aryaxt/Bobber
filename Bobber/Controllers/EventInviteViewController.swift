@@ -10,8 +10,10 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
     
     var event: Event!
     var contacts = [Contact]()
+    var friends = [User]()
     lazy var contactsManager = ContactsManager()
     lazy var eventService = EventService()
+    lazy var friendService = FriendService()
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - UIViewController names -
@@ -20,18 +22,49 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         
         populateContactList()
+        
+        friendService.fetchFriends { friends, error in
+            if error == nil {
+                self.friends = friends!
+            }
+            else {
+                UIAlertView.show(self, title: "Error", message: "Error getting your friends")
+            }
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EventInviteViewController" {
+            var destination = segue.destinationViewController as EventInviteViewController
+            destination.event = event
+        }
     }
 
     // MARK: - UITableView Delegate & Datasource -
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return contacts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let identifier = "personCell"
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
-        cell.textLabel?.text = "\(contacts[indexPath.row].firstName!) \(contacts[indexPath.row].lastName!) \(contacts[indexPath.row].phoneNumber!)"
+        var cell: UITableViewCell!
+        
+        if indexPath.section == 0 {
+            let identifier = "FriendCell"
+            cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+            cell.textLabel?.text = "\(friends[indexPath.row].firstName) \(friends[indexPath.row].lastName)"
+        }
+        else {
+            let identifier = "PersonCell"
+            cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+            cell.textLabel?.text = "\(contacts[indexPath.row].firstName!) \(contacts[indexPath.row].lastName!) \(contacts[indexPath.row].phoneNumber!)"
+        }
         
         return cell
     }
@@ -59,7 +92,6 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
             }
             else {
                 self.contacts = contacts!
-                self.tableView.reloadData()
             }
         }
     }

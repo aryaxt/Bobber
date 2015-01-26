@@ -1,5 +1,14 @@
 
 
+
+var EventStatusPending = "pending";
+var EventStatusActive = "active";
+var EventStatusCanceled = "canceled";
+var EventAttendeeStatusPending = "pending";
+var EventAttendeeStatusAccepted = "accepted";
+var EventAttendeeStatusCanceled = "canceled";
+
+
 exports.sendInvite = function(invitation, completion) {
     
     // TODO: If phoneNumber MD5 passed check for existing user before sending sms
@@ -14,7 +23,7 @@ exports.sendInvite = function(invitation, completion) {
     // TODO: Handle allowInvites flag
     // TODO: Don't allow invite after response time is expired
     // TODO: Send push to confirmed attendees registered for new attendees when someone accepts (send reject to owner only?)
-    
+
 	var push = require("cloud/push.js");
 	var sms = require("cloud/sms.js");
 	var md5 = require("cloud/md5.js");

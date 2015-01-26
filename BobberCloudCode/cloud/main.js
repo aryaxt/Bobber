@@ -1,13 +1,12 @@
 
-var EventStatusPending = "pending";
-var EventStatusActive = "active";
-var EventStatusCanceled = "canceled";
-var EventAttendeeStatusPending = "pending";
-var EventAttendeeStatusAccepted = "accepted";
-var EventAttendeeStatusCanceled = "canceled";
 var FriendStatusPending = "pending";
 var FriendStatusAccepted = "accepted";
 var FriendStatusCanceled = "canceled";
+
+var userNotificationSettingsService = require("cloud/userNotificationSettings.js");
+var phoneVerificationService = require("cloud/phoneVerification.js");
+var eventService = require("cloud/event.js");
+var googleLocationService = require("cloud/googleLocation.js");
 
 
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
@@ -42,13 +41,9 @@ Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
 });
 
 
-Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
-                      
-     // Creating new invite
+Parse.Cloud.beforeSave("EventInvitation", function(request, response) {     
 	if (request.object.isNew()) {
-        var event = require("cloud/event.js");
-
-        event.sendInvite(request.object, function(error) {
+        eventService.sendInvite(request.object, function(error) {
             if (error == null) {
                 response.success()
             }
@@ -65,11 +60,8 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
 
 
 Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
-                       
-    // When updating don't send sms(ex: set result of verification or number of attempts)
     if (request.object.isNew()) {
-        var phoneVerification = require("cloud/phoneVerification.js");
-        phoneVerification.sendVerification(Parse.User.current(), request.object, function(error) {
+        phoneVerificationService.sendVerification(Parse.User.current(), request.object, function(error) {
             if (error) {
                 console.error(error);
                 response.error(error);
@@ -86,9 +78,7 @@ Parse.Cloud.beforeSave("PhoneVerification", function(request, response) {
 
 
 Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
-    var phoneVerification = require("cloud/phoneVerification.js");
-
-    phoneVerification.verifyPhoneNumber(Parse.User.current(), request.params.phoneNumber, request.params.verificationCode, function(error) {
+    phoneVerificationService.verifyPhoneNumber(Parse.User.current(), request.params.phoneNumber, request.params.verificationCode, function(error) {
         if (error == null) {
             response.success();
         }
@@ -101,9 +91,7 @@ Parse.Cloud.define("VerifyPhoneNumber", function(request, response) {
 
 
 Parse.Cloud.define("Autocomplete", function(request, response) {
-    var googleLocation = require("cloud/googleLocation.js");
-    
-    googleLocation.autocomplete(request.params.query, function(result, error) {
+    googleLocationService.autocomplete(request.params.query, function(result, error) {
         if (error == null) {
             response.success(result);
         }
@@ -116,9 +104,7 @@ Parse.Cloud.define("Autocomplete", function(request, response) {
 
 
 Parse.Cloud.define("PlaceDetail", function(request, response) {
-    var googleLocation = require("cloud/googleLocation.js");
-                  
-    googleLocation.placeDetail(request.params.placeId, function(result, error) {
+    googleLocationService.placeDetail(request.params.placeId, function(result, error) {
         if (error == null) {
             response.success(result);
         }
@@ -131,9 +117,7 @@ Parse.Cloud.define("PlaceDetail", function(request, response) {
 
 
 Parse.Cloud.define("UserNotificationSetting", function(request, response) {
-    var userNotificationSettings = require("cloud/userNotificationSettings.js");
-    
-    userNotificationSettings.getUserNotificationSettings(user, function(result, error) {
+    userNotificationSettingsService.getUserNotificationSettings(user, function(result, error) {
         if (error == null) {
             response.success(result);
         }

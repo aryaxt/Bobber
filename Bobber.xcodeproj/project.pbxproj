@@ -21,6 +21,8 @@
 		15258A761A75CF6600944268 /* userNotificationSettings.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A741A75CF6600944268 /* userNotificationSettings.js */; };
 		15258A781A75D0CB00944268 /* phoneVerification.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A771A75D0CB00944268 /* phoneVerification.js */; };
 		15258A791A75D0CB00944268 /* phoneVerification.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A771A75D0CB00944268 /* phoneVerification.js */; };
+		15258A7B1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
+		15258A7C1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
 		1535F2BE1A62E3D2004C5CC2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2BD1A62E3D2004C5CC2 /* HomeViewController.swift */; };
 		1535F2BF1A62E3D2004C5CC2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2BD1A62E3D2004C5CC2 /* HomeViewController.swift */; };
 		1535F2C11A62EAC5004C5CC2 /* BobberNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */; };
@@ -132,6 +134,7 @@
 		15258A711A75CCD500944268 /* googleLocation.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = googleLocation.js; sourceTree = "<group>"; };
 		15258A741A75CF6600944268 /* userNotificationSettings.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userNotificationSettings.js; sourceTree = "<group>"; };
 		15258A771A75D0CB00944268 /* phoneVerification.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = phoneVerification.js; sourceTree = "<group>"; };
+		15258A7A1A75EE9B00944268 /* event.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = event.js; sourceTree = "<group>"; };
 		1535F2BD1A62E3D2004C5CC2 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BobberNavigationController.swift; sourceTree = SOURCE_ROOT; };
 		1535F2C31A62EC30004C5CC2 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 				15258A711A75CCD500944268 /* googleLocation.js */,
 				15258A771A75D0CB00944268 /* phoneVerification.js */,
 				15258A741A75CF6600944268 /* userNotificationSettings.js */,
+				15258A7A1A75EE9B00944268 /* event.js */,
 				15A7C0811A75B17F0061B8B6 /* push.js */,
 				15258A6E1A75C9D600944268 /* sms.js */,
 				15F6939E1A61F64500184D81 /* md5.js */,
@@ -526,6 +530,7 @@
 				15258A6F1A75C9D600944268 /* sms.js in Resources */,
 				15258A751A75CF6600944268 /* userNotificationSettings.js in Resources */,
 				92C7F1821A5C714100259218 /* Main.storyboard in Resources */,
+				15258A7B1A75EE9B00944268 /* event.js in Resources */,
 				92C7F1871A5C714100259218 /* LaunchScreen.xib in Resources */,
 				15258A721A75CCD500944268 /* googleLocation.js in Resources */,
 				92C7F1841A5C714100259218 /* Images.xcassets in Resources */,
@@ -538,6 +543,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15258A7C1A75EE9B00944268 /* event.js in Resources */,
 				15258A791A75D0CB00944268 /* phoneVerification.js in Resources */,
 				15258A701A75C9D600944268 /* sms.js in Resources */,
 				15A7C0831A75B17F0061B8B6 /* push.js in Resources */,

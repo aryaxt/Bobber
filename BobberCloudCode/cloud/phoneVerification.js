@@ -8,7 +8,7 @@ exports.sendVerification = function(user, verification, completion) {
     var md5 = require("cloud/md5.js");
     var sms = require("cloud/sms.js");
     var verificationCode = Math.floor(Math.random() * 9999) + 1000
-    var phoneNumber = verification.get("phoneNumber");
+    var phoneNumber = verification.get("phoneNumber").replace(/\D/g,"");
     verification.set("user", user);
      
     sms.sendSms(phoneNumber, "Your Bobber verification code is: " + verificationCode, function(error) {
@@ -33,7 +33,7 @@ exports.verifyPhoneNumber = function(user, phoneNumber, verificationCode, comple
     Parse.Cloud.useMasterKey();
                    
     var md5 = require("cloud/md5.js");
-    var phoneNumberHashed = md5.hex_md5(phoneNumber)
+    var phoneNumberHashed = md5.hex_md5(phoneNumber.replace(/\D/g,""));
                
     // Find last PhoneVerification for a given user and phone number
     var query = new Parse.Query("PhoneVerification");

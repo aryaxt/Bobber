@@ -1,6 +1,6 @@
 
 
-exports.getUserNotificationSettings(user, completion) {
+exports.getUserNotificationSettings = function(user, completion) {
 
 	Parse.Cloud.useMasterKey();
 	var notificationSettingsQuery = new Parse.Query("NotificationSetting");

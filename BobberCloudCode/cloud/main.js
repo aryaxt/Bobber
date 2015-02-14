@@ -25,6 +25,7 @@ Parse.Cloud.beforeSave("Comment", function(request, response) {
 Parse.Cloud.beforeSave("Event", function(request, response) {
     // TODO: Handle state change and send push notification
     // TODO: Make sure only creator can modify event
+	// TODO: If time and location are missing set state to 'planning'
                        
     response.success();
 });
@@ -54,7 +55,15 @@ Parse.Cloud.beforeSave("EventInvitation", function(request, response) {
         });
 	}
 	else {
-         response.success();
+        eventService.respondToInvite(Parse.User.current(), request.object, function(error) {
+            if (error == null) {
+                response.success()
+            }
+            else {
+                console.error(error);
+                response.error(error);
+            }
+        });
 	}
 });
 

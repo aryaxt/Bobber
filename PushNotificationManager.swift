@@ -30,6 +30,8 @@ public class PushNotificationManager {
             let notificationTypes: UIUserNotificationType = .Alert | .Sound | .Badge
             let userSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
+            
+            UIApplication.sharedApplication().registerForRemoteNotifications()
         }
         else {
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(.Alert | .Sound | .Badge)

@@ -4,7 +4,6 @@
 exports.sendVerification = function(user, verification, completion) {
 	// TODO: Make sure user doesn't send too many
 
-
     var md5 = require("cloud/md5.js");
     var sms = require("cloud/sms.js");
     var verificationCode = Math.floor(Math.random() * 9999) + 1000

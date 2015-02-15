@@ -23,11 +23,19 @@ Parse.Cloud.beforeSave("Comment", function(request, response) {
 
 
 Parse.Cloud.beforeSave("Event", function(request, response) {
-    // TODO: Handle state change and send push notification
+    // TODO: Handle state change and send push notification (canceled, location change, etc)
     // TODO: Make sure only creator can modify event
 	// TODO: If time and location are missing set state to 'planning'
                        
     response.success();
+});
+
+
+Parse.Cloud.afterSave("Location", function(request, response) {
+	// TODO: Set full location detail (try finding an existing one before calling google)
+	// Client only send name and placeId, call place detail to get full detail, including a possible photo
+					  
+	response.success();
 });
 
 
@@ -44,7 +52,7 @@ Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
 
 Parse.Cloud.beforeSave("EventInvitation", function(request, response) {     
 	if (request.object.isNew()) {
-        eventService.sendInvite(request.object, function(error) {
+        eventService.sendInvite(Parse.User.current(), request.object, function(error) {
             if (error == null) {
                 response.success()
             }

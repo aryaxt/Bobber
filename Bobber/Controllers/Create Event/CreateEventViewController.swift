@@ -6,25 +6,26 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-class CreateEventViewController: UIViewController {
+class CreateEventViewController: UIViewController, LocationSearchViewControllerDelegate {
     
     lazy var eventService = EventService()
-    var event: Event!
+    var event = Event()
     @IBOutlet weak var txtTitle: UITextField!
-    @IBOutlet weak var txtMinAttendees: UITextField!
-    @IBOutlet weak var txtMaxAttendees: UITextField!
     @IBOutlet weak var txtMinutesToRespond: UITextField!
-    @IBOutlet weak var txtDetail: UITextView!
-    @IBOutlet weak var swtAllowInvites: UISwitch!
     @IBOutlet weak var dpDate: UIDatePicker!
 
     // MARK: - UIViewController -
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "EventInviteViewController" {
-            var destination = segue.destinationViewController as EventInviteViewController
+        if segue.identifier == "CreateEventInviteViewController" {
+            let destination = segue.destinationViewController as EventInviteViewController
             destination.event = event
         }
+		else if segue.identifier == "LocationSearchViewController" {
+			let navigationController = segue.destinationViewController as UINavigationController
+			let destination = navigationController.topViewController as LocationSearchViewController
+			destination.delegate = self
+		}
     }
     
     // MARK: - Actions -
@@ -34,16 +35,10 @@ class CreateEventViewController: UIViewController {
     }
     
     @IBAction func createEventSelected(sender: AnyObject) {
-        event = Event()
         event.creator = User.currentUser()
         event.title = txtTitle.text
-        event.detail = txtDetail.text?
-        event.detail = txtDetail.text
         event.startTime = dpDate.date
-        event.minAttendees = NSNumber(integer: txtMinAttendees.text.toInt()!)
-        event.maxAttendees = NSNumber(integer: txtMaxAttendees.text.toInt()!)
         event.minutesToRespond = NSNumber(integer: txtMinutesToRespond.text.toInt()!)
-        event.allowInvites = NSNumber(bool: swtAllowInvites.on)
         
         eventService.createEvent(event) { error in
             if error == nil {
@@ -54,5 +49,16 @@ class CreateEventViewController: UIViewController {
             }
         }
     }
+	
+	// MARK: - LocationSearchViewControllerDelegate -
+	
+	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation location: GoogleAutocompleteLocation) {
+		dismissViewControllerAnimated(true, completion: nil)
+		event.location = Location(location)
+	}
+	
+	func locationSearchViewControllerDidCancel(controller: LocationSearchViewController) {
+		dismissViewControllerAnimated(true, completion: nil)
+	}
     
 }

@@ -10,10 +10,10 @@ import Foundation
 
 extension PFQuery {
     
-    public func findObjectsInBackgroundWithCompletion <T> (type:T.Type, closure: ([T]?, NSError?) -> Void) {
+    public func findObjectsInBackgroundWithCompletion <T> (type:T.Type, completion: ([T]?, NSError?) -> Void) {
         findObjectsInBackgroundWithBlock { (result, error) in
             if (error != nil) {
-                closure(nil, error)
+                completion(nil, error)
             }
             else {
                 var castedResults = [T]()
@@ -22,23 +22,23 @@ extension PFQuery {
                     castedResults.append(object as T)
                 }
                 
-                closure(castedResults, nil)
+                completion(castedResults, nil)
             }
         }
     }
     
-    public func findObjectInBackgroundWithCompletion <T> (type:T.Type, closure: (T?, NSError?) -> Void) {
+    public func findObjectInBackgroundWithCompletion <T> (type:T.Type, completion: (T?, NSError?) -> Void) {
         findObjectsInBackgroundWithBlock { (result, error) in
             if (error != nil) {
-                closure(nil, error)
+                completion(nil, error)
             }
             else {
                 if result.count == 1 {
                     var castedObject = result[0] as T
-                    closure(castedObject, nil)
+                    completion(castedObject, nil)
                 }
                 else {
-                    closure(nil, NSError(domain: "RetunedMoreThanOneObject", code: 0, userInfo: nil))
+                    completion(nil, NSError(domain: "RetunedMoreThanOneObject", code: 0, userInfo: nil))
                 }
             }
         }

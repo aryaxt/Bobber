@@ -6,18 +6,26 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
+protocol LocationSearchViewControllerDelegate: class {
+	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation location: GoogleAutocompleteLocation)
+	func locationSearchViewControllerDidCancel(controller: LocationSearchViewController)
+}
+
 class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	
 	@IBOutlet var searchBar: UISearchBar!
 	@IBOutlet weak var tableView: UITableView!
 	var locations = [GoogleAutocompleteLocation]()
 	lazy var searchService = GoogleLocationService()
+	weak var delegate: LocationSearchViewControllerDelegate!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		searchBar.removeFromSuperview()
 		navigationItem.titleView = searchBar
+		
+		searchBar.becomeFirstResponder()
 	}
 	
 	// MARK: - UISearchBarDelegate -
@@ -38,7 +46,7 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	// MARK: - IBActions -
 	
 	@IBAction func closeSelected(sender: AnyObject) {
-		dismissViewControllerAnimated(true, completion: nil)
+		self.delegate.locationSearchViewControllerDidCancel(self)
 	}
 	
 	// MARK: - UITableView Delegate & Datasource -
@@ -56,6 +64,7 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 		
+		self.delegate.locationSearchViewController(self, didSelectLocation: locations[indexPath.row])
 	}
 	
 }

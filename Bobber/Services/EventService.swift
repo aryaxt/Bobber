@@ -14,7 +14,7 @@ public class EventService {
         query.whereKey("objectId", equalTo: eventId)
         query.includeKey("creator")
         query.includeKey("invitations")
-        query.findObjectInBackgroundWithCompletion(Event.self, closure: completion)
+        query.findObjectInBackgroundWithCompletion(Event.self, completion: completion)
     }
     
     public func createEvent(event: Event, completion: (NSError?)->()) {
@@ -30,10 +30,16 @@ public class EventService {
     public func invite(event: Event, toPhoneNumber: String, completion: (NSError?)->()) {
         invite(event, to: nil, toPhoneNumber: toPhoneNumber, completion: completion)
     }
+	
+	public func respondToInvitation(eventInvitation: EventInvitation, status: EventInvitation.Status, completion: (NSError?)->()) {
+		eventInvitation.statusEnum = status
+		eventInvitation.saveInBackgroundWithBlock { result, error in
+			completion(error)
+		}
+	}
     
     public func cancel(event: Event, completion: (NSError?)->()) {
         event.stateEnum = .Canceled
-        
         event.saveInBackgroundWithBlock { success, error in
             completion(error)
         }
@@ -44,7 +50,7 @@ public class EventService {
         query.whereKey("event", equalTo: event)
         query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
         query.includeKey("to")
-        
+		
         query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
             if error == nil {
                 let users = invitations!.map { $0.to! }
@@ -55,33 +61,28 @@ public class EventService {
             }
         }
     }
-    
+	
     public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
         let query = Event.query()
         query.whereKey("creator", equalTo: User.currentUser())
         query.whereKey("startTime", greaterThan: NSDate())
-        query.findObjectsInBackgroundWithCompletion(Event.self, closure: completion)
+        query.findObjectsInBackgroundWithCompletion(Event.self, completion: completion)
     }
-    
-    public func fetchMyAttendingEvents(completion: ([Event]?, NSError?)->()) {
+	
+	
+    public func fetchMyEventInvitations(completion: ([EventInvitation]?, NSError?)->()) {
         // TODO: Accepted and pending, use NSPredicate
         let query = EventInvitation.query()
         query.whereKey("to", equalTo: User.currentUser())
-        query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
-        query.whereKey("startDate", greaterThan: NSDate())
-        query.includeKey("event")
+		// Think about this, what about expiration time?
+		query.includeKey("event")
+		
+		// TODO: Maybe all attending events with accepted status in the future
+		// And all pending where expiration has not passed
         
-        query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
-            if error == nil {
-                var events = invitations!.map { $0.event }
-                completion(events, nil)
-            }
-            else {
-                completion(nil, error)
-            }
-        }
+		query.findObjectsInBackgroundWithCompletion(EventInvitation.self, completion: completion)
     }
-    
+	
     public func addComment(event: Event, text: String, completion: (NSError?)->()) {
         let comment = Comment()
         comment.from = User.currentUser()

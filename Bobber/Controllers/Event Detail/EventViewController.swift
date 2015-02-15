@@ -7,7 +7,8 @@
 //
 
 class EventViewController: BaseViewController {
-    
+	
+	@IBOutlet weak var titleLabel: UILabel!
     var event: Event!
     var comments: [Comment]!
     lazy var eventService = EventService()
@@ -29,11 +30,18 @@ class EventViewController: BaseViewController {
             }
         }
     }
-    
+	
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+		if segue.identifier == "EventInviteViewController" {
+			let destination = segue.destinationViewController as EventInviteViewController
+			destination.event = event
+		}
+	}
+	
     // MARK: - Private -
-    
+		
     private func populateEvent() {
-        self.title = event.title
+        titleLabel.text = event.title
     }
     
 }

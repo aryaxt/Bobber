@@ -21,7 +21,7 @@ public class Location: PFObject, PFSubclassing {
         super.init()
     }
     
-    init(googlePladeDetail: GooglePlaceDetail) {
+    init(_ googlePladeDetail: GooglePlaceDetail) {
         super.init()
         
         self.formattedAddress = googlePladeDetail.formattedAddress
@@ -33,7 +33,14 @@ public class Location: PFObject, PFSubclassing {
         self.googlePlaceId = googlePladeDetail.placeId
         self.geoPoint = PFGeoPoint(latitude: googlePladeDetail.latitude!, longitude: googlePladeDetail.longitude!)
     }
-    
+	
+	init(_ googleAutocompleteLocation: GoogleAutocompleteLocation) {
+		super.init()
+		
+		self.googlePlaceId = googleAutocompleteLocation.placeId
+		self.formattedAddress = googleAutocompleteLocation.name
+	}
+	
     public class func parseClassName() -> String {
         return "Location"
     }

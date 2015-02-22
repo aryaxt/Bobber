@@ -39,7 +39,7 @@ class PhoneVerificationViewController: BaseViewController {
                 self.updateVerificationSate(.VerifyCode)
             }
             else {
-                UIAlertView.show(self, title: "Error", message: "There was a problem sening phone verification")
+                UIAlertController.show(self, title: "Error", message: "There was a problem sening phone verification")
             }
         }
     }
@@ -51,7 +51,7 @@ class PhoneVerificationViewController: BaseViewController {
                 BobberNavigationController.sharedInstance().applyLoggedInState()
             }
             else {
-                UIAlertView.show(self, title: "Error", message: "Invalid verification code")
+                UIAlertController.show(self, title: "Error", message: "Invalid verification code")
             }
         }
     }

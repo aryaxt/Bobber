@@ -28,7 +28,7 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             }
         }
 		
-		eventService.fetchMyEventInvitations { invitations, error in
+		eventService.fetchMyInvitations { invitations, error in
 			if error == nil {
 				invitations?.each {
 					
@@ -102,13 +102,12 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
 	}
 	
 	func respondToInvitation(eventInvitation: EventInvitation, status: EventInvitation.Status) {
-		
 		eventService.respondToInvitation(eventInvitation, status: status) { error in
 			if error == nil {
 				
 			}
 			else {
-				UIAlertView.show(self, title: "Error", message: "Error responding to invitation")
+				UIAlertController.show(self, title: "Error", message: "Error responding to invitation")
 			}
 		}
 	}

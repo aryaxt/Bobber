@@ -187,9 +187,12 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4Q-CV-ONX">
                                 <rect key="frame" x="27" y="83" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Invite">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="27" y="83" width="37" height="30"/>
+                                </variation>
                                 <connections>
                                     <segue destination="7pN-RW-aA1" kind="show" identifier="EventInviteViewController" id="viW-f5-cde"/>
                                 </connections>
@@ -200,23 +203,93 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="27" y="133" width="325" height="21"/>
+                                    <rect key="frame" x="27" y="110" width="325" height="21"/>
                                 </variation>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cuP-fl-4Y6">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="22" y="146" width="233" height="39"/>
+                                </variation>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MxM-AT-rpd">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="285" y="151" width="36" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="sendCommentSelected:" destination="Qtu-fT-z4u" eventType="touchUpInside" id="ajI-Hl-Uxu"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2r0-h7-ImM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="mFO-Kn-Mha" detailTextLabel="MTg-hQ-ExA" style="IBUITableViewCellStyleSubtitle" id="q3N-Mo-0oz">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q3N-Mo-0oz" id="Fx8-ni-pTJ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mFO-Kn-Mha">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MTg-hQ-ExA">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="193" width="372" height="343"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="dataSource" destination="Qtu-fT-z4u" id="z8O-c5-EvP"/>
+                                    <outlet property="delegate" destination="Qtu-fT-z4u" id="k8N-DS-ciz"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="pVp-DA-AGS"/>
+                                <exclude reference="cuP-fl-4Y6"/>
+                                <exclude reference="MxM-AT-rpd"/>
+                                <exclude reference="2r0-h7-ImM"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="pVp-DA-AGS"/>
+                                <include reference="cuP-fl-4Y6"/>
+                                <include reference="MxM-AT-rpd"/>
+                                <include reference="2r0-h7-ImM"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="commentTextView" destination="cuP-fl-4Y6" id="xw7-Ot-uhB"/>
+                        <outlet property="sendCommentButton" destination="MxM-AT-rpd" id="8h5-k7-Lys"/>
+                        <outlet property="tableView" destination="2r0-h7-ImM" id="rFS-Sn-xnG"/>
                         <outlet property="titleLabel" destination="pVp-DA-AGS" id="ggG-90-yNL"/>
                     </connections>
                 </viewController>
@@ -649,6 +722,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="viW-f5-cde"/>
+        <segue reference="QVx-ru-XNe"/>
     </inferredMetricsTieBreakers>
 </document>

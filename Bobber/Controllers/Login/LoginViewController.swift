@@ -28,7 +28,7 @@ class LoginViewController: BaseViewController {
                 self.checkForLoggedInUser()
             }
             else {
-                UIAlertView.show(self, title: "Error", message: error!.localizedDescription)
+                UIAlertController.show(self, title: "Error", message: error!.localizedDescription)
             }
         }
     }

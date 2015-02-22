@@ -8,7 +8,7 @@
 
 public class EventService {
     
-    public func fetchEventDetail(eventId: String, completion: (Event?, NSError?)->()) {
+    public func fetchDetail(eventId: String, completion: (Event?, NSError?)->()) {
         // TODO: Add attendees to event as PFRelation?
         let query = Event.query()
         query.whereKey("objectId", equalTo: eventId)
@@ -45,11 +45,14 @@ public class EventService {
         }
     }
     
-    public func fetchAttendees(event: Event, completion: ([User]?, NSError?)->()) {
+	public func fetchAttendees(event: Event, var page: Int, perPage: Int, completion: ([User]?, NSError?)->()) {
+		page-- // UI thinks of first page as 1, data thinks of first page as 0
         let query = EventInvitation.query()
         query.whereKey("event", equalTo: event)
         query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
         query.includeKey("to")
+		query.limit = perPage
+		query.skip = page * perPage
 		
         query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
             if error == nil {
@@ -70,7 +73,7 @@ public class EventService {
     }
 	
 	
-    public func fetchMyEventInvitations(completion: ([EventInvitation]?, NSError?)->()) {
+    public func fetchMyInvitations(completion: ([EventInvitation]?, NSError?)->()) {
         // TODO: Accepted and pending, use NSPredicate
         let query = EventInvitation.query()
         query.whereKey("to", equalTo: User.currentUser())
@@ -83,17 +86,55 @@ public class EventService {
 		query.findObjectsInBackgroundWithCompletion(EventInvitation.self, completion: completion)
     }
 	
-    public func addComment(event: Event, text: String, completion: (NSError?)->()) {
+	public func fetchComments(event: Event, var page: Int, perPage: Int, completion: ([Comment]?, NSError?)->()) {
+		page-- // UI thinks of first page as 1, data thinks of first page as 0
+		let query = Comment.query()
+		query.whereKey("event", equalTo: event)
+		query.orderByDescending("createdAt")
+		query.limit = perPage
+		query.skip = page * perPage
+		query.includeKey("from")
+		query.findObjectsInBackgroundWithCompletion(Comment.self, completion: completion)
+	}
+	
+    public func addComment(event: Event, text: String, completion: (Comment?, NSError?)->()) {
         let comment = Comment()
         comment.from = User.currentUser()
         comment.text = text
         comment.event = event
         
         comment.saveInBackgroundWithBlock { success, error in
-            completion(error)
+			if error == nil {
+				completion(comment, nil)
+			}
+			else {
+				completion(nil, error)
+			}
         }
     }
-    
+	
+	public func suggestLocation(event: Event, location: Location, completion: (NSError?)->()) {
+		let suggestion = EventLocationSuggestion()
+		suggestion.suggester = User.currentUser()
+		suggestion.event = event
+		suggestion.location = location
+		
+		suggestion.saveInBackgroundWithBlock { success, error in
+			completion(error)
+		}
+	}
+	
+	public func suggestDate(event: Event, date: NSDate, completion: (NSError?)->()) {
+		let suggestion = EventDateSuggestion()
+		suggestion.suggester = User.currentUser()
+		suggestion.event = event
+		suggestion.date = date
+		
+		suggestion.saveInBackgroundWithBlock { success, error in
+			completion(error)
+		}
+	}
+	
     // MARK: - Private -
     
     private func invite(event: Event, to: User?, toPhoneNumber: String?, completion: (NSError?)->()) {

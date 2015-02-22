@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-extension UIAlertView {
+extension UIAlertController {
     
     public class func show(controller: UIViewController, title: String, message: String, cancelButton: String = NSLocalizedString("Ok", comment: "Ok"), completion: ((UIAlertAction!)->())? = nil) {
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

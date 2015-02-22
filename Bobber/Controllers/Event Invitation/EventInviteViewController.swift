@@ -28,7 +28,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
                 self.friends = friends!
             }
             else {
-                UIAlertView.show(self, title: "Error", message: "Error getting your friends")
+                UIAlertController.show(self, title: "Error", message: "Error getting your friends")
             }
             
             self.tableView.reloadData()

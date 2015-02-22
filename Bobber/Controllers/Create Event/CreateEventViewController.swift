@@ -42,10 +42,10 @@ class CreateEventViewController: UIViewController, LocationSearchViewControllerD
         
         eventService.createEvent(event) { error in
             if error == nil {
-                self.performSegueWithIdentifier("EventInviteViewController", sender: self)
+                self.performSegueWithIdentifier("CreateEventInviteViewController", sender: self)
             }
             else {
-                UIAlertView.show(self, title: "Error", message: "Error creating event")
+                UIAlertController.show(self, title: "Error", message: "Error creating event")
             }
         }
     }

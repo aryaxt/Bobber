@@ -153,3 +153,11 @@ exports.sendInvite = function(user, invitation, completion) {
 	}
     
 }
+
+
+exports.addComment = function (user, comment, completion) {
+
+
+}
+
+

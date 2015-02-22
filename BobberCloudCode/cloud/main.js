@@ -7,6 +7,7 @@ var userNotificationSettingsService = require("cloud/userNotificationSettings.js
 var phoneVerificationService = require("cloud/phoneVerification.js");
 var eventService = require("cloud/event.js");
 var googleLocationService = require("cloud/googleLocation.js");
+var locationService = require("cloud/location.js");
 
 
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
@@ -14,7 +15,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 });
 
 
-Parse.Cloud.beforeSave("Comment", function(request, response) {
+Parse.Cloud.afterSave("Comment", function(request, response) {
     // TODO: Only allow confirmed attendees to make comments
     // TODO: Send push to confirmed attendees who are registered for this notification
                        
@@ -31,11 +32,22 @@ Parse.Cloud.beforeSave("Event", function(request, response) {
 });
 
 
-Parse.Cloud.afterSave("Location", function(request, response) {
-	// TODO: Set full location detail (try finding an existing one before calling google)
-	// Client only send name and placeId, call place detail to get full detail, including a possible photo
-					  
+Parse.Cloud.beforeSave("EventDateSuggestion", function(request, response) {
+	// TODO: Check for duplicate
+	// TODO: Make sure it allows suggestion
 	response.success();
+});
+
+
+Parse.Cloud.beforeSave("EventLocationSuggestion", function(request, response) {
+	// TODO: Check for duplicate
+	// TODO: Make sure it allows suggestion
+	response.success();
+});
+
+
+Parse.Cloud.afterSave("Location", function(request, response) {		  
+	locationService.updateLocationIfNeeded(request.object);
 });
 
 
@@ -144,3 +156,9 @@ Parse.Cloud.define("UserNotificationSetting", function(request, response) {
         }
     });
 });
+
+
+Parse.Cloud.define("EventSuggestions", function(request, response) {
+	// TODO: Add cloud code to return number of suggestion location/dates because we don't want to just send them all to client
+});
+

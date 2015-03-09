@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         PushNotificationManager.sharedInstance.registerForPushNotifications()
         
         // TODO: Check for push notification launch option
+		
+		AppearanceManager.configureAppearance()
         
         return true
     }

@@ -47,7 +47,7 @@ Parse.Cloud.beforeSave("EventLocationSuggestion", function(request, response) {
 
 
 Parse.Cloud.afterSave("Location", function(request, response) {		  
-	locationService.updateLocationIfNeeded(request.object);
+	//locationService.updateLocationIfNeeded(request.object);
 });
 
 
@@ -127,6 +127,19 @@ Parse.Cloud.define("Autocomplete", function(request, response) {
         else {
             console.error(error);
             response.error("Failed to request autocomplete api");
+        }
+    });
+});
+
+
+Parse.Cloud.define("PlaceSearch", function(request, response) {
+    googleLocationService.placeTextSearch(request.params.query, function(result, error) {
+        if (error == null) {
+            response.success(result);
+        }
+        else {
+            console.error(error);
+            response.error("Failed to request place detail api");
         }
     });
 });

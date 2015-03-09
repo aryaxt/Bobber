@@ -31,7 +31,7 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	// MARK: - UISearchBarDelegate -
 
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		searchService.fetchLocations(searchText) { autoCompleteLocations, error in
+		searchService.searchLocations(searchText) { autoCompleteLocations, error in
 			if error != nil {
 				UIAlertController.show(self, title: "Error", message: "Error fetching locations")
 			}

@@ -155,7 +155,7 @@ exports.sendInvite = function(user, invitation, completion) {
 }
 
 
-exports.addComment = function (user, comment, completion) {
+exports.sendCommentNotification = function (user, comment, completion) {
 
 
 }

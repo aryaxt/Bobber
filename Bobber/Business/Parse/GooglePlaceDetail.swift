@@ -7,9 +7,10 @@
 //
 
 public class GooglePlaceDetail {
-    
+	
     var formattedAddress: String?
     var placeId: String?
+	var name: String?
     var streetNumber: String?
     var street: String?
     var city: String?
@@ -18,6 +19,7 @@ public class GooglePlaceDetail {
     var postalCode: String?
     var latitude: Double?
     var longitude: Double?
+	var icon: String?
     
     init() {
         

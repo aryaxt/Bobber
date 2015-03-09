@@ -8,11 +8,13 @@
 
 public class GoogleAutocompleteLocation {
 
-    var name: String
-    var placeId: String
+    public var name: String
+    public var placeId: String
+	public var firstTerm: String
 
-    init(name: String, placeId: String) {
+	init(name: String, placeId: String, firstTerm: String) {
         self.name = name
         self.placeId = placeId
+		self.firstTerm = firstTerm
     }
 }

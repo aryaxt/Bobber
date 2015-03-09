@@ -19,7 +19,7 @@ extension NSDictionary {
                 result = dictionary[key]
             }
             else {
-                println("Invalid keypath was passed")
+                println("Invalid keypath was passed: \(keyPath)")
                 return nil
             }
         }

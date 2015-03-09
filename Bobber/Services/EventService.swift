@@ -75,10 +75,11 @@ public class EventService {
 	
     public func fetchMyInvitations(completion: ([EventInvitation]?, NSError?)->()) {
         // TODO: Accepted and pending, use NSPredicate
+		// Think about this, what about expiration time?
         let query = EventInvitation.query()
         query.whereKey("to", equalTo: User.currentUser())
-		// Think about this, what about expiration time?
 		query.includeKey("event")
+		query.includeKey("from")
 		
 		// TODO: Maybe all attending events with accepted status in the future
 		// And all pending where expiration has not passed

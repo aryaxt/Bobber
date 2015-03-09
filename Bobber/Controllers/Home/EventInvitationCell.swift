@@ -18,8 +18,25 @@ class EventInvitationCell: UITableViewCell {
 	@IBOutlet weak var acceptButton: UIButton!
 	weak var delegate: EventInvitationCellDelegate!
 	
+	// MARK: - View Methods -
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		
+		declineButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+		acceptButton.setTitleColor(UIColor.greenColor(), forState: .Normal)
+	}
+	
+	// MARK: - Public -
+	
 	func configure(eventInvitation: EventInvitation) {
-		self.eventNameLabel.text = eventInvitation.event.title
+		
+		let defaultAttributes = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.systemFontOfSize(14)]
+		let fromAttributes = [NSForegroundColorAttributeName: UIColor.blueColor()]
+		let string = "\(eventInvitation.from.firstName) wants to \(eventInvitation.event.title)"
+		let attributedString = NSMutableAttributedString(string: string, attributes: defaultAttributes)
+		attributedString.addAttributes(fromAttributes, range: NSMakeRange(0, countElements(eventInvitation.from.firstName)))
+		eventNameLabel.attributedText = attributedString
 	}
 	
 	// MARK: - Actions -

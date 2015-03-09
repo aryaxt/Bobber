@@ -6,7 +6,22 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-extension UIViewController {
-    
+public extension UIViewController {
+	
+	public enum BarButtonPosition {
+		case Left
+		case Right
+	}
+	
+	public func addBarButtonWithTitle(title: String, position: BarButtonPosition, selector: Selector) {
+		let button = UIBarButtonItem(title: title, style: .Plain, target: self, action: selector)
+		
+		if position == .Left {
+			self.navigationItem.leftBarButtonItem = button
+		}
+		else {
+			self.navigationItem.rightBarButtonItem = button
+		}
+	}
     
 }

@@ -34,6 +34,7 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
 		questionTextView.text = ""
 		questionTextView.layer.borderColor = UIColor.lightGrayColor().CGColor
 		questionTextView.layer.borderWidth = 0.6
+		questionTextView.backgroundColor = UIColor.whiteColor()
 		
 		NSNotificationCenter.defaultCenter().addObserverForName(UITextViewTextDidChangeNotification, object: questionTextView, queue: nil) { [weak self] note in
 			
@@ -162,8 +163,8 @@ class CreateEventViewController: UIViewController, UITableViewDelegate, UITableV
 			var searchText = text.substringWithRange(NSMakeRange(searchStartIndex, questionTextView.selectedRange.location - searchStartIndex))
 			searchText = searchText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
 			
-			// 4 because that's the minimum number of character to guess the time before deciding whether it's time or location
-			if countElements(searchText) >= 4 {
+			// 3 because that's the minimum number of character to guess the time before deciding whether it's time or location
+			if countElements(searchText) >= 3 {
 				
 				if textRepresentsTime(searchText) {
 					searchMode = .Date

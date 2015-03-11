@@ -74,6 +74,8 @@
 		1541F4A81AACD400005D6CA2 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A61AACD400005D6CA2 /* StringExtension.swift */; };
 		1541F4AA1AAD3433005D6CA2 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A91AAD3433005D6CA2 /* DateCell.swift */; };
 		1541F4AB1AAD3433005D6CA2 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A91AAD3433005D6CA2 /* DateCell.swift */; };
+		1541F4AD1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */; };
+		1541F4AE1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */; };
 		159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C03101A905D0300EAA342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03031A905D0300EAA342 /* EventViewController.swift */; };
@@ -190,6 +192,7 @@
 		1540E7521A8FFA4A00838860 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		1541F4A61AACD400005D6CA2 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1541F4A91AAD3433005D6CA2 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
+		1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = SOURCE_ROOT; };
 		159C03011A905D0300EAA342 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		159C03031A905D0300EAA342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		159C03051A905D0300EAA342 /* EventInviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInviteViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +268,7 @@
 			children = (
 				15258A681A75B8B900944268 /* PushNotificationManager.swift */,
 				15F9716F1A9A68EB00169B7E /* AppearanceManager.swift */,
+				1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -758,6 +762,7 @@
 				159C03331A91773200EAA342 /* EventDateSuggestion.swift in Sources */,
 				1535F2FC1A632B40004C5CC2 /* ContactsManager.swift in Sources */,
 				92C7F17D1A5C714100259218 /* AppDelegate.swift in Sources */,
+				1541F4AD1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */,
 				927EA5EA1A5CA67B00B9F084 /* UIColorExtension.swift in Sources */,
 				927EA5F61A5CA6A600B9F084 /* NSDictionaryExtension.swift in Sources */,
 				15F693A31A61FA4000184D81 /* PhoneVerificationService.swift in Sources */,
@@ -856,6 +861,7 @@
 				15F693AD1A622C1200184D81 /* Icomoon.swift in Sources */,
 				159C031E1A905D2000EAA342 /* EventInvitationCell.swift in Sources */,
 				927FCE711A5C79AF001F25A0 /* UserService.swift in Sources */,
+				1541F4AE1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */,
 				159C03131A905D0300EAA342 /* EventInviteViewController.swift in Sources */,
 				1540E7541A8FFA4A00838860 /* ArrayExtension.swift in Sources */,
 				152FDA181AAB68190032DFAC /* RounderHeaderView.swift in Sources */,

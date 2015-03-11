@@ -20,7 +20,9 @@ class EventViewController: BaseViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
+		addBarButtonWithTitle("Create", position: .Right, selector: "inviteSelected:")
+		
         populateEvent()
         
         eventService.fetchDetail(event.objectId) { event, error in
@@ -60,6 +62,10 @@ class EventViewController: BaseViewController, UITableViewDelegate, UITableViewD
     }
 	
 	// MARK: - Actions -
+	
+	@IBAction func inviteSelected(sender: AnyObject) {
+		performSegueWithIdentifier("EventInviteViewController", sender: nil)
+	}
 	
 	@IBAction func sendCommentSelected(sender: AnyObject) {
 		eventService.addComment(event, text: commentTextView.text) { comment, error in

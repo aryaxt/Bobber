@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -26,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // TODO: Check for push notification launch option
 		
 		AppearanceManager.configureAppearance()
+		
+		// Start location service
+		LocationManager.sharedInstance
         
         return true
     }

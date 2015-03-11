@@ -15,11 +15,19 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 });
 
 
-Parse.Cloud.afterSave("Comment", function(request, response) {
+Parse.Cloud.beforeSave("Comment", function(request, response) {
     // TODO: Only allow confirmed attendees to make comments
-    // TODO: Send push to confirmed attendees who are registered for this notification
-                       
     response.success();
+
+});
+
+
+Parse.Cloud.afterSave("Comment", function(request, response) {
+	eventService.sendCommentNotification(Parse.User.current(), request.object, function(error) {
+        if (error != null) {
+            console.error(error);
+        }
+    });
 });
 
 

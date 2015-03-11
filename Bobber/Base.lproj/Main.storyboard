@@ -291,18 +291,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4Q-CV-ONX">
-                                <rect key="frame" x="27" y="83" width="46" height="30"/>
-                                <state key="normal" title="Invite">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="27" y="83" width="37" height="30"/>
-                                </variation>
-                                <connections>
-                                    <segue destination="7pN-RW-aA1" kind="show" identifier="EventInviteViewController" id="viW-f5-cde"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVp-DA-AGS">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -397,6 +385,7 @@
                         <outlet property="sendCommentButton" destination="MxM-AT-rpd" id="8h5-k7-Lys"/>
                         <outlet property="tableView" destination="2r0-h7-ImM" id="rFS-Sn-xnG"/>
                         <outlet property="titleLabel" destination="pVp-DA-AGS" id="ggG-90-yNL"/>
+                        <segue destination="7pN-RW-aA1" kind="presentation" identifier="EventInviteViewController" id="ldy-Yi-G6M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OIY-XM-DYB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -820,6 +809,9 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="600"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="7pN-RW-aA1" id="jLU-q8-2JL"/>
                                     <outlet property="delegate" destination="7pN-RW-aA1" id="Suk-sz-40B"/>
@@ -847,7 +839,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoY-JJ-mh8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2808" y="1174"/>
+            <point key="canvasLocation" x="2796" y="1174"/>
         </scene>
         <!--Phone Verification View Controller-->
         <scene sceneID="b2x-KL-tbL">
@@ -963,6 +955,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="QVx-ru-XNe"/>
+        <segue reference="ldy-Yi-G6M"/>
     </inferredMetricsTieBreakers>
 </document>

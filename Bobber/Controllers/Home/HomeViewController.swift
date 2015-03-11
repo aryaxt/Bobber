@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate {
+class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate, SlideNavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     lazy var eventService = EventService()
@@ -63,7 +63,13 @@ class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDa
             destination.event = event
         }
     }
-    
+	
+	// MARK: - SlideNavigationControllerDelegate -
+	
+	func slideNavigationControllerShouldDisplayLeftMenu() -> Bool {
+		return true
+	}
+	
     // MARK: - UITableView Delegate & Datasource -
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {

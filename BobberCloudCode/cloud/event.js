@@ -10,6 +10,11 @@ var EventInvitationFieldTo = "to";
 var EventInvitationFieldToPhoneNumber = "toPhoneNumber";
 var EventInvitationFieldStatus = "status";
 
+var EventCommentFieldFrom = "from";
+var EventCommentFieldEvent = "event";
+var EventCommentFieldText = "text";
+var EventCommentFieldIsSystem = "isSystem";
+
 var EventStatusPending = "pending";
 var EventStatusActive = "active";
 var EventStatusPlanning = "planning";
@@ -156,8 +161,44 @@ exports.sendInvite = function(user, invitation, completion) {
 
 
 exports.sendCommentNotification = function (user, comment, completion) {
+	// TODO: Send push to confirmed attendees who are registered for this notification
 
+	var event = comment.get(EventCommentFieldEvent);
+	var invitationQuery = new Parse.Query("EventInvitation");
+	invitationQuery.equalTo(EventInvitationFieldEvent, event);
+	invitationQuery.equalTo(EventInvitationFieldStatus, EventInvitationStatusAccepted);
+	invitationQuery.notEqualTo(EventInvitationFieldTo, user);
+	invitationQuery.exists(EventInvitationFieldTo);
+	invitationQuery.include(EventInvitationFieldTo);
 
+	invitationQuery.find({success: function(invitations) {
+	            
+	    	var users = [];
+					
+			for (var i=0 ; i<invitations.length ; i++) {
+				var invitation = invitations[i];
+				users.push(invitation.get(EventInvitationFieldTo));
+			}
+
+			var push = require("cloud/push.js");
+			var pushData = { "alert": comment.get(EventCommentFieldText) };
+			var installationQuery = new Parse.Query("Installation");
+			installationQuery.containedIn("user", users);
+
+	  		push.sendPushNotification(installationQuery, pushData, function(error) {
+				if (error == null) {
+					completion(null);
+				}
+				else {
+					completion(error);
+	 			}
+			});
+	    },
+	    error: function(error) {
+	        completion(error);
+	    }
+	});
+	
 }
 
 

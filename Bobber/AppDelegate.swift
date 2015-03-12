@@ -17,18 +17,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         Parse.setApplicationId("JhvF9YgLmKVVhXXn0Qd6MiBp60vKLI6PdcG3LXLi", clientKey: "BG5RqjnGu85pFOrpWpYY099Wmn4fPsWZauJUpJnK");
-        
+		
         PFFacebookUtils.initializeFacebook()
-        
-        PushNotificationManager.sharedInstance.registerForPushNotifications()
-        
-        // TODO: Check for push notification launch option
 		
 		AppearanceManager.configureAppearance()
 		
 		// Start location service
 		LocationManager.sharedInstance
-        
+		
+		// Setup slide menu
+		let animator = SlideNavigationContorllerAnimatorScaleAndFade(maximumFadeAlpha: 0.6, fadeColor: UIColor.blackColor(), andMinimumScale: 0.8)
+		SlideNavigationController.sharedInstance().leftMenu = MenuViewController.instantiateFromStoryboard()
+		SlideNavigationController.sharedInstance().menuRevealAnimationDuration = 0.18
+		SlideNavigationController.sharedInstance().menuRevealAnimator = animator
+		
+		PushNotificationManager.sharedInstance.registerForPushNotifications()
+		
+		if let pushNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject: AnyObject] {
+			PushNotificationManager.sharedInstance.handleNotification(pushNotification)
+		}
+		
         return true
     }
 

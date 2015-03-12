@@ -9,3 +9,4 @@
 #import <SVPullToRefresh/SVPullToRefresh.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "SlideNavigationController.h"
+#import "SlideNavigationContorllerAnimatorScaleAndFade.h"

@@ -7,6 +7,12 @@
 //
 
 public class PushNotificationManager {
+	
+	public enum Type: String {
+		case EventComment = "eventComment"
+		case EventInvite = "eventInvite"
+		case FriendRequest = "friendRequest"
+	}
     
     private lazy var installationService = InstallationService()
     
@@ -30,7 +36,6 @@ public class PushNotificationManager {
             let notificationTypes: UIUserNotificationType = .Alert | .Sound | .Badge
             let userSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
-            
             UIApplication.sharedApplication().registerForRemoteNotifications()
         }
         else {
@@ -39,7 +44,11 @@ public class PushNotificationManager {
     }
     
     public func handleNotification(userInfo: [NSObject : AnyObject]) {
-        println(userInfo)
+		
+		if let type = userInfo["type"] as? String {
+			let data = userInfo["data"] as? [NSObject: AnyObject]
+			NSNotificationCenter.defaultCenter().postNotificationName(type, object: self, userInfo: data)
+		}
     }
     
     public func tryRegisterDeviceTokenWithParse() {

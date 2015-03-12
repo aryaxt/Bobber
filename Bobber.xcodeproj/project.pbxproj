@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1511774B1A91A2AF00118FE6 /* location.js in Resources */ = {isa = PBXBuildFile; fileRef = 1511774A1A91A2AF00118FE6 /* location.js */; };
-		15258A691A75B8B900944268 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A681A75B8B900944268 /* PushNotificationManager.swift */; };
-		15258A6A1A75B8B900944268 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A681A75B8B900944268 /* PushNotificationManager.swift */; };
 		15258A6C1A75C02E00944268 /* InstallationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A6B1A75C02E00944268 /* InstallationService.swift */; };
 		15258A6D1A75C02E00944268 /* InstallationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A6B1A75C02E00944268 /* InstallationService.swift */; };
 		15258A6F1A75C9D600944268 /* sms.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A6E1A75C9D600944268 /* sms.js */; };
@@ -22,10 +20,6 @@
 		15258A791A75D0CB00944268 /* phoneVerification.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A771A75D0CB00944268 /* phoneVerification.js */; };
 		15258A7B1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
 		15258A7C1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
-		152FDA171AAB68190032DFAC /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA161AAB68190032DFAC /* RounderHeaderView.swift */; };
-		152FDA181AAB68190032DFAC /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA161AAB68190032DFAC /* RounderHeaderView.swift */; };
-		152FDA1A1AAB6AEE0032DFAC /* RoundedHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 152FDA191AAB6AEE0032DFAC /* RoundedHeaderView.xib */; };
-		152FDA1B1AAB6AEE0032DFAC /* RoundedHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 152FDA191AAB6AEE0032DFAC /* RoundedHeaderView.xib */; };
 		152FDA1D1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */; };
 		152FDA1E1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */; };
 		152FDA201AABD8620032DFAC /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1F1AABD8620032DFAC /* UITableViewExtension.swift */; };
@@ -34,8 +28,6 @@
 		152FDA241AABD9050032DFAC /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA221AABD9050032DFAC /* EventCell.swift */; };
 		152FDA261AAC08E00032DFAC /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA251AAC08E00032DFAC /* LocationCell.swift */; };
 		152FDA271AAC08E00032DFAC /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA251AAC08E00032DFAC /* LocationCell.swift */; };
-		1535F2C11A62EAC5004C5CC2 /* BobberNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */; };
-		1535F2C21A62EAC5004C5CC2 /* BobberNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */; };
 		1535F2C41A62EC30004C5CC2 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C31A62EC30004C5CC2 /* UIViewControllerExtension.swift */; };
 		1535F2C51A62EC30004C5CC2 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C31A62EC30004C5CC2 /* UIViewControllerExtension.swift */; };
 		1535F2C71A62EF1E004C5CC2 /* UIStoryboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2C61A62EF1E004C5CC2 /* UIStoryboardExtension.swift */; };
@@ -66,16 +58,28 @@
 		1535F2F51A632404004C5CC2 /* UserInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2DC1A632404004C5CC2 /* UserInvitation.swift */; };
 		1535F2F61A632404004C5CC2 /* UserNotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2DD1A632404004C5CC2 /* UserNotificationSetting.swift */; };
 		1535F2F71A632404004C5CC2 /* UserNotificationSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2DD1A632404004C5CC2 /* UserNotificationSetting.swift */; };
-		1535F2FC1A632B40004C5CC2 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2FB1A632B40004C5CC2 /* ContactsManager.swift */; };
-		1535F2FD1A632B40004C5CC2 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1535F2FB1A632B40004C5CC2 /* ContactsManager.swift */; };
 		1540E7531A8FFA4A00838860 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1540E7521A8FFA4A00838860 /* ArrayExtension.swift */; };
 		1540E7541A8FFA4A00838860 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1540E7521A8FFA4A00838860 /* ArrayExtension.swift */; };
 		1541F4A71AACD400005D6CA2 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A61AACD400005D6CA2 /* StringExtension.swift */; };
 		1541F4A81AACD400005D6CA2 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A61AACD400005D6CA2 /* StringExtension.swift */; };
 		1541F4AA1AAD3433005D6CA2 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A91AAD3433005D6CA2 /* DateCell.swift */; };
 		1541F4AB1AAD3433005D6CA2 /* DateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4A91AAD3433005D6CA2 /* DateCell.swift */; };
-		1541F4AD1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */; };
-		1541F4AE1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */; };
+		1541F4B11AB13301005D6CA2 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B01AB13301005D6CA2 /* MenuViewController.swift */; };
+		1541F4B21AB13301005D6CA2 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B01AB13301005D6CA2 /* MenuViewController.swift */; };
+		1541F4BC1AB154DA005D6CA2 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B41AB154DA005D6CA2 /* AppearanceManager.swift */; };
+		1541F4BD1AB154DA005D6CA2 /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B41AB154DA005D6CA2 /* AppearanceManager.swift */; };
+		1541F4BE1AB154DA005D6CA2 /* BobberNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B51AB154DA005D6CA2 /* BobberNavigationController.swift */; };
+		1541F4BF1AB154DA005D6CA2 /* BobberNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B51AB154DA005D6CA2 /* BobberNavigationController.swift */; };
+		1541F4C01AB154DA005D6CA2 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B61AB154DA005D6CA2 /* ContactsManager.swift */; };
+		1541F4C11AB154DA005D6CA2 /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B61AB154DA005D6CA2 /* ContactsManager.swift */; };
+		1541F4C21AB154DA005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B71AB154DA005D6CA2 /* LocationManager.swift */; };
+		1541F4C31AB154DA005D6CA2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4B71AB154DA005D6CA2 /* LocationManager.swift */; };
+		1541F4C61AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */; };
+		1541F4C71AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */; };
+		1541F4C81AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */; };
+		1541F4C91AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */; };
+		1541F4CC1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
+		1541F4CD1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
 		159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C03101A905D0300EAA342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03031A905D0300EAA342 /* EventViewController.swift */; };
@@ -113,8 +117,6 @@
 		15F693B01A623AF300184D81 /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F693AE1A623AF300184D81 /* EventService.swift */; };
 		15F693B21A62408200184D81 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F693B11A62408200184D81 /* FriendService.swift */; };
 		15F693B31A62408200184D81 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F693B11A62408200184D81 /* FriendService.swift */; };
-		15F971701A9A68EB00169B7E /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9716F1A9A68EB00169B7E /* AppearanceManager.swift */; };
-		15F971711A9A68EB00169B7E /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F9716F1A9A68EB00169B7E /* AppearanceManager.swift */; };
 		67A61F4E1ED9C7B56064C8ED /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D84301C4271FC4E7C06E7019 /* libPods.a */; };
 		927EA5E01A5CA5F700B9F084 /* NotificationSettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927EA5DF1A5CA5F700B9F084 /* NotificationSettingService.swift */; };
 		927EA5E21A5CA61800B9F084 /* GoogleLocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927EA5E11A5CA61800B9F084 /* GoogleLocationService.swift */; };
@@ -159,20 +161,16 @@
 
 /* Begin PBXFileReference section */
 		1511774A1A91A2AF00118FE6 /* location.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = location.js; sourceTree = "<group>"; };
-		15258A681A75B8B900944268 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = SOURCE_ROOT; };
 		15258A6B1A75C02E00944268 /* InstallationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallationService.swift; sourceTree = "<group>"; };
 		15258A6E1A75C9D600944268 /* sms.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sms.js; sourceTree = "<group>"; };
 		15258A711A75CCD500944268 /* googleLocation.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = googleLocation.js; sourceTree = "<group>"; };
 		15258A741A75CF6600944268 /* userNotificationSettings.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userNotificationSettings.js; sourceTree = "<group>"; };
 		15258A771A75D0CB00944268 /* phoneVerification.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = phoneVerification.js; sourceTree = "<group>"; };
 		15258A7A1A75EE9B00944268 /* event.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = event.js; sourceTree = "<group>"; };
-		152FDA161AAB68190032DFAC /* RounderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RounderHeaderView.swift; sourceTree = SOURCE_ROOT; };
-		152FDA191AAB6AEE0032DFAC /* RoundedHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundedHeaderView.xib; sourceTree = SOURCE_ROOT; };
 		152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		152FDA1F1AABD8620032DFAC /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		152FDA221AABD9050032DFAC /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		152FDA251AAC08E00032DFAC /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
-		1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BobberNavigationController.swift; sourceTree = SOURCE_ROOT; };
 		1535F2C31A62EC30004C5CC2 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		1535F2C61A62EF1E004C5CC2 /* UIStoryboardExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStoryboardExtension.swift; sourceTree = "<group>"; };
 		1535F2D11A632404004C5CC2 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
@@ -188,11 +186,17 @@
 		1535F2DB1A632404004C5CC2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1535F2DC1A632404004C5CC2 /* UserInvitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInvitation.swift; sourceTree = "<group>"; };
 		1535F2DD1A632404004C5CC2 /* UserNotificationSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationSetting.swift; sourceTree = "<group>"; };
-		1535F2FB1A632B40004C5CC2 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = SOURCE_ROOT; };
 		1540E7521A8FFA4A00838860 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		1541F4A61AACD400005D6CA2 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		1541F4A91AAD3433005D6CA2 /* DateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCell.swift; sourceTree = "<group>"; };
-		1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = SOURCE_ROOT; };
+		1541F4B01AB13301005D6CA2 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		1541F4B41AB154DA005D6CA2 /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
+		1541F4B51AB154DA005D6CA2 /* BobberNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BobberNavigationController.swift; sourceTree = "<group>"; };
+		1541F4B61AB154DA005D6CA2 /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		1541F4B71AB154DA005D6CA2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundedHeaderView.xib; sourceTree = "<group>"; };
+		1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RounderHeaderView.swift; sourceTree = "<group>"; };
+		1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
 		159C03011A905D0300EAA342 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
 		159C03031A905D0300EAA342 /* EventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventViewController.swift; sourceTree = "<group>"; };
 		159C03051A905D0300EAA342 /* EventInviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInviteViewController.swift; sourceTree = "<group>"; };
@@ -214,7 +218,6 @@
 		15F693AB1A622C1200184D81 /* Icomoon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icomoon.swift; sourceTree = "<group>"; };
 		15F693AE1A623AF300184D81 /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		15F693B11A62408200184D81 /* FriendService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
-		15F9716F1A9A68EB00169B7E /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = SOURCE_ROOT; };
 		3E78702AC7F25A59CC6CA058 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		927EA5DF1A5CA5F700B9F084 /* NotificationSettingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingService.swift; sourceTree = "<group>"; };
 		927EA5E11A5CA61800B9F084 /* GoogleLocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleLocationService.swift; sourceTree = "<group>"; };
@@ -263,16 +266,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1535F2CF1A632404004C5CC2 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				15258A681A75B8B900944268 /* PushNotificationManager.swift */,
-				15F9716F1A9A68EB00169B7E /* AppearanceManager.swift */,
-				1541F4AC1AAD3EE6005D6CA2 /* LocationManager.swift */,
-			);
-			path = Other;
-			sourceTree = "<group>";
-		};
 		1535F2D01A632404004C5CC2 /* Parse */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,6 +286,44 @@
 				159C03321A91773200EAA342 /* EventDateSuggestion.swift */,
 			);
 			path = Parse;
+			sourceTree = "<group>";
+		};
+		1541F4AF1AB132F1005D6CA2 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				1541F4B01AB13301005D6CA2 /* MenuViewController.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		1541F4B31AB154DA005D6CA2 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				1541F4CA1AB154FD005D6CA2 /* PushNotification */,
+				1541F4B91AB154DA005D6CA2 /* Views */,
+				1541F4B41AB154DA005D6CA2 /* AppearanceManager.swift */,
+				1541F4B51AB154DA005D6CA2 /* BobberNavigationController.swift */,
+				1541F4B61AB154DA005D6CA2 /* ContactsManager.swift */,
+				1541F4B71AB154DA005D6CA2 /* LocationManager.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		1541F4B91AB154DA005D6CA2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */,
+				1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1541F4CA1AB154FD005D6CA2 /* PushNotification */ = {
+			isa = PBXGroup;
+			children = (
+				1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */,
+			);
+			path = PushNotification;
 			sourceTree = "<group>";
 		};
 		159C03001A905D0300EAA342 /* Create Event */ = {
@@ -397,17 +428,6 @@
 			path = public;
 			sourceTree = "<group>";
 		};
-		15F693B41A62E2DC00184D81 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				1535F2C01A62EAC5004C5CC2 /* BobberNavigationController.swift */,
-				1535F2FB1A632B40004C5CC2 /* ContactsManager.swift */,
-				152FDA161AAB68190032DFAC /* RounderHeaderView.swift */,
-				152FDA191AAB6AEE0032DFAC /* RoundedHeaderView.xib */,
-			);
-			path = Other;
-			sourceTree = "<group>";
-		};
 		927EA5E51A5CA65600B9F084 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +453,7 @@
 		927FCE671A5C792C001F25A0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				1541F4AF1AB132F1005D6CA2 /* Menu */,
 				159C03001A905D0300EAA342 /* Create Event */,
 				159C03021A905D0300EAA342 /* Event Detail */,
 				159C03041A905D0300EAA342 /* Event Invitation */,
@@ -485,7 +506,7 @@
 		92C7F1791A5C714100259218 /* Bobber */ = {
 			isa = PBXGroup;
 			children = (
-				15F693B41A62E2DC00184D81 /* Other */,
+				1541F4B31AB154DA005D6CA2 /* Other */,
 				927EA5E51A5CA65600B9F084 /* Extension */,
 				927FCE6E1A5C79A2001F25A0 /* Services */,
 				927FCE671A5C792C001F25A0 /* Controllers */,
@@ -529,7 +550,6 @@
 		92C7F19C1A5C728C00259218 /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				1535F2CF1A632404004C5CC2 /* Other */,
 				1535F2D01A632404004C5CC2 /* Parse */,
 			);
 			path = Business;
@@ -645,7 +665,6 @@
 				15258A781A75D0CB00944268 /* phoneVerification.js in Resources */,
 				15F580941A5F1CC900959F4F /* index.html in Resources */,
 				15F580931A5F1CC900959F4F /* global.json in Resources */,
-				152FDA1A1AAB6AEE0032DFAC /* RoundedHeaderView.xib in Resources */,
 				15A7C0821A75B17F0061B8B6 /* push.js in Resources */,
 				15258A6F1A75C9D600944268 /* sms.js in Resources */,
 				15258A751A75CF6600944268 /* userNotificationSettings.js in Resources */,
@@ -653,6 +672,7 @@
 				15258A7B1A75EE9B00944268 /* event.js in Resources */,
 				92C7F1871A5C714100259218 /* LaunchScreen.xib in Resources */,
 				15258A721A75CCD500944268 /* googleLocation.js in Resources */,
+				1541F4C61AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */,
 				92C7F1841A5C714100259218 /* Images.xcassets in Resources */,
 				1511774B1A91A2AF00118FE6 /* location.js in Resources */,
 				927EA5F91A5CA6C300B9F084 /* icomoon.ttf in Resources */,
@@ -665,9 +685,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				15258A7C1A75EE9B00944268 /* event.js in Resources */,
+				1541F4C71AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */,
 				15258A791A75D0CB00944268 /* phoneVerification.js in Resources */,
 				15258A701A75C9D600944268 /* sms.js in Resources */,
-				152FDA1B1AAB6AEE0032DFAC /* RoundedHeaderView.xib in Resources */,
 				15A7C0831A75B17F0061B8B6 /* push.js in Resources */,
 				15258A731A75CCD500944268 /* googleLocation.js in Resources */,
 				927EA5FA1A5CA6C300B9F084 /* icomoon.ttf in Resources */,
@@ -745,43 +765,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15258A691A75B8B900944268 /* PushNotificationManager.swift in Sources */,
 				159C03301A9176E500EAA342 /* EventLocationSuggestion.swift in Sources */,
+				1541F4BC1AB154DA005D6CA2 /* AppearanceManager.swift in Sources */,
 				159C03101A905D0300EAA342 /* EventViewController.swift in Sources */,
 				152FDA231AABD9050032DFAC /* EventCell.swift in Sources */,
 				1535F2E81A632404004C5CC2 /* GooglePlaceDetail.swift in Sources */,
 				1535F2EC1A632404004C5CC2 /* Location.swift in Sources */,
 				15A7C07F1A758DC70061B8B6 /* UIAlertControllerExtension.swift in Sources */,
 				15F693AC1A622C1200184D81 /* Icomoon.swift in Sources */,
-				15F971701A9A68EB00169B7E /* AppearanceManager.swift in Sources */,
+				1541F4B11AB13301005D6CA2 /* MenuViewController.swift in Sources */,
 				92C7F17F1A5C714100259218 /* ViewController.swift in Sources */,
 				1535F2F61A632404004C5CC2 /* UserNotificationSetting.swift in Sources */,
 				1535F2E21A632404004C5CC2 /* EventInvitation.swift in Sources */,
+				1541F4BE1AB154DA005D6CA2 /* BobberNavigationController.swift in Sources */,
 				159C03121A905D0300EAA342 /* EventInviteViewController.swift in Sources */,
 				927EA5E01A5CA5F700B9F084 /* NotificationSettingService.swift in Sources */,
 				159C03331A91773200EAA342 /* EventDateSuggestion.swift in Sources */,
-				1535F2FC1A632B40004C5CC2 /* ContactsManager.swift in Sources */,
 				92C7F17D1A5C714100259218 /* AppDelegate.swift in Sources */,
-				1541F4AD1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */,
 				927EA5EA1A5CA67B00B9F084 /* UIColorExtension.swift in Sources */,
 				927EA5F61A5CA6A600B9F084 /* NSDictionaryExtension.swift in Sources */,
 				15F693A31A61FA4000184D81 /* PhoneVerificationService.swift in Sources */,
 				152FDA201AABD8620032DFAC /* UITableViewExtension.swift in Sources */,
 				1535F2C41A62EC30004C5CC2 /* UIViewControllerExtension.swift in Sources */,
 				1535F2E01A632404004C5CC2 /* Event.swift in Sources */,
+				1541F4C01AB154DA005D6CA2 /* ContactsManager.swift in Sources */,
 				1541F4AA1AAD3433005D6CA2 /* DateCell.swift in Sources */,
 				927EA5F01A5CA6A600B9F084 /* PFQueryExtension.swift in Sources */,
 				159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */,
 				927FCE6C1A5C795F001F25A0 /* BaseViewController.swift in Sources */,
 				927EA5E81A5CA67B00B9F084 /* NSDateExtension.swift in Sources */,
-				1535F2C11A62EAC5004C5CC2 /* BobberNavigationController.swift in Sources */,
 				152FDA261AAC08E00032DFAC /* LocationCell.swift in Sources */,
 				927EA5F41A5CA6A600B9F084 /* UIFontExtension.swift in Sources */,
 				927EA5F21A5CA6A600B9F084 /* NSMutableAttributedStringExtension.swift in Sources */,
 				1535F2F01A632404004C5CC2 /* PhoneVerification.swift in Sources */,
+				1541F4C21AB154DA005D6CA2 /* LocationManager.swift in Sources */,
 				159C03181A905D0300EAA342 /* LoginViewController.swift in Sources */,
 				1535F2C71A62EF1E004C5CC2 /* UIStoryboardExtension.swift in Sources */,
 				15258A6C1A75C02E00944268 /* InstallationService.swift in Sources */,
+				1541F4CC1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */,
 				1540E7531A8FFA4A00838860 /* ArrayExtension.swift in Sources */,
 				927FCE701A5C79AF001F25A0 /* UserService.swift in Sources */,
 				15F693A91A622BA300184D81 /* UIImageExtension.swift in Sources */,
@@ -792,6 +813,7 @@
 				1541F4A71AACD400005D6CA2 /* StringExtension.swift in Sources */,
 				1535F2F41A632404004C5CC2 /* UserInvitation.swift in Sources */,
 				927EA5E21A5CA61800B9F084 /* GoogleLocationService.swift in Sources */,
+				1541F4C81AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */,
 				159C03141A905D0300EAA342 /* HomeViewController.swift in Sources */,
 				152FDA1D1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */,
 				1535F2EE1A632404004C5CC2 /* NotificationSetting.swift in Sources */,
@@ -799,7 +821,6 @@
 				1535F2E61A632404004C5CC2 /* GoogleAutocompleteLocation.swift in Sources */,
 				1535F2F21A632404004C5CC2 /* User.swift in Sources */,
 				159C031A1A905D0300EAA342 /* PhoneVerificationViewController.swift in Sources */,
-				152FDA171AAB68190032DFAC /* RounderHeaderView.swift in Sources */,
 				1535F2E41A632404004C5CC2 /* FriendRequest.swift in Sources */,
 				1535F2EA1A632404004C5CC2 /* Installation.swift in Sources */,
 			);
@@ -823,13 +844,13 @@
 				159C03151A905D0300EAA342 /* HomeViewController.swift in Sources */,
 				15F693B01A623AF300184D81 /* EventService.swift in Sources */,
 				927EA5F11A5CA6A600B9F084 /* PFQueryExtension.swift in Sources */,
-				15F971711A9A68EB00169B7E /* AppearanceManager.swift in Sources */,
+				1541F4BD1AB154DA005D6CA2 /* AppearanceManager.swift in Sources */,
 				1535F2F11A632404004C5CC2 /* PhoneVerification.swift in Sources */,
+				1541F4BF1AB154DA005D6CA2 /* BobberNavigationController.swift in Sources */,
 				15F693B31A62408200184D81 /* FriendService.swift in Sources */,
 				1535F2F31A632404004C5CC2 /* User.swift in Sources */,
 				1535F2F71A632404004C5CC2 /* UserNotificationSetting.swift in Sources */,
 				159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */,
-				15258A6A1A75B8B900944268 /* PushNotificationManager.swift in Sources */,
 				152FDA241AABD9050032DFAC /* EventCell.swift in Sources */,
 				152FDA1E1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */,
 				1535F2DF1A632404004C5CC2 /* Comment.swift in Sources */,
@@ -839,7 +860,6 @@
 				1535F2F51A632404004C5CC2 /* UserInvitation.swift in Sources */,
 				1535F2E51A632404004C5CC2 /* FriendRequest.swift in Sources */,
 				1535F2EB1A632404004C5CC2 /* Installation.swift in Sources */,
-				1535F2FD1A632B40004C5CC2 /* ContactsManager.swift in Sources */,
 				927EA5E31A5CA61800B9F084 /* GoogleLocationService.swift in Sources */,
 				15F693A41A61FA4000184D81 /* PhoneVerificationService.swift in Sources */,
 				1541F4A81AACD400005D6CA2 /* StringExtension.swift in Sources */,
@@ -853,7 +873,9 @@
 				159C03191A905D0300EAA342 /* LoginViewController.swift in Sources */,
 				15258A6D1A75C02E00944268 /* InstallationService.swift in Sources */,
 				92C7F1931A5C714100259218 /* BobberTests.swift in Sources */,
-				1535F2C21A62EAC5004C5CC2 /* BobberNavigationController.swift in Sources */,
+				1541F4C11AB154DA005D6CA2 /* ContactsManager.swift in Sources */,
+				1541F4C31AB154DA005D6CA2 /* LocationManager.swift in Sources */,
+				1541F4CD1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */,
 				927EA5F31A5CA6A600B9F084 /* NSMutableAttributedStringExtension.swift in Sources */,
 				152FDA211AABD8620032DFAC /* UITableViewExtension.swift in Sources */,
 				1535F2E91A632404004C5CC2 /* GooglePlaceDetail.swift in Sources */,
@@ -861,10 +883,10 @@
 				15F693AD1A622C1200184D81 /* Icomoon.swift in Sources */,
 				159C031E1A905D2000EAA342 /* EventInvitationCell.swift in Sources */,
 				927FCE711A5C79AF001F25A0 /* UserService.swift in Sources */,
-				1541F4AE1AAD3EE6005D6CA2 /* LocationManager.swift in Sources */,
+				1541F4B21AB13301005D6CA2 /* MenuViewController.swift in Sources */,
 				159C03131A905D0300EAA342 /* EventInviteViewController.swift in Sources */,
 				1540E7541A8FFA4A00838860 /* ArrayExtension.swift in Sources */,
-				152FDA181AAB68190032DFAC /* RounderHeaderView.swift in Sources */,
+				1541F4C91AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

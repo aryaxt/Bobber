@@ -1,5 +1,9 @@
 
 
+// Each notification sent to the client has a "type", the client decides what to do based on the type
+var EventCommentNotificationType = "eventComment";
+var EventInviteNotificationType = "eventInvite";
+
 var EventFieldCreator = "creator";
 var EventFieldTitle = "title";
 
@@ -29,7 +33,6 @@ var EventInvitationErrorStatusChangeInvalidUser = "event_invitation_status_chang
 var EventInvitationErrorStatusInvalid = "event_invitation_status_invalid";
 var EventInvitationErrorMissingUserOrPhone = "event_invitation_missing_user_or_phone";
 
-
 exports.respondToInvite = function (user, invitation, completion) {
     // TODO: Send push notification to users
     // TODO: Add notification setting
@@ -56,6 +59,7 @@ exports.respondToInvite = function (user, invitation, completion) {
     		}
         },
         error: function(error) {
+						
             completion(error);
         }
     });
@@ -116,7 +120,12 @@ exports.sendInvite = function(user, invitation, completion) {
 	                invitation.set(EventInvitationFieldTo, user);
 	                invitation.set(EventInvitationFieldToPhoneNumber, null);
 
-	                var pushData = { "alert": inviteMessage };
+	                var pushData = {
+					   "alert" : inviteMessage,
+					   "type" : EventInviteNotificationType,
+					   "data" : invitation
+					   };
+					   
 	                var installationQuery = new Parse.Query("Installation");
 	                installationQuery.equalTo("user", user);
 
@@ -181,7 +190,12 @@ exports.sendCommentNotification = function (user, comment, completion) {
 			}
 
 			var push = require("cloud/push.js");
-			var pushData = { "alert": comment.get(EventCommentFieldText) };
+			var pushData = {
+				"alert" : comment.get(EventCommentFieldText),
+				"type" : EventCommentNotificationType,
+				"data" : comment
+			};
+						 
 			var installationQuery = new Parse.Query("Installation");
 			installationQuery.containedIn("user", users);
 
@@ -198,7 +212,6 @@ exports.sendCommentNotification = function (user, comment, completion) {
 	        completion(error);
 	    }
 	});
-	
 }
 
 

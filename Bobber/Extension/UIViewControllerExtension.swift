@@ -23,5 +23,9 @@ public extension UIViewController {
 			self.navigationItem.rightBarButtonItem = button
 		}
 	}
+	
+	public class func instantiateFromStoryboard() -> Self {
+		return UIStoryboard.instantiateViewController(self)
+	}
     
 }

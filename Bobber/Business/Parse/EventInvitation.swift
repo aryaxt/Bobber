@@ -12,6 +12,8 @@ public class EventInvitation: PFObject, PFSubclassing {
         case Pending = "pending"
         case Accepted = "accepted"
         case Declined = "declined"
+		case AwaitingConfirmation = "awaitingConfirmation"
+		case Confirmed = "confirmed"
     }
     
     // Some kind of phone number in case user is not already a member, in order to later assign events to user when joined

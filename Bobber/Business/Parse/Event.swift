@@ -10,9 +10,8 @@ public class Event: PFObject, PFSubclassing {
     
     public enum State: String {
         case Pending = "pending"
-		case Planning = "planning"
-        case Active = "active"
         case Canceled = "canceled"
+		case Expired = "expired"
     }
     
     @NSManaged var title: String
@@ -24,7 +23,7 @@ public class Event: PFObject, PFSubclassing {
     @NSManaged var allowInvites: NSNumber
     @NSManaged var inviteeCount: NSNumber
     @NSManaged var attendeeCount: NSNumber
-    @NSManaged var minutesToRespond: NSNumber
+    @NSManaged var expirationDate: NSDate
     @NSManaged var creator: User
     @NSManaged var location: Location
     @NSManaged var photo: PFFile?

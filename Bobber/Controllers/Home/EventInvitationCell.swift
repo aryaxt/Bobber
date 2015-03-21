@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-protocol EventInvitationCellDelegate: class {
+public protocol EventInvitationCellDelegate: class {
 	func eventInvitationCellDidSelectDecline(cell: EventInvitationCell)
 	func eventInvitationCellDidSelectAccept(cell: EventInvitationCell)
 }
 
-class EventInvitationCell: UITableViewCell {
+public class EventInvitationCell: UITableViewCell {
 	
 	@IBOutlet weak var eventNameLabel: UILabel!
 	@IBOutlet weak var declineButton: UIButton!
@@ -20,7 +20,7 @@ class EventInvitationCell: UITableViewCell {
 	
 	// MARK: - View Methods -
 	
-	override func awakeFromNib() {
+	public override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		declineButton.setTitleColor(UIColor.redColor(), forState: .Normal)
@@ -29,7 +29,7 @@ class EventInvitationCell: UITableViewCell {
 	
 	// MARK: - Public -
 	
-	func configure(eventInvitation: EventInvitation) {
+	public func configure(eventInvitation: EventInvitation) {
 		
 		let defaultAttributes = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.systemFontOfSize(14)]
 		let fromAttributes = [NSForegroundColorAttributeName: UIColor.blueColor()]

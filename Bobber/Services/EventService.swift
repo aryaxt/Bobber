@@ -17,9 +17,15 @@ public class EventService {
         query.findObjectInBackgroundWithCompletion(Event.self, completion: completion)
     }
     
-    public func createEvent(event: Event, completion: (NSError?)->()) {
+	public func createEvent(title: String, expirationDate: NSDate, completion: (Event?, NSError?)->()) {
+		let event = Event()
+		event.creator = User.currentUser()
+		event.stateEnum = .Pending
+		event.title = title
+		event.expirationDate = expirationDate
+		
         event.saveInBackgroundWithBlock { bool, error in
-            completion(error)
+            completion(event, error)
         }
     }
     
@@ -68,7 +74,7 @@ public class EventService {
     public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
         let query = Event.query()
         query.whereKey("creator", equalTo: User.currentUser())
-        query.whereKey("startTime", greaterThan: NSDate())
+        query.whereKey("startTime", greaterThanOrEqualTo: NSDate())
         query.findObjectsInBackgroundWithCompletion(Event.self, completion: completion)
     }
 	

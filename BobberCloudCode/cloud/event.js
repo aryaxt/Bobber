@@ -3,9 +3,12 @@
 // Each notification sent to the client has a "type", the client decides what to do based on the type
 var EventCommentNotificationType = "eventComment";
 var EventInviteNotificationType = "eventInvite";
+var EventExpiredNotificationType = "eventExpired";
 
 var EventFieldCreator = "creator";
 var EventFieldTitle = "title";
+var EventFieldExpirationDate = "expirationDate";
+var EventFieldState = "state";
 
 var EventInvitationFieldId = "id";
 var EventInvitationFieldEvent = "event";
@@ -20,13 +23,14 @@ var EventCommentFieldText = "text";
 var EventCommentFieldIsSystem = "isSystem";
 
 var EventStatusPending = "pending";
-var EventStatusActive = "active";
-var EventStatusPlanning = "planning";
 var EventStatusCanceled = "canceled";
+var EventStatusExpired = "expired";
 
 var EventInvitationStatusPending = "pending";
 var EventInvitationStatusAccepted = "accepted";
 var EventInvitationStatusCanceled = "canceled";
+var EventInvitationStatusAwaitingConfirmation = "awaitingConfirmation";
+var EventInvitationStatusConfirmed = "confirmed";
 
 var EventInvitationErrorStatusChangeNotallowed = "event_invitation_status_change_not_allowed";
 var EventInvitationErrorStatusChangeInvalidUser = "event_invitation_status_change_invalid_user";
@@ -36,6 +40,7 @@ var EventInvitationErrorMissingUserOrPhone = "event_invitation_missing_user_or_p
 exports.respondToInvite = function (user, invitation, completion) {
     // TODO: Send push notification to users
     // TODO: Add notification setting
+    // TODO: Check to make sure expiration date has not passed
     
     var newStatus = invitation.get(EventInvitationFieldStatus);
     var invitationId = invitation.get(EventInvitationFieldId);
@@ -170,8 +175,7 @@ exports.sendInvite = function(user, invitation, completion) {
 
 
 exports.sendCommentNotification = function (user, comment, completion) {
-	// TODO: Send push to confirmed attendees who are registered for this notification
-
+	
 	var event = comment.get(EventCommentFieldEvent);
 	var invitationQuery = new Parse.Query("EventInvitation");
 	invitationQuery.equalTo(EventInvitationFieldEvent, event);
@@ -198,16 +202,48 @@ exports.sendCommentNotification = function (user, comment, completion) {
 						 
 			var installationQuery = new Parse.Query("Installation");
 			installationQuery.containedIn("user", users);
-
-	  		push.sendPushNotification(installationQuery, pushData, function(error) {
-				if (error == null) {
-					completion(null);
-				}
-				else {
-					completion(error);
-	 			}
-			});
+	  		push.sendPushNotification(installationQuery, pushData, null);
+	  		completion(null);
 	    },
+	    error: function(error) {
+	        completion(error);
+	    }
+	});
+}
+
+exports.handleExpiredEvents = function (completion) {
+	var push = require("cloud/push.js");
+	var now = new Date();
+	var eventQuery = new Parse.Query("Event");
+	eventQuery.equalTo(EventFieldState, EventStatusPending);
+	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
+
+	eventQuery.find({success: function(events) {
+
+			for (var i=0 ; i<events.length ; i++) {
+				var event = events[i];
+				event.set(EventFieldState, EventStatusExpired);
+
+				var pushData = {
+					"alert" : "Your event has expired, time to pick a location and time",
+					"type" : EventExpiredNotificationType,
+					"data" : event
+				};
+
+	    		var installationQuery = new Parse.Query("Installation");
+	    		installationQuery.equalTo("user", event.get(EventFieldCreator));
+	    		push.sendPushNotification(installationQuery, pushData, null);
+			}
+
+			Parse.Object.saveAll(events, {
+				success: function(list) {
+					completion(null);
+				},
+				error: function(error) {
+				    completion(error);
+				}
+			});
+		},
 	    error: function(error) {
 	        completion(error);
 	    }

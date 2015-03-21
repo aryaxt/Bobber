@@ -6,6 +6,6 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-class EventCell: UITableViewCell {
+public class EventCell: UITableViewCell {
 	
 }

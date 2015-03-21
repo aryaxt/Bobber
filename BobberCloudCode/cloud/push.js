@@ -7,10 +7,14 @@ exports.sendPushNotification = function(installationQuery, data, completion) {
         data: data
     }, {
         success: function() {
-        	completion(null);
+			if (completion != null) {
+				completion(null);
+			}
 		},
 		error: function(error) {
-			completion(error);
+			if (completion != null) {
+				completion(error);
+			}
 		}
 	});
 }

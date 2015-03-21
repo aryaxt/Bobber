@@ -8,7 +8,7 @@
 
 public class PushNotificationManager {
 	
-	public enum Type: String {
+	public enum NotificationType: String {
 		case EventComment = "eventComment"
 		case EventInvite = "eventInvite"
 		case FriendRequest = "friendRequest"

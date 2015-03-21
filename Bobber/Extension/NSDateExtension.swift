@@ -23,9 +23,31 @@ extension NSDate {
         var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
         return dateComponents.month;
     }
+	
+	public func year() -> Int {
+		var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
+		return dateComponents.year;
+	}
     
-    public func year() -> Int {
-        var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit, fromDate: self)
-        return dateComponents.year;
+    public func hour() -> Int {
+        var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit | .HourCalendarUnit | .MinuteCalendarUnit, fromDate: self)
+        return dateComponents.hour;
     }
+	
+	public func minute() -> Int {
+		var dateComponents = NSCalendar.currentCalendar().components(.DayCalendarUnit | .MonthCalendarUnit | .YearCalendarUnit | .HourCalendarUnit | .MinuteCalendarUnit, fromDate: self)
+		return dateComponents.minute;
+	}
+	
+	public func eventFormattedDate() -> String {
+		let dateFormatter = NSDateFormatter()
+		dateFormatter.dateFormat = "HH: mm"
+		
+		if isSameDayAs(NSDate()) {
+			return "Today \(dateFormatter.stringFromDate(self))"
+		}
+		else {
+			return "Tomorrow \(dateFormatter.stringFromDate(self))"
+		}
+	}
 }

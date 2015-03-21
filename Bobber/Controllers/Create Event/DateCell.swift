@@ -16,7 +16,7 @@ class DateCell: UITableViewCell {
 		titleLabel.attributedText = NSMutableAttributedString(
 			icon: .Calendar,
 			iconColor: UIColor.lightGrayColor(),
-			text: date.description,
+			text: date.eventFormattedDate(),
 			textColor: UIColor.darkGrayColor(),
 			font: UIFont.boldSystemFontOfSize(14))
 	}

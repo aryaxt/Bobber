@@ -52,6 +52,10 @@ extension UIFont {
     public class func extraLargeBoldFont() -> UIFont {
         return UIFont(name: BoldFont, size: 18)!
     }
+	
+	public class func iconFont(size: CGFloat) -> UIFont {
+		return UIFont(name: "icomoon", size: size)!
+	}
     
     private class func fontOfSize(size: CGFloat) -> UIFont {
         return UIFont(name: StandardFont, size: size)!

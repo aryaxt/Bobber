@@ -46,6 +46,14 @@ class EventViewController: BaseViewController, UITableViewDelegate, UITableViewD
 				UIAlertController.show(self, title: "Error", message: "Error posting comment")
 			}
 		}
+		
+		NSNotificationCenter.defaultCenter().addObserverForName(
+			PushNotificationManager.NotificationType.EventComment.rawValue,
+			object: nil,
+			queue: nil) { note in
+				
+			// reload if the new comment is not visible, then display a view after the view clicked take user to top of the page
+		}
     }
 	
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

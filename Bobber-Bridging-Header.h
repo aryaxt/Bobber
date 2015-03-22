@@ -10,3 +10,4 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "SlideNavigationController.h"
 #import "SlideNavigationContorllerAnimatorScaleAndFade.h"
+#import "UIImageView+AFNetworking.h"

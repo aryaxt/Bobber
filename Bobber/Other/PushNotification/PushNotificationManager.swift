@@ -12,6 +12,7 @@ public class PushNotificationManager {
 		case EventComment = "eventComment"
 		case EventInvite = "eventInvite"
 		case FriendRequest = "friendRequest"
+		case EventExpired = "eventExpired"
 	}
     
     private lazy var installationService = InstallationService()

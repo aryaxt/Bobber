@@ -12,7 +12,6 @@ public class EventLocationSuggestion: PFObject, PFSubclassing {
 	@NSManaged var event: Event
 	@NSManaged var location: Location
 	
-	
 	public class func parseClassName() -> String {
 		return "EventLocationSuggestion"
 	}

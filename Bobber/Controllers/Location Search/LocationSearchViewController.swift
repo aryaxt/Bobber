@@ -7,7 +7,7 @@
 //
 
 protocol LocationSearchViewControllerDelegate: class {
-	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation location: GoogleAutocompleteLocation)
+	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation autocompleteLocation: GoogleAutocompleteLocation)
 	func locationSearchViewControllerDidCancel(controller: LocationSearchViewController)
 }
 
@@ -24,21 +24,20 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 		
 		searchBar.removeFromSuperview()
 		navigationItem.titleView = searchBar
-		
 		searchBar.becomeFirstResponder()
 	}
 	
 	// MARK: - UISearchBarDelegate -
 
 	func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-		searchService.searchLocations(searchText) { autoCompleteLocations, error in
+		searchService.searchLocations(searchText) { [weak self] autoCompleteLocations, error in
 			if error != nil {
-				UIAlertController.show(self, title: "Error", message: "Error fetching locations")
+				UIAlertController.show(self!, title: "Error", message: "Error fetching locations")
 			}
 			else {
-				self.locations.removeAll(keepCapacity: false)
-				autoCompleteLocations?.each { self.locations.append($0) }
-				self.tableView.reloadData()
+				self!.locations.removeAll(keepCapacity: false)
+				autoCompleteLocations?.each { self!.locations.append($0) }
+				self!.tableView.reloadData()
 			}
 		}
 	}
@@ -64,7 +63,7 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		tableView.deselectRowAtIndexPath(indexPath, animated: true)
 		
-		self.delegate.locationSearchViewController(self, didSelectLocation: locations[indexPath.row])
+		delegate.locationSearchViewController(self, didSelectLocation: locations[indexPath.row])
 	}
 	
 }

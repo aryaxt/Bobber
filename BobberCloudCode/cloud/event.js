@@ -22,14 +22,13 @@ var EventCommentFieldEvent = "event";
 var EventCommentFieldText = "text";
 var EventCommentFieldIsSystem = "isSystem";
 
-var EventStatusPending = "pending";
+var EventStatusPlanning = "planning";
 var EventStatusCanceled = "canceled";
 var EventStatusExpired = "expired";
 
 var EventInvitationStatusPending = "pending";
 var EventInvitationStatusAccepted = "accepted";
 var EventInvitationStatusCanceled = "canceled";
-var EventInvitationStatusAwaitingConfirmation = "awaitingConfirmation";
 var EventInvitationStatusConfirmed = "confirmed";
 
 var EventInvitationErrorStatusChangeNotallowed = "event_invitation_status_change_not_allowed";
@@ -50,7 +49,7 @@ exports.respondToInvite = function (user, invitation, completion) {
 						
         success: function(oldInvitation) {
 						
-   			if (oldInvitation.get(EventInvitationFieldStatus) != EventStatusPending) {
+   			if (oldInvitation.get(EventInvitationFieldStatus) != EventStatusPlanning) {
         		completion(EventInvitationErrorStatusChangeNotallowed);
     		}
     		else if (invitation.get(EventInvitationFieldTo).get(EventInvitationFieldId) != user.get(EventInvitationFieldId)) {
@@ -215,7 +214,7 @@ exports.handleExpiredEvents = function (completion) {
 	var push = require("cloud/push.js");
 	var now = new Date();
 	var eventQuery = new Parse.Query("Event");
-	eventQuery.equalTo(EventFieldState, EventStatusPending);
+	eventQuery.equalTo(EventFieldState, EventStatusPlanning);
 	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
 
 	eventQuery.find({success: function(events) {

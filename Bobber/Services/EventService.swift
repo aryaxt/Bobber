@@ -20,7 +20,7 @@ public class EventService {
 	public func createEvent(title: String, expirationDate: NSDate, completion: (Event?, NSError?)->()) {
 		let event = Event()
 		event.creator = User.currentUser()
-		event.stateEnum = .Pending
+		event.stateEnum = .Planning
 		event.title = title
 		event.expirationDate = expirationDate
 		
@@ -55,10 +55,15 @@ public class EventService {
 		page-- // UI thinks of first page as 1, data thinks of first page as 0
         let query = EventInvitation.query()
         query.whereKey("event", equalTo: event)
-        query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
         query.includeKey("to")
 		query.limit = perPage
 		query.skip = page * perPage
+		
+		if event.stateEnum == .Planning {
+			query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
+		}
+		
+		// TODO: Handler final confirmes, if event is sent for final confirmation, diplay confirmed instead of accepted
 		
         query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
             if error == nil {
@@ -74,11 +79,10 @@ public class EventService {
     public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
         let query = Event.query()
         query.whereKey("creator", equalTo: User.currentUser())
-        query.whereKey("startTime", greaterThanOrEqualTo: NSDate())
+        query.whereKey("createdAt", greaterThanOrEqualTo: NSDate().dateByAddingTimeInterval(60 * 60 * 24 * 2 * -1))
         query.findObjectsInBackgroundWithCompletion(Event.self, completion: completion)
     }
-	
-	
+
     public func fetchMyInvitations(completion: ([EventInvitation]?, NSError?)->()) {
         // TODO: Accepted and pending, use NSPredicate
 		// Think about this, what about expiration time?
@@ -129,6 +133,12 @@ public class EventService {
 		suggestion.saveInBackgroundWithBlock { success, error in
 			completion(error)
 		}
+	}
+	
+	public func fetchSuggestedLocations(event: Event, completion: ([EventLocationSuggestion]?, NSError?)->()) {
+		let query = EventLocationSuggestion.query()
+		query.whereKey("event", equalTo: event)
+		query.findObjectsInBackgroundWithCompletion(EventLocationSuggestion.self, completion: completion)
 	}
 	
 	public func suggestDate(event: Event, date: NSDate, completion: (NSError?)->()) {

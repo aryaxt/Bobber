@@ -6,44 +6,72 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-class EventViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+public class EventViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, LocationSearchViewControllerDelegate {
 	
-	@IBOutlet weak var tableView: UITableView!
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var commentTextView: UITextView!
-	@IBOutlet weak var sendCommentButton: UIButton!
-    var event: Event!
-    var comments = [Comment]()
-    lazy var eventService = EventService()
+	@IBOutlet private weak var tableView: UITableView!
+	@IBOutlet private weak var titleLabel: UILabel!
+	@IBOutlet private weak var locationLabel: UILabel!
+	@IBOutlet private weak var dateLabel: UILabel!
+	@IBOutlet private weak var attendeesLabel: UILabel!
+	@IBOutlet private weak var attendeesScrollView: UIScrollView!
+	@IBOutlet private weak var commentTextView: UITextView!
+	@IBOutlet private weak var sendCommentButton: UIButton!
+	@IBOutlet private weak var suggestLocationButton: UIButton!
+    public var event: Event!
+    private var comments = [Comment]()
+	private var suggestedLocations = [EventLocationSuggestion]()
+    private lazy var eventService = EventService()
     
     // MARK: - UIViewController -
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 		
-		addBarButtonWithTitle("Create", position: .Right, selector: "inviteSelected:")
+		addBarButtonWithTitle("Invite", position: .Right, selector: "inviteSelected:")
 		
         populateEvent()
         
-        eventService.fetchDetail(event.objectId) { event, error in
+        eventService.fetchDetail(event.objectId) { [weak self] event, error in
             if let anError = error {
                 // Error
             }
             else {
-                self.event = event!
-                self.populateEvent()
+                self?.event = event!
+                self?.populateEvent()
             }
         }
 		
-		// TODO: Don't preload, wait till user scrolls down
-		// TODO: Add pull to refresh, load more, and comment header that contains number of comments
-		eventService.fetchComments(event, page: 1, perPage: 25) { comments, error in
+		eventService.fetchComments(event, page: 1, perPage: 25) { [weak self] comments, error in
 			if error == nil {
-				comments?.each { self.comments.append($0) }
-				self.tableView.reloadData()
+				self!.comments.append(comments!)
+				self!.tableView.reloadData()
 			}
 			else {
-				UIAlertController.show(self, title: "Error", message: "Error posting comment")
+				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
+			}
+		}
+		
+		eventService.fetchAttendees(event, page: 1, perPage: 100) { [weak self] users, error in
+			if error == nil {
+				if users!.count == 0 {
+					self?.attendeesLabel.text = "No attendees yet"
+				}
+				else {
+					self?.attendeesLabel.text = ",".join(users!.map { $0.firstName })
+				}
+			}
+			else {
+				
+			}
+		}
+		
+		// No need to fetch these if event is already planned to event has a location
+		eventService.fetchSuggestedLocations(event) { [weak self] suggestedLocations, error in
+			if error == nil {
+				self!.suggestedLocations.append(suggestedLocations!)
+			}
+			else {
+				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
 			}
 		}
 		
@@ -56,10 +84,16 @@ class EventViewController: BaseViewController, UITableViewDelegate, UITableViewD
 		}
     }
 	
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+	override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "EventInviteViewController" {
-			let destination = segue.destinationViewController as EventInviteViewController
-			destination.event = event
+			let destination = segue.destinationViewController as UINavigationController
+			let inviteViewController = destination.topViewController as EventInviteViewController
+			inviteViewController.event = event
+		}
+		else if segue.identifier == "LocationSearchViewController" {
+			let destination = segue.destinationViewController as UINavigationController
+			let inviteViewController = destination.topViewController as LocationSearchViewController
+			inviteViewController.delegate = self
 		}
 	}
 	
@@ -67,45 +101,80 @@ class EventViewController: BaseViewController, UITableViewDelegate, UITableViewD
 		
     private func populateEvent() {
         titleLabel.text = event.title
+		locationLabel.text = event.location == nil ? "Location In Planning" : event.location!.formattedAddress
+		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime!.eventFormattedDate()
+		suggestLocationButton.hidden = event.stateEnum == .Planning ? false : true
     }
 	
 	// MARK: - Actions -
+	
+	@IBAction func suggestLocationSelected(sender: AnyObject) {
+		
+	}
 	
 	@IBAction func inviteSelected(sender: AnyObject) {
 		performSegueWithIdentifier("EventInviteViewController", sender: nil)
 	}
 	
 	@IBAction func sendCommentSelected(sender: AnyObject) {
-		eventService.addComment(event, text: commentTextView.text) { comment, error in
+		commentTextView.resignFirstResponder()
+		
+		eventService.addComment(event, text: commentTextView.text) { [weak self] comment, error in
 			if error == nil {
-				self.commentTextView.text = nil
+				self?.commentTextView.text = nil
 				
-				// TODO: Don't reload insert cell and animate
-				self.comments.insert(comment!, atIndex: 0)
-				self.tableView.reloadData()
+				self?.tableView.beginUpdates()
+				self?.comments.insert(comment!, atIndex: 0)
+				self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+				self?.tableView.endUpdates()
 			}
 			else {
-				UIAlertController.show(self, title: "Error", message: "Error posting comment")
+				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
 			}
 		}
 	}
 	
 	// MARK: - UITableView Delegate & Datasource -
 	
-	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+	public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
 	}
 	
-	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return comments.count
 	}
 	
-	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell") as UITableViewCell
 		let comment = comments[indexPath.row]
 		cell.textLabel?.text = comment.from.firstName
 		cell.detailTextLabel?.text = comment.text
+		cell.imageView?.setImageWithURL(NSURL(string: comment.from.photoUrl!), placeholderImage: UIImage(named: "placeholder"))
 		return cell
+	}
+	
+	public func scrollViewDidScroll(scrollView: UIScrollView) {
+		commentTextView.resignFirstResponder()
+	}
+	
+	// MARK: - LocationSearchViewControllerDelegate -
+	
+	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation autocompleteLocation: GoogleAutocompleteLocation) {
+		dismissViewControllerAnimated(true, completion: nil)
+		
+		eventService.suggestLocation(event, location: Location(autocompleteLocation)) { [weak self] error in
+			
+			if error == nil {
+				
+			}
+			else {
+				
+			}
+		}
+	}
+	
+	func locationSearchViewControllerDidCancel(controller: LocationSearchViewController) {
+		dismissViewControllerAnimated(true, completion: nil)
 	}
 	
 }

@@ -12,7 +12,6 @@ public class EventInvitation: PFObject, PFSubclassing {
         case Pending = "pending"
         case Accepted = "accepted"
         case Declined = "declined"
-		case AwaitingConfirmation = "awaitingConfirmation"
 		case Confirmed = "confirmed"
     }
     

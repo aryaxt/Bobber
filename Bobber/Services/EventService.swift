@@ -124,20 +124,21 @@ public class EventService {
         }
     }
 	
-	public func suggestLocation(event: Event, location: Location, completion: (NSError?)->()) {
+	public func suggestLocation(event: Event, location: Location, completion: (EventLocationSuggestion?, NSError?)->()) {
 		let suggestion = EventLocationSuggestion()
 		suggestion.suggester = User.currentUser()
 		suggestion.event = event
 		suggestion.location = location
 		
 		suggestion.saveInBackgroundWithBlock { success, error in
-			completion(error)
+			completion(suggestion, error)
 		}
 	}
 	
 	public func fetchSuggestedLocations(event: Event, completion: ([EventLocationSuggestion]?, NSError?)->()) {
 		let query = EventLocationSuggestion.query()
 		query.whereKey("event", equalTo: event)
+		query.includeKey("location")
 		query.findObjectsInBackgroundWithCompletion(EventLocationSuggestion.self, completion: completion)
 	}
 	

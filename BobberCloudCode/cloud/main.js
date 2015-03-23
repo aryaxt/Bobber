@@ -34,7 +34,13 @@ Parse.Cloud.afterSave("Comment", function(request, response) {
 Parse.Cloud.beforeSave("Event", function(request, response) {
     // TODO: Handle state change and send push notification (canceled, location change, etc)
     // TODO: Make sure only creator can modify event
-	// TODO: If time and location are missing set state to 'planning'
+					   
+	if (request.object.isNew()) {
+					   
+	}
+	else {
+					   
+	}
                        
     response.success();
 });
@@ -43,6 +49,7 @@ Parse.Cloud.beforeSave("Event", function(request, response) {
 Parse.Cloud.beforeSave("EventDateSuggestion", function(request, response) {
 	// TODO: Check for duplicate
 	// TODO: Make sure it allows suggestion
+	// TODO: Anly allow when event has state of 'planning'
 	response.success();
 });
 
@@ -50,6 +57,7 @@ Parse.Cloud.beforeSave("EventDateSuggestion", function(request, response) {
 Parse.Cloud.beforeSave("EventLocationSuggestion", function(request, response) {
 	// TODO: Check for duplicate
 	// TODO: Make sure it allows suggestion
+	// TODO: Anly allow when event has state of 'planning'
 	response.success();
 });
 

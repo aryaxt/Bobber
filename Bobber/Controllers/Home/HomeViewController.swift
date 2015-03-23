@@ -19,11 +19,6 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
 		
 		addBarButtonWithTitle("Create", position: .Right, selector: "createEventSelected:")
-		
-		tableView.addPullToRefreshWithActionHandler() { [weak self] in
-			self?.fetchAndPopulateData()
-			return
-		}
 
 		fetchAndPopulateData()
 	}
@@ -32,6 +27,15 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		super.viewWillAppear(animated)
 		
 		tableView.deselectRowAnimated(true)
+	}
+	
+	public override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		tableView.addPullToRefreshWithActionHandler() { [weak self] in
+			self?.fetchAndPopulateData()
+			return
+		}
 	}
 	
     override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

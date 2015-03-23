@@ -69,6 +69,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 		eventService.fetchSuggestedLocations(event) { [weak self] suggestedLocations, error in
 			if error == nil {
 				self!.suggestedLocations.append(suggestedLocations!)
+				self!.tableView.reloadData()
 			}
 			else {
 				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
@@ -125,7 +126,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 				
 				self?.tableView.beginUpdates()
 				self?.comments.insert(comment!, atIndex: 0)
-				self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+				self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
 				self?.tableView.endUpdates()
 			}
 			else {
@@ -137,20 +138,42 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	// MARK: - UITableView Delegate & Datasource -
 	
 	public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 1
+		return 2
 	}
 	
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return comments.count
+		if section == 0 {
+			return suggestedLocations.count;
+		}
+		else {
+			return comments.count
+		}
 	}
 	
 	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell") as UITableViewCell
-		let comment = comments[indexPath.row]
-		cell.textLabel?.text = comment.from.firstName
-		cell.detailTextLabel?.text = comment.text
-		cell.imageView?.setImageWithURL(NSURL(string: comment.from.photoUrl!), placeholderImage: UIImage(named: "placeholder"))
-		return cell
+		if indexPath.section == 0 {
+			let cell = tableView.dequeueReusableCellWithIdentifier("SuggestedLocationCell") as UITableViewCell
+			let suggestedLocation = suggestedLocations[indexPath.row]
+			cell.textLabel?.text = suggestedLocation.location.formattedAddress
+			return cell
+		}
+		else {
+			let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell") as UITableViewCell
+			let comment = comments[indexPath.row]
+			cell.textLabel?.text = comment.from.firstName
+			cell.detailTextLabel?.text = comment.text
+			cell.imageView?.setImageWithURL(NSURL(string: comment.from.photoUrl!), placeholderImage: UIImage(named: "placeholder"))
+			return cell
+		}
+	}
+	
+	public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		if section == 0 {
+			return "Suggested Locations"
+		}
+		else {
+			return "Comments"
+		}
 	}
 	
 	public func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -162,10 +185,13 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	func locationSearchViewController(controller: LocationSearchViewController, didSelectLocation autocompleteLocation: GoogleAutocompleteLocation) {
 		dismissViewControllerAnimated(true, completion: nil)
 		
-		eventService.suggestLocation(event, location: Location(autocompleteLocation)) { [weak self] error in
+		eventService.suggestLocation(event, location: Location(autocompleteLocation)) { [weak self] suggestion, error in
 			
 			if error == nil {
-				
+				self!.tableView.beginUpdates()
+				self!.suggestedLocations.insert(suggestion!, atIndex: 0)
+				self!.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+				self!.tableView.endUpdates()
 			}
 			else {
 				

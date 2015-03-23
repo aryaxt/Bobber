@@ -186,6 +186,7 @@ exports.sendCommentNotification = function (user, comment, completion) {
 	invitationQuery.find({success: function(invitations) {
 	            
 	    	var users = [];
+			users.push(user);
 					
 			for (var i=0 ; i<invitations.length ; i++) {
 				var invitation = invitations[i];

@@ -80,14 +80,6 @@
 		1541F4C91AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */; };
 		1541F4CC1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
 		1541F4CD1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
-		15426A391AB4BFEC00F4CD67 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A381AB4BFEC00F4CD67 /* InterfaceController.swift */; };
-		15426A3B1AB4BFEC00F4CD67 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A3A1AB4BFEC00F4CD67 /* NotificationController.swift */; };
-		15426A3D1AB4BFEC00F4CD67 /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A3C1AB4BFEC00F4CD67 /* GlanceController.swift */; };
-		15426A3F1AB4BFEC00F4CD67 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15426A3E1AB4BFEC00F4CD67 /* Images.xcassets */; };
-		15426A431AB4BFEC00F4CD67 /* Bobber WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 15426A421AB4BFEC00F4CD67 /* Bobber WatchKit App.app */; };
-		15426A4B1AB4BFEC00F4CD67 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15426A491AB4BFEC00F4CD67 /* Interface.storyboard */; };
-		15426A4D1AB4BFEC00F4CD67 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15426A4C1AB4BFEC00F4CD67 /* Images.xcassets */; };
-		15426A501AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 15426A331AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		15426A5B1ABDE40700F4CD67 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A5A1ABDE40700F4CD67 /* UIAlertViewExtension.swift */; };
 		159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
@@ -115,6 +107,7 @@
 		15A7C0831A75B17F0061B8B6 /* push.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A7C0811A75B17F0061B8B6 /* push.js */; };
 		15DAF9A41ABE645D006951B7 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAF9A31ABE645D006951B7 /* UserAvatarView.swift */; };
 		15DAF9A61ABE67FD006951B7 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15DAF9A51ABE67FD006951B7 /* UserAvatarView.xib */; };
+		15DAF9A91ABF2DAF006951B7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */; };
 		15F580921A5F1CC900959F4F /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15F5808D1A5F1CC900959F4F /* main.js */; };
 		15F580931A5F1CC900959F4F /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F5808F1A5F1CC900959F4F /* global.json */; };
 		15F580941A5F1CC900959F4F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 15F580911A5F1CC900959F4F /* index.html */; };
@@ -160,20 +153,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		15426A441AB4BFEC00F4CD67 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 92C7F16F1A5C714100259218 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 15426A411AB4BFEC00F4CD67;
-			remoteInfo = "Bobber WatchKit App";
-		};
-		15426A4E1AB4BFEC00F4CD67 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 92C7F16F1A5C714100259218 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 15426A321AB4BFEC00F4CD67;
-			remoteInfo = "Bobber WatchKit Extension";
-		};
 		92C7F18D1A5C714100259218 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 92C7F16F1A5C714100259218 /* Project object */;
@@ -190,7 +169,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				15426A501AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,14 +213,12 @@
 		1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundedHeaderView.xib; sourceTree = "<group>"; };
 		1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RounderHeaderView.swift; sourceTree = "<group>"; };
 		1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
-		15426A331AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Bobber WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15426A361AB4BFEC00F4CD67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15426A371AB4BFEC00F4CD67 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		15426A381AB4BFEC00F4CD67 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		15426A3A1AB4BFEC00F4CD67 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
 		15426A3C1AB4BFEC00F4CD67 /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
 		15426A3E1AB4BFEC00F4CD67 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		15426A421AB4BFEC00F4CD67 /* Bobber WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bobber WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15426A481AB4BFEC00F4CD67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15426A4A1AB4BFEC00F4CD67 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		15426A4C1AB4BFEC00F4CD67 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -261,6 +237,7 @@
 		15A7C0811A75B17F0061B8B6 /* push.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = push.js; sourceTree = "<group>"; };
 		15DAF9A31ABE645D006951B7 /* UserAvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
 		15DAF9A51ABE67FD006951B7 /* UserAvatarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
+		15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		15F5808D1A5F1CC900959F4F /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		15F5808F1A5F1CC900959F4F /* global.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global.json; sourceTree = "<group>"; };
 		15F580911A5F1CC900959F4F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -298,13 +275,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		15426A301AB4BFEC00F4CD67 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		92C7F1741A5C714100259218 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -485,6 +455,14 @@
 			path = "Phone Verification";
 			sourceTree = "<group>";
 		};
+		15DAF9A71ABF2D98006951B7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		15F5808B1A5F1CC900959F4F /* BobberCloudCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +531,7 @@
 		927FCE671A5C792C001F25A0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				15DAF9A71ABF2D98006951B7 /* Profile */,
 				1541F4AF1AB132F1005D6CA2 /* Menu */,
 				159C03001A905D0300EAA342 /* Create Event */,
 				159C03021A905D0300EAA342 /* Event Detail */,
@@ -601,8 +580,6 @@
 			children = (
 				92C7F1771A5C714100259218 /* Bobber.app */,
 				92C7F18C1A5C714100259218 /* BobberTests.xctest */,
-				15426A331AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex */,
-				15426A421AB4BFEC00F4CD67 /* Bobber WatchKit App.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -678,39 +655,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		15426A321AB4BFEC00F4CD67 /* Bobber WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 15426A561AB4BFEC00F4CD67 /* Build configuration list for PBXNativeTarget "Bobber WatchKit Extension" */;
-			buildPhases = (
-				15426A2F1AB4BFEC00F4CD67 /* Sources */,
-				15426A301AB4BFEC00F4CD67 /* Frameworks */,
-				15426A311AB4BFEC00F4CD67 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				15426A451AB4BFEC00F4CD67 /* PBXTargetDependency */,
-			);
-			name = "Bobber WatchKit Extension";
-			productName = "Bobber WatchKit Extension";
-			productReference = 15426A331AB4BFEC00F4CD67 /* Bobber WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
-		};
-		15426A411AB4BFEC00F4CD67 /* Bobber WatchKit App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 15426A551AB4BFEC00F4CD67 /* Build configuration list for PBXNativeTarget "Bobber WatchKit App" */;
-			buildPhases = (
-				15426A401AB4BFEC00F4CD67 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Bobber WatchKit App";
-			productName = "Bobber WatchKit App";
-			productReference = 15426A421AB4BFEC00F4CD67 /* Bobber WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
-		};
 		92C7F1761A5C714100259218 /* Bobber */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92C7F1961A5C714100259218 /* Build configuration list for PBXNativeTarget "Bobber" */;
@@ -725,7 +669,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				15426A4F1AB4BFEC00F4CD67 /* PBXTargetDependency */,
 			);
 			name = Bobber;
 			productName = Bobber;
@@ -761,13 +704,6 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = aryaxt;
 				TargetAttributes = {
-					15426A321AB4BFEC00F4CD67 = {
-						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 24FGDP9KJW;
-					};
-					15426A411AB4BFEC00F4CD67 = {
-						CreatedOnToolsVersion = 6.2;
-					};
 					92C7F1761A5C714100259218 = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 24FGDP9KJW;
@@ -798,31 +734,11 @@
 			targets = (
 				92C7F1761A5C714100259218 /* Bobber */,
 				92C7F18B1A5C714100259218 /* BobberTests */,
-				15426A321AB4BFEC00F4CD67 /* Bobber WatchKit Extension */,
-				15426A411AB4BFEC00F4CD67 /* Bobber WatchKit App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		15426A311AB4BFEC00F4CD67 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15426A431AB4BFEC00F4CD67 /* Bobber WatchKit App.app in Resources */,
-				15426A3F1AB4BFEC00F4CD67 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		15426A401AB4BFEC00F4CD67 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15426A4B1AB4BFEC00F4CD67 /* Interface.storyboard in Resources */,
-				15426A4D1AB4BFEC00F4CD67 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		92C7F1751A5C714100259218 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -927,16 +843,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		15426A2F1AB4BFEC00F4CD67 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				15426A3B1AB4BFEC00F4CD67 /* NotificationController.swift in Sources */,
-				15426A391AB4BFEC00F4CD67 /* InterfaceController.swift in Sources */,
-				15426A3D1AB4BFEC00F4CD67 /* GlanceController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		92C7F1731A5C714100259218 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -983,6 +889,7 @@
 				15F693A91A622BA300184D81 /* UIImageExtension.swift in Sources */,
 				15F693B21A62408200184D81 /* FriendService.swift in Sources */,
 				159C031D1A905D2000EAA342 /* EventInvitationCell.swift in Sources */,
+				15DAF9A91ABF2DAF006951B7 /* ProfileViewController.swift in Sources */,
 				159C03161A905D0300EAA342 /* LocationSearchViewController.swift in Sources */,
 				1535F2DE1A632404004C5CC2 /* Comment.swift in Sources */,
 				1541F4A71AACD400005D6CA2 /* StringExtension.swift in Sources */,
@@ -1070,16 +977,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		15426A451AB4BFEC00F4CD67 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 15426A411AB4BFEC00F4CD67 /* Bobber WatchKit App */;
-			targetProxy = 15426A441AB4BFEC00F4CD67 /* PBXContainerItemProxy */;
-		};
-		15426A4F1AB4BFEC00F4CD67 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 15426A321AB4BFEC00F4CD67 /* Bobber WatchKit Extension */;
-			targetProxy = 15426A4E1AB4BFEC00F4CD67 /* PBXContainerItemProxy */;
-		};
 		92C7F18E1A5C714100259218 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 92C7F1761A5C714100259218 /* Bobber */;
@@ -1115,66 +1012,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		15426A511AB4BFEC00F4CD67 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "Bobber WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		15426A521AB4BFEC00F4CD67 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = "Bobber WatchKit Extension/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		15426A531AB4BFEC00F4CD67 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				IBSC_MODULE = Bobber_WatchKit_Extension;
-				INFOPLIST_FILE = "Bobber WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
-			};
-			name = Debug;
-		};
-		15426A541AB4BFEC00F4CD67 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COPY_PHASE_STRIP = NO;
-				IBSC_MODULE = Bobber_WatchKit_Extension;
-				INFOPLIST_FILE = "Bobber WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
-			};
-			name = Release;
-		};
 		92C7F1941A5C714100259218 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1236,7 +1073,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aryan Ghassemi (T5E8BV8RVA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Aryan Ghassemi (24FGDP9KJW)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1261,12 +1099,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Bobber/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "175c8840-3467-46fa-b50c-728b342a4e56";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bobber-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1276,11 +1118,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Aryan Ghassemi (24FGDP9KJW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Aryan Ghassemi (24FGDP9KJW)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = Bobber/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f31156de-2d5b-4e5f-9158-532c92d83078";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bobber-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1328,24 +1174,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		15426A551AB4BFEC00F4CD67 /* Build configuration list for PBXNativeTarget "Bobber WatchKit App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				15426A531AB4BFEC00F4CD67 /* Debug */,
-				15426A541AB4BFEC00F4CD67 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		15426A561AB4BFEC00F4CD67 /* Build configuration list for PBXNativeTarget "Bobber WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				15426A511AB4BFEC00F4CD67 /* Debug */,
-				15426A521AB4BFEC00F4CD67 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		92C7F1721A5C714100259218 /* Build configuration list for PBXProject "Bobber" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -35,10 +35,8 @@ Parse.Cloud.beforeSave("Event", function(request, response) {
     // TODO: Handle state change and send push notification (canceled, location change, etc)
     // TODO: Make sure only creator can modify event
 					   
-	if (request.object.isNew()) {
-					   
-	}
-	else {
+	// state has changed
+	if (request.object.dirtyKeys().indexOf("state") != -1 && request.object.get("state")) {
 					   
 	}
                        

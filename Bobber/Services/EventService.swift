@@ -37,8 +37,8 @@ public class EventService {
         invite(event, to: nil, toPhoneNumber: toPhoneNumber, completion: completion)
     }
 	
-	public func respondToInvitation(eventInvitation: EventInvitation, status: EventInvitation.Status, completion: (NSError?)->()) {
-		eventInvitation.statusEnum = status
+	public func respondToInvitation(eventInvitation: EventInvitation, status: EventInvitation.State, completion: (NSError?)->()) {
+		eventInvitation.stateEnum = status
 		eventInvitation.saveInBackgroundWithBlock { result, error in
 			completion(error)
 		}
@@ -60,7 +60,7 @@ public class EventService {
 		query.skip = page * perPage
 		
 		if event.stateEnum == .Planning {
-			query.whereKey("status", equalTo: EventInvitation.Status.Accepted.rawValue)
+			query.whereKey("status", equalTo: EventInvitation.State.Accepted.rawValue)
 		}
 		
 		// TODO: Handler final confirmes, if event is sent for final confirmation, diplay confirmed instead of accepted
@@ -149,6 +149,14 @@ public class EventService {
 		suggestion.date = date
 		
 		suggestion.saveInBackgroundWithBlock { success, error in
+			completion(error)
+		}
+	}
+	
+	public func senfForFinalConfirmation(event: Event, location: Location, completion: (NSError?)->()) {
+		event.location = location
+		event.stateEnum = .FinalConfirmation
+		event.saveInBackgroundWithBlock { success, error in
 			completion(error)
 		}
 	}

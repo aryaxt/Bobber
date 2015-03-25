@@ -9,9 +9,10 @@
 public class Event: PFObject, PFSubclassing {
     
     public enum State: String {
-        case Planning = "planning"
-        case Canceled = "canceled"
-		case Expired = "expired"
+        case Planning = "planning" // Created
+        case Canceled = "canceled" // Creator Canceled
+		case Expired = "expired" // Planning time and accepting time expired
+		case FinalConfirmation = "finalConfirmation" // Final confirmation
     }
     
     @NSManaged var title: String

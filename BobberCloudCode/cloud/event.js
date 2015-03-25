@@ -15,25 +15,25 @@ var EventInvitationFieldEvent = "event";
 var EventInvitationFieldFrom = "from";
 var EventInvitationFieldTo = "to";
 var EventInvitationFieldToPhoneNumber = "toPhoneNumber";
-var EventInvitationFieldStatus = "status";
+var EventInvitationFieldState = "state";
 
 var EventCommentFieldFrom = "from";
 var EventCommentFieldEvent = "event";
 var EventCommentFieldText = "text";
 var EventCommentFieldIsSystem = "isSystem";
 
-var EventStatusPlanning = "planning";
-var EventStatusCanceled = "canceled";
-var EventStatusExpired = "expired";
+var EventStatePlanning = "planning";
+var EventStateCanceled = "canceled";
+var EventStateExpired = "expired";
 
-var EventInvitationStatusPending = "pending";
-var EventInvitationStatusAccepted = "accepted";
-var EventInvitationStatusCanceled = "canceled";
-var EventInvitationStatusConfirmed = "confirmed";
+var EventInvitationStatePending = "pending";
+var EventInvitationStateAccepted = "accepted";
+var EventInvitationStateCanceled = "canceled";
+var EventInvitationStateConfirmed = "confirmed";
 
-var EventInvitationErrorStatusChangeNotallowed = "event_invitation_status_change_not_allowed";
-var EventInvitationErrorStatusChangeInvalidUser = "event_invitation_status_change_invalid_user";
-var EventInvitationErrorStatusInvalid = "event_invitation_status_invalid";
+var EventInvitationErrorStateChangeNotallowed = "event_invitation_state_change_not_allowed";
+var EventInvitationErrorStateChangeInvalidUser = "event_invitation_state_change_invalid_user";
+var EventInvitationErrorStateInvalid = "event_invitation_state_invalid";
 var EventInvitationErrorMissingUserOrPhone = "event_invitation_missing_user_or_phone";
 
 exports.respondToInvite = function (user, invitation, completion) {
@@ -41,7 +41,7 @@ exports.respondToInvite = function (user, invitation, completion) {
     // TODO: Add notification setting
     // TODO: Check to make sure expiration date has not passed
     
-    var newStatus = invitation.get(EventInvitationFieldStatus);
+    var newState = invitation.get(EventInvitationFieldState);
     var invitationId = invitation.get(EventInvitationFieldId);
     var invitationQuery = new Parse.Query("EventInvitation");
     
@@ -49,14 +49,14 @@ exports.respondToInvite = function (user, invitation, completion) {
 						
         success: function(oldInvitation) {
 						
-   			if (oldInvitation.get(EventInvitationFieldStatus) != EventStatusPlanning) {
-        		completion(EventInvitationErrorStatusChangeNotallowed);
+   			if (oldInvitation.get(EventInvitationFieldState) != EventStatePlanning) {
+        		completion(EventInvitationErrorStateChangeNotallowed);
     		}
     		else if (invitation.get(EventInvitationFieldTo).get(EventInvitationFieldId) != user.get(EventInvitationFieldId)) {
-        		completion(EventInvitationErrorStatusChangeInvalidUser);
+        		completion(EventInvitationErrorStateChangeInvalidUser);
     		}
-    		else if (newStatus != EventInvitationStatusAccepted && newStatus != EventInvitationStatusCanceled) {
-    			completion(EventInvitationErrorStatusInvalid);
+    		else if (newState != EventInvitationStateAccepted && newState != EventInvitationStateCanceled) {
+    			completion(EventInvitationErrorStateInvalid);
     		}
     		else {
         		completion(null);
@@ -92,7 +92,7 @@ exports.sendInvite = function(user, invitation, completion) {
 	var phoneNumberHashed = md5.hex_md5(phoneNumber);
 	var inviteMessage = "Someone sent you a bob (Fix with better message)"; // TODO: Show a better message
     
-    invitation.set(EventInvitationFieldStatus, EventInvitationStatusPending);
+    invitation.set(EventInvitationFieldState, EventInvitationStatePending);
 
 	// If attempting to invite a user with phone number
 	if (phoneNumber != null) {
@@ -172,13 +172,12 @@ exports.sendInvite = function(user, invitation, completion) {
     
 }
 
-
 exports.sendCommentNotification = function (user, comment, completion) {
 	
 	var event = comment.get(EventCommentFieldEvent);
 	var invitationQuery = new Parse.Query("EventInvitation");
 	invitationQuery.equalTo(EventInvitationFieldEvent, event);
-	invitationQuery.equalTo(EventInvitationFieldStatus, EventInvitationStatusAccepted);
+	invitationQuery.equalTo(EventInvitationFieldState, EventInvitationStateAccepted);
 	invitationQuery.notEqualTo(EventInvitationFieldTo, user);
 	invitationQuery.exists(EventInvitationFieldTo);
 	invitationQuery.include(EventInvitationFieldTo);
@@ -215,14 +214,14 @@ exports.handleExpiredEvents = function (completion) {
 	var push = require("cloud/push.js");
 	var now = new Date();
 	var eventQuery = new Parse.Query("Event");
-	eventQuery.equalTo(EventFieldState, EventStatusPlanning);
+	eventQuery.equalTo(EventFieldState, EventStatePlanning);
 	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
 
 	eventQuery.find({success: function(events) {
 
 			for (var i=0 ; i<events.length ; i++) {
 				var event = events[i];
-				event.set(EventFieldState, EventStatusExpired);
+				event.set(EventFieldState, EventStateExpired);
 
 				var pushData = {
 					"alert" : "Your event has expired, time to pick a location and time",

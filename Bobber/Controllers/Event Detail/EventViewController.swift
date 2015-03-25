@@ -101,8 +101,9 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
     // MARK: - Private -
 		
     private func populateEvent() {
+		
         titleLabel.text = event.title
-		locationLabel.text = event.location == nil ? "Location In Planning" : event.location!.formattedAddress
+		locationLabel.text = event.location == nil ? "Location In Planning, expires in \(event.expirationDate)" : event.location!.formattedAddress
 		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime!.eventFormattedDate()
 		suggestLocationButton.hidden = event.stateEnum == .Planning ? false : true
     }
@@ -143,7 +144,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		if section == 0 {
-			return suggestedLocations.count;
+			return shouldShowSuggestedLocations() ? suggestedLocations.count : 0;
 		}
 		else {
 			return comments.count
@@ -169,10 +170,52 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	public func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if section == 0 {
-			return "Suggested Locations"
+			return shouldShowSuggestedLocations() ? "Suggested Locations" : nil
 		}
 		else {
 			return "Comments"
+		}
+	}
+	
+	public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		if indexPath.section == 0 {
+			
+			let suggestion = suggestedLocations[indexPath.row]
+			
+			// Creator finalizing event
+			if event.stateEnum == .Expired && User.currentUser() == event.creator {
+
+				UIActionSheet.showInView(
+					view,
+					withTitle: "Are you sure you want to pick this location as the final event location?",
+					cancelButtonTitle: "No",
+					destructiveButtonTitle: nil,
+					otherButtonTitles: ["Yes"]) { [weak self] actionSheet, index in
+						
+						if index != actionSheet.cancelButtonIndex {
+							self!.eventService.senfForFinalConfirmation(self!.event, location: suggestion.location) { error in
+								
+							}
+						}
+				}
+			}
+			else if event.stateEnum == .Planning {
+				
+				UIActionSheet.showInView(
+					view,
+					withTitle: "Are you sure you want to suggest this location?",
+					cancelButtonTitle: "No",
+					destructiveButtonTitle: nil,
+					otherButtonTitles: ["Yes"]) { [weak self] actionSheet, index in
+						
+						if index != actionSheet.cancelButtonIndex {
+							self!.eventService.suggestLocation(self!.event, location: suggestion.location) { [weak self] suggestion, error in
+								
+							}
+						}
+				}
+				
+			}
 		}
 	}
 	
@@ -201,6 +244,17 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	func locationSearchViewControllerDidCancel(controller: LocationSearchViewController) {
 		dismissViewControllerAnimated(true, completion: nil)
+	}
+	
+	// MARK: - Private -
+	
+	private func shouldShowSuggestedLocations() -> Bool {
+		if event.stateEnum == .Planning ||
+			(event.stateEnum == .Expired && event.creator == User.currentUser()) {
+			return true
+		}
+		
+		return false
 	}
 	
 }

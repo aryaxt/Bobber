@@ -8,7 +8,7 @@
 
 public class EventInvitation: PFObject, PFSubclassing {
     
-    public enum Status: String {
+    public enum State: String {
         case Pending = "pending"
         case Accepted = "accepted"
         case Declined = "declined"
@@ -20,10 +20,10 @@ public class EventInvitation: PFObject, PFSubclassing {
     @NSManaged var from: User
     @NSManaged var to: User?
     @NSManaged var toPhoneNumber: String?
-    @NSManaged var status: String
-    var statusEnum: Status {
-        get { return Status(rawValue: status)! }
-        set { status = newValue.rawValue }
+    @NSManaged var state: String
+    var stateEnum: State {
+        get { return State(rawValue: state)! }
+        set { state = newValue.rawValue }
     }
     
     public class func parseClassName() -> String {

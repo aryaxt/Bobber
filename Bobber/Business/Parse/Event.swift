@@ -9,9 +9,8 @@
 public class Event: PFObject, PFSubclassing {
     
     public enum State: String {
-        case Planning = "planning" // Created
+        case Initial = "initial" // Created
         case Canceled = "canceled" // Creator Canceled
-		case Expired = "expired" // Planning time and accepting time expired
 		case FinalConfirmation = "finalConfirmation" // Final confirmation
     }
     
@@ -41,4 +40,15 @@ public class Event: PFObject, PFSubclassing {
     override public class func load() {
         registerSubclass()
     }
+	
+	public func isExpired() -> Bool {
+		let comparision = NSDate().compare(expirationDate)
+		
+		if comparision == .OrderedAscending || comparision == .OrderedSame {
+			return true
+		}
+		else   {
+			return true
+		}
+	}
 }

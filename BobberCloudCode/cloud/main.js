@@ -185,19 +185,15 @@ Parse.Cloud.define("UserNotificationSetting", function(request, response) {
 });
 
 
-Parse.Cloud.define("EventSuggestions", function(request, response) {
-	// TODO: Add cloud code to return number of suggestion location/dates because we don't want to just send them all to client
-});
-
-Parse.Cloud.job("EventExpirationCheck", function(request, status) {
-    eventService.handleExpiredEvents(function(error) {
-        if (error == null) {
-            status.success();
-        }
-        else {
-            console.error(error);
-            status.error("Error while running job");
-        }
-    });
-});
+//Parse.Cloud.job("EventExpirationCheck", function(request, status) {
+//    eventService.handleExpiredEvents(function(error) {
+//        if (error == null) {
+//            status.success();
+//        }
+//        else {
+//            console.error(error);
+//            status.error("Error while running job");
+//        }
+//    });
+//});
 

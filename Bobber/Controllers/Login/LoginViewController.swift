@@ -39,7 +39,7 @@ class LoginViewController: BaseViewController {
         if let currentUser = User.currentUser() {
             
             if currentUser.phoneNumber != nil {
-                PushNotificationManager.sharedInstance.tryRegisterDeviceTokenWithParse()
+                NotificationManager.sharedInstance.tryRegisterDeviceTokenWithParse()
                 BobberNavigationController.sharedInstance().applyLoggedInState()
             }
             else {

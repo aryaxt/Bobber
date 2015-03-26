@@ -78,8 +78,8 @@
 		1541F4C71AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */; };
 		1541F4C81AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */; };
 		1541F4C91AB154DA005D6CA2 /* RounderHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */; };
-		1541F4CC1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
-		1541F4CD1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */; };
+		1541F4CC1AB154FD005D6CA2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */; };
+		1541F4CD1AB154FD005D6CA2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */; };
 		15426A5B1ABDE40700F4CD67 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A5A1ABDE40700F4CD67 /* UIAlertViewExtension.swift */; };
 		159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
@@ -212,7 +212,7 @@
 		1541F4B71AB154DA005D6CA2 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1541F4BA1AB154DA005D6CA2 /* RoundedHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoundedHeaderView.xib; sourceTree = "<group>"; };
 		1541F4BB1AB154DA005D6CA2 /* RounderHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RounderHeaderView.swift; sourceTree = "<group>"; };
-		1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
+		1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		15426A361AB4BFEC00F4CD67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15426A371AB4BFEC00F4CD67 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		15426A381AB4BFEC00F4CD67 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 		1541F4CA1AB154FD005D6CA2 /* PushNotification */ = {
 			isa = PBXGroup;
 			children = (
-				1541F4CB1AB154FD005D6CA2 /* PushNotificationManager.swift */,
+				1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */,
 			);
 			path = PushNotification;
 			sourceTree = "<group>";
@@ -883,7 +883,7 @@
 				159C03181A905D0300EAA342 /* LoginViewController.swift in Sources */,
 				1535F2C71A62EF1E004C5CC2 /* UIStoryboardExtension.swift in Sources */,
 				15258A6C1A75C02E00944268 /* InstallationService.swift in Sources */,
-				1541F4CC1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */,
+				1541F4CC1AB154FD005D6CA2 /* NotificationManager.swift in Sources */,
 				1540E7531A8FFA4A00838860 /* ArrayExtension.swift in Sources */,
 				927FCE701A5C79AF001F25A0 /* UserService.swift in Sources */,
 				15F693A91A622BA300184D81 /* UIImageExtension.swift in Sources */,
@@ -959,7 +959,7 @@
 				92C7F1931A5C714100259218 /* BobberTests.swift in Sources */,
 				1541F4C11AB154DA005D6CA2 /* ContactsManager.swift in Sources */,
 				1541F4C31AB154DA005D6CA2 /* LocationManager.swift in Sources */,
-				1541F4CD1AB154FD005D6CA2 /* PushNotificationManager.swift in Sources */,
+				1541F4CD1AB154FD005D6CA2 /* NotificationManager.swift in Sources */,
 				927EA5F31A5CA6A600B9F084 /* NSMutableAttributedStringExtension.swift in Sources */,
 				152FDA211AABD8620032DFAC /* UITableViewExtension.swift in Sources */,
 				1535F2E91A632404004C5CC2 /* GooglePlaceDetail.swift in Sources */,

@@ -20,12 +20,16 @@ public class EventService {
 	public func createEvent(title: String, expirationDate: NSDate, completion: (Event?, NSError?)->()) {
 		let event = Event()
 		event.creator = User.currentUser()
-		event.stateEnum = .Planning
+		event.stateEnum = .Initial
 		event.title = title
 		event.expirationDate = expirationDate
 		
         event.saveInBackgroundWithBlock { bool, error in
             completion(event, error)
+			
+			if error == nil {
+				NotificationManager.sharedInstance.scheduleEventLocalNotification(event)
+			}
         }
     }
     
@@ -59,7 +63,7 @@ public class EventService {
 		query.limit = perPage
 		query.skip = page * perPage
 		
-		if event.stateEnum == .Planning {
+		if event.stateEnum == .Initial {
 			query.whereKey("status", equalTo: EventInvitation.State.Accepted.rawValue)
 		}
 		

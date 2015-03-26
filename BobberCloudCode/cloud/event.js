@@ -24,7 +24,7 @@ var EventCommentFieldIsSystem = "isSystem";
 
 var EventStatePlanning = "planning";
 var EventStateCanceled = "canceled";
-var EventStateExpired = "expired";
+var EventStateFinalConfirmation = "finalConfirmation";
 
 var EventInvitationStatePending = "pending";
 var EventInvitationStateAccepted = "accepted";
@@ -210,43 +210,43 @@ exports.sendCommentNotification = function (user, comment, completion) {
 	});
 }
 
-exports.handleExpiredEvents = function (completion) {
-	var push = require("cloud/push.js");
-	var now = new Date();
-	var eventQuery = new Parse.Query("Event");
-	eventQuery.equalTo(EventFieldState, EventStatePlanning);
-	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
-
-	eventQuery.find({success: function(events) {
-
-			for (var i=0 ; i<events.length ; i++) {
-				var event = events[i];
-				event.set(EventFieldState, EventStateExpired);
-
-				var pushData = {
-					"alert" : "Your event has expired, time to pick a location and time",
-					"type" : EventExpiredNotificationType,
-					"data" : event
-				};
-
-	    		var installationQuery = new Parse.Query("Installation");
-	    		installationQuery.equalTo("user", event.get(EventFieldCreator));
-	    		push.sendPushNotification(installationQuery, pushData, null);
-			}
-
-			Parse.Object.saveAll(events, {
-				success: function(list) {
-					completion(null);
-				},
-				error: function(error) {
-				    completion(error);
-				}
-			});
-		},
-	    error: function(error) {
-	        completion(error);
-	    }
-	});
-}
+//exports.handleExpiredEvents = function (completion) {
+//	var push = require("cloud/push.js");
+//	var now = new Date();
+//	var eventQuery = new Parse.Query("Event");
+//	eventQuery.equalTo(EventFieldState, EventStatePlanning);
+//	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
+//
+//	eventQuery.find({success: function(events) {
+//
+//			for (var i=0 ; i<events.length ; i++) {
+//				var event = events[i];
+//				event.set(EventFieldState, EventStateExpired);
+//
+//				var pushData = {
+//					"alert" : "Your event has expired, time to pick a location and time",
+//					"type" : EventExpiredNotificationType,
+//					"data" : event
+//				};
+//
+//	    		var installationQuery = new Parse.Query("Installation");
+//	    		installationQuery.equalTo("user", event.get(EventFieldCreator));
+//	    		push.sendPushNotification(installationQuery, pushData, null);
+//			}
+//
+//			Parse.Object.saveAll(events, {
+//				success: function(list) {
+//					completion(null);
+//				},
+//				error: function(error) {
+//				    completion(error);
+//				}
+//			});
+//		},
+//	    error: function(error) {
+//	        completion(error);
+//	    }
+//	});
+//}
 
 

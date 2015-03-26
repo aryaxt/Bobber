@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-public class PushNotificationManager {
+public class NotificationManager {
 	
 	public enum NotificationType: String {
 		case EventComment = "eventComment"
@@ -23,9 +23,9 @@ public class PushNotificationManager {
         }
     }
     
-    class var sharedInstance: PushNotificationManager {
+    class var sharedInstance: NotificationManager {
         struct Singleton {
-            static let instance = PushNotificationManager()
+            static let instance = NotificationManager()
         }
         
         return Singleton.instance
@@ -44,18 +44,32 @@ public class PushNotificationManager {
         }
     }
     
-    public func handleNotification(userInfo: [NSObject : AnyObject]) {
+    public func handlePushNotification(userInfo: [NSObject : AnyObject]) {
 		
 		if let type = userInfo["type"] as? String {
 			let data = userInfo["data"] as? [NSObject: AnyObject]
 			NSNotificationCenter.defaultCenter().postNotificationName(type, object: self, userInfo: data)
 		}
     }
-    
+	
+	public func handleLocalNotification(localNotification: UILocalNotification) {
+			
+	}
+	
     public func tryRegisterDeviceTokenWithParse() {
         if User.currentUser() != nil && deviceToken != nil {
             installationService.updateDeviceToken(deviceToken!)
         }
     }
-    
+	
+	public func scheduleEventLocalNotification(event: Event) {
+		let notification = UILocalNotification()
+		notification.alertTitle = "Bob Expired"
+		notification.alertBody = "Your Bob '\(event.title)' expired, time to pick a location"
+		notification.alertAction = "Go to Bob"
+		notification.fireDate = event.expirationDate
+		
+		UIApplication.sharedApplication().scheduleLocalNotification(notification)
+	}
+	
 }

@@ -177,7 +177,7 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 					if $0.stateEnum == .Accepted {
 						newEvents.append($0.event)
 					}
-					else if $0.statusEnum == .Pending {
+					else if $0.stateEnum == .Pending {
 						newInvitations.append($0)
 					}
 				}

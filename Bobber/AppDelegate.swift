@@ -31,10 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		SlideNavigationController.sharedInstance().menuRevealAnimationDuration = 0.18
 		SlideNavigationController.sharedInstance().menuRevealAnimator = animator
 		
-		PushNotificationManager.sharedInstance.registerForPushNotifications()
+		NotificationManager.sharedInstance.registerForPushNotifications()
 		
 		if let pushNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [NSObject: AnyObject] {
-			PushNotificationManager.sharedInstance.handleNotification(pushNotification)
+			NotificationManager.sharedInstance.handlePushNotification(pushNotification)
+		}
+		
+		if let localNotification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+			NotificationManager.sharedInstance.handleLocalNotification(localNotification)
 		}
 		
         return true
@@ -76,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        PushNotificationManager.sharedInstance.deviceToken = deviceToken
+        NotificationManager.sharedInstance.deviceToken = deviceToken
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -88,8 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        PushNotificationManager.sharedInstance.handleNotification(userInfo)
+        NotificationManager.sharedInstance.handlePushNotification(userInfo)
     }
-
+	
+	func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+		NotificationManager.sharedInstance.handleLocalNotification(notification)
+	}
 }
 

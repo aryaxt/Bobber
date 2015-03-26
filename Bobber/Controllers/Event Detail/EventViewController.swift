@@ -77,7 +77,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 		}
 		
 		NSNotificationCenter.defaultCenter().addObserverForName(
-			PushNotificationManager.NotificationType.EventComment.rawValue,
+			NotificationManager.NotificationType.EventComment.rawValue,
 			object: nil,
 			queue: nil) { note in
 				
@@ -105,14 +105,10 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
         titleLabel.text = event.title
 		locationLabel.text = event.location == nil ? "Location In Planning, expires in \(event.expirationDate)" : event.location!.formattedAddress
 		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime!.eventFormattedDate()
-		suggestLocationButton.hidden = event.stateEnum == .Planning ? false : true
+		suggestLocationButton.hidden = event.stateEnum == .Initial ? false : true
     }
 	
 	// MARK: - Actions -
-	
-	@IBAction func suggestLocationSelected(sender: AnyObject) {
-		
-	}
 	
 	@IBAction func inviteSelected(sender: AnyObject) {
 		performSegueWithIdentifier("EventInviteViewController", sender: nil)
@@ -182,8 +178,8 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 			
 			let suggestion = suggestedLocations[indexPath.row]
 			
-			// Creator finalizing event
-			if event.stateEnum == .Expired && User.currentUser() == event.creator {
+			 //Creator finalizing event
+			if event.isExpired() && User.currentUser() == event.creator {
 
 				UIActionSheet.showInView(
 					view,
@@ -199,7 +195,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 						}
 				}
 			}
-			else if event.stateEnum == .Planning {
+			else if event.stateEnum == .Initial {
 				
 				UIActionSheet.showInView(
 					view,
@@ -249,8 +245,8 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	// MARK: - Private -
 	
 	private func shouldShowSuggestedLocations() -> Bool {
-		if event.stateEnum == .Planning ||
-			(event.stateEnum == .Expired && event.creator == User.currentUser()) {
+		if event.stateEnum == .Initial ||
+			(event.isExpired() && event.creator == User.currentUser()) {
 			return true
 		}
 		

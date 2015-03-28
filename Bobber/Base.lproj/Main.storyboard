@@ -383,8 +383,8 @@
                                                         <mask key="constraints">
                                                             <exclude reference="zsh-4y-Aun"/>
                                                             <exclude reference="O0G-4H-2P6"/>
-                                                            <exclude reference="o71-As-s3U"/>
                                                             <exclude reference="SBF-1o-lUt"/>
+                                                            <exclude reference="o71-As-s3U"/>
                                                             <exclude reference="sKs-Kl-gfh"/>
                                                         </mask>
                                                     </variation>
@@ -397,8 +397,8 @@
                                                         <mask key="constraints">
                                                             <include reference="zsh-4y-Aun"/>
                                                             <include reference="O0G-4H-2P6"/>
-                                                            <include reference="o71-As-s3U"/>
                                                             <include reference="SBF-1o-lUt"/>
+                                                            <include reference="o71-As-s3U"/>
                                                             <include reference="sKs-Kl-gfh"/>
                                                         </mask>
                                                     </variation>
@@ -441,8 +441,8 @@
                                                     <exclude reference="F0U-Af-uvy"/>
                                                     <exclude reference="VGP-Rm-mmV"/>
                                                     <exclude reference="bhn-9h-IpE"/>
-                                                    <exclude reference="Ixv-Ih-EaA"/>
                                                     <exclude reference="7tg-ZZ-P5V"/>
+                                                    <exclude reference="Ixv-Ih-EaA"/>
                                                     <exclude reference="niw-CZ-KXo"/>
                                                 </mask>
                                             </variation>
@@ -455,8 +455,8 @@
                                                     <include reference="F0U-Af-uvy"/>
                                                     <include reference="VGP-Rm-mmV"/>
                                                     <include reference="bhn-9h-IpE"/>
-                                                    <include reference="Ixv-Ih-EaA"/>
                                                     <include reference="7tg-ZZ-P5V"/>
+                                                    <include reference="Ixv-Ih-EaA"/>
                                                     <include reference="niw-CZ-KXo"/>
                                                 </mask>
                                             </variation>
@@ -889,7 +889,7 @@
                                     <outlet property="delegate" destination="J2b-IS-Ruq" id="inB-tc-4Ac"/>
                                 </connections>
                             </textView>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="Vsk-78-siG">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vsk-78-siG">
                                 <rect key="frame" x="-160" y="-81" width="320" height="162"/>
                                 <date key="date" timeIntervalSinceReferenceDate="448656895.15877002">
                                     <!--2015-03-21 18:54:55 +0000-->

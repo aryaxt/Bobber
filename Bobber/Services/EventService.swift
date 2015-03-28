@@ -28,7 +28,7 @@ public class EventService {
             completion(event, error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.scheduleEventLocalNotification(event)
+				NotificationManager.sharedInstance.scheduleEventLocalNotificationForCreator(event)
 			}
         }
     }
@@ -45,6 +45,10 @@ public class EventService {
 		eventInvitation.stateEnum = status
 		eventInvitation.saveInBackgroundWithBlock { result, error in
 			completion(error)
+			
+			if error == nil && status == .Accepted {
+				NotificationManager.sharedInstance.scheduleEventLocalNotificationForAttendee(eventInvitation.event)
+			}
 		}
 	}
     
@@ -136,6 +140,10 @@ public class EventService {
 		
 		suggestion.saveInBackgroundWithBlock { success, error in
 			completion(suggestion, error)
+			
+			if error == nil {
+				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId)
+			}
 		}
 	}
 	

@@ -26,7 +26,8 @@ class CreateEventViewController: BaseViewController {
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 
-		datePicker.minimumDate = NSDate().dateByAddingTimeInterval(60*30) // 30 minutes
+		// Later add 30 minutes back
+		datePicker.minimumDate = NSDate() // .dateByAddingTimeInterval(60*30) // 30 minutes
 		datePicker.maximumDate = NSDate().dateByAddingTimeInterval(60*60*24*2) // 48 hours
 		datePicker.removeFromSuperview()
 		datePicker.hidden = false

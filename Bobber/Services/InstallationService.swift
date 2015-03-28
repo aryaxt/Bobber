@@ -13,7 +13,7 @@ public class InstallationService {
         let installation = Installation.currentInstallation()
         installation.user = User.currentUser()
         installation.setDeviceTokenFromData(deviceToken)
-        installation.saveEventually()
+		installation.saveInBackgroundWithBlock { result, error in }
     }
     
 }

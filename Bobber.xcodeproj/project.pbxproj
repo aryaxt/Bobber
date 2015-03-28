@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1511774B1A91A2AF00118FE6 /* location.js in Resources */ = {isa = PBXBuildFile; fileRef = 1511774A1A91A2AF00118FE6 /* location.js */; };
+		151ECB221AC652CA000DD67B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152A06181AC6503B00A858A4 /* ProfileViewController.swift */; };
+		151ECB231AC652D3000DD67B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152A06181AC6503B00A858A4 /* ProfileViewController.swift */; };
+		151ECB251AC65D90000DD67B /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151ECB241AC65D90000DD67B /* FriendRequestCell.swift */; };
+		151ECB261AC65D90000DD67B /* FriendRequestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151ECB241AC65D90000DD67B /* FriendRequestCell.swift */; };
 		15258A6C1A75C02E00944268 /* InstallationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A6B1A75C02E00944268 /* InstallationService.swift */; };
 		15258A6D1A75C02E00944268 /* InstallationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15258A6B1A75C02E00944268 /* InstallationService.swift */; };
 		15258A6F1A75C9D600944268 /* sms.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A6E1A75C9D600944268 /* sms.js */; };
@@ -20,6 +24,7 @@
 		15258A791A75D0CB00944268 /* phoneVerification.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A771A75D0CB00944268 /* phoneVerification.js */; };
 		15258A7B1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
 		15258A7C1A75EE9B00944268 /* event.js in Resources */ = {isa = PBXBuildFile; fileRef = 15258A7A1A75EE9B00944268 /* event.js */; };
+		152A06171AC507CF00A858A4 /* friend.js in Resources */ = {isa = PBXBuildFile; fileRef = 152A06161AC507CF00A858A4 /* friend.js */; };
 		152FDA1D1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */; };
 		152FDA1E1AAB6DBE0032DFAC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */; };
 		152FDA201AABD8620032DFAC /* UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152FDA1F1AABD8620032DFAC /* UITableViewExtension.swift */; };
@@ -107,7 +112,6 @@
 		15A7C0831A75B17F0061B8B6 /* push.js in Resources */ = {isa = PBXBuildFile; fileRef = 15A7C0811A75B17F0061B8B6 /* push.js */; };
 		15DAF9A41ABE645D006951B7 /* UserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAF9A31ABE645D006951B7 /* UserAvatarView.swift */; };
 		15DAF9A61ABE67FD006951B7 /* UserAvatarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 15DAF9A51ABE67FD006951B7 /* UserAvatarView.xib */; };
-		15DAF9A91ABF2DAF006951B7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */; };
 		15F580921A5F1CC900959F4F /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = 15F5808D1A5F1CC900959F4F /* main.js */; };
 		15F580931A5F1CC900959F4F /* global.json in Resources */ = {isa = PBXBuildFile; fileRef = 15F5808F1A5F1CC900959F4F /* global.json */; };
 		15F580941A5F1CC900959F4F /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 15F580911A5F1CC900959F4F /* index.html */; };
@@ -177,12 +181,15 @@
 
 /* Begin PBXFileReference section */
 		1511774A1A91A2AF00118FE6 /* location.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = location.js; sourceTree = "<group>"; };
+		151ECB241AC65D90000DD67B /* FriendRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestCell.swift; sourceTree = "<group>"; };
 		15258A6B1A75C02E00944268 /* InstallationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstallationService.swift; sourceTree = "<group>"; };
 		15258A6E1A75C9D600944268 /* sms.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = sms.js; sourceTree = "<group>"; };
 		15258A711A75CCD500944268 /* googleLocation.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = googleLocation.js; sourceTree = "<group>"; };
 		15258A741A75CF6600944268 /* userNotificationSettings.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = userNotificationSettings.js; sourceTree = "<group>"; };
 		15258A771A75D0CB00944268 /* phoneVerification.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = phoneVerification.js; sourceTree = "<group>"; };
 		15258A7A1A75EE9B00944268 /* event.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = event.js; sourceTree = "<group>"; };
+		152A06161AC507CF00A858A4 /* friend.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = friend.js; sourceTree = "<group>"; };
+		152A06181AC6503B00A858A4 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		152FDA1C1AAB6DBE0032DFAC /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		152FDA1F1AABD8620032DFAC /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		152FDA221AABD9050032DFAC /* EventCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
@@ -237,7 +244,6 @@
 		15A7C0811A75B17F0061B8B6 /* push.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = push.js; sourceTree = "<group>"; };
 		15DAF9A31ABE645D006951B7 /* UserAvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAvatarView.swift; sourceTree = "<group>"; };
 		15DAF9A51ABE67FD006951B7 /* UserAvatarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserAvatarView.xib; sourceTree = "<group>"; };
-		15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		15F5808D1A5F1CC900959F4F /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
 		15F5808F1A5F1CC900959F4F /* global.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = global.json; sourceTree = "<group>"; };
 		15F580911A5F1CC900959F4F /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -427,6 +433,7 @@
 				159C03071A905D0300EAA342 /* HomeViewController.swift */,
 				152FDA221AABD9050032DFAC /* EventCell.swift */,
 				159C031C1A905D2000EAA342 /* EventInvitationCell.swift */,
+				151ECB241AC65D90000DD67B /* FriendRequestCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -458,7 +465,7 @@
 		15DAF9A71ABF2D98006951B7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				15DAF9A81ABF2DAF006951B7 /* ProfileViewController.swift */,
+				152A06181AC6503B00A858A4 /* ProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -477,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				15F5808D1A5F1CC900959F4F /* main.js */,
+				152A06161AC507CF00A858A4 /* friend.js */,
 				15258A711A75CCD500944268 /* googleLocation.js */,
 				15258A771A75D0CB00944268 /* phoneVerification.js */,
 				15258A741A75CF6600944268 /* userNotificationSettings.js */,
@@ -754,6 +762,7 @@
 				92C7F1871A5C714100259218 /* LaunchScreen.xib in Resources */,
 				15258A721A75CCD500944268 /* googleLocation.js in Resources */,
 				1541F4C61AB154DA005D6CA2 /* RoundedHeaderView.xib in Resources */,
+				152A06171AC507CF00A858A4 /* friend.js in Resources */,
 				92C7F1841A5C714100259218 /* Images.xcassets in Resources */,
 				15DAF9A61ABE67FD006951B7 /* UserAvatarView.xib in Resources */,
 				1511774B1A91A2AF00118FE6 /* location.js in Resources */,
@@ -847,9 +856,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				151ECB221AC652CA000DD67B /* ProfileViewController.swift in Sources */,
 				159C03301A9176E500EAA342 /* EventLocationSuggestion.swift in Sources */,
 				1541F4BC1AB154DA005D6CA2 /* AppearanceManager.swift in Sources */,
 				159C03101A905D0300EAA342 /* EventViewController.swift in Sources */,
+				151ECB251AC65D90000DD67B /* FriendRequestCell.swift in Sources */,
 				152FDA231AABD9050032DFAC /* EventCell.swift in Sources */,
 				1535F2E81A632404004C5CC2 /* GooglePlaceDetail.swift in Sources */,
 				1535F2EC1A632404004C5CC2 /* Location.swift in Sources */,
@@ -889,7 +900,6 @@
 				15F693A91A622BA300184D81 /* UIImageExtension.swift in Sources */,
 				15F693B21A62408200184D81 /* FriendService.swift in Sources */,
 				159C031D1A905D2000EAA342 /* EventInvitationCell.swift in Sources */,
-				15DAF9A91ABF2DAF006951B7 /* ProfileViewController.swift in Sources */,
 				159C03161A905D0300EAA342 /* LocationSearchViewController.swift in Sources */,
 				1535F2DE1A632404004C5CC2 /* Comment.swift in Sources */,
 				1541F4A71AACD400005D6CA2 /* StringExtension.swift in Sources */,
@@ -942,6 +952,7 @@
 				1535F2E11A632404004C5CC2 /* Event.swift in Sources */,
 				927EA5E41A5CA61D00B9F084 /* NotificationSettingService.swift in Sources */,
 				1535F2F51A632404004C5CC2 /* UserInvitation.swift in Sources */,
+				151ECB261AC65D90000DD67B /* FriendRequestCell.swift in Sources */,
 				1535F2E51A632404004C5CC2 /* FriendRequest.swift in Sources */,
 				1535F2EB1A632404004C5CC2 /* Installation.swift in Sources */,
 				927EA5E31A5CA61800B9F084 /* GoogleLocationService.swift in Sources */,
@@ -956,6 +967,7 @@
 				159C03311A9176E500EAA342 /* EventLocationSuggestion.swift in Sources */,
 				159C03191A905D0300EAA342 /* LoginViewController.swift in Sources */,
 				15258A6D1A75C02E00944268 /* InstallationService.swift in Sources */,
+				151ECB231AC652D3000DD67B /* ProfileViewController.swift in Sources */,
 				92C7F1931A5C714100259218 /* BobberTests.swift in Sources */,
 				1541F4C11AB154DA005D6CA2 /* ContactsManager.swift in Sources */,
 				1541F4C31AB154DA005D6CA2 /* LocationManager.swift in Sources */,

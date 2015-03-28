@@ -8,6 +8,7 @@ var phoneVerificationService = require("cloud/phoneVerification.js");
 var eventService = require("cloud/event.js");
 var googleLocationService = require("cloud/googleLocation.js");
 var locationService = require("cloud/location.js");
+var friendService = require("cloud/friend.js");
 
 
 Parse.Cloud.beforeSave(Parse.User, function(request, response) {
@@ -35,9 +36,19 @@ Parse.Cloud.beforeSave("Event", function(request, response) {
     // TODO: Handle state change and send push notification (canceled, location change, etc)
     // TODO: Make sure only creator can modify event
 					   
-	// state has changed
-	if (request.object.dirtyKeys().indexOf("state") != -1 && request.object.get("state")) {
+	var event = request.object;
 					   
+	// state has changed to final confirmation
+	if (event.dirtyKeys().indexOf("state") != -1 && event.get("state") == "finalConfirmation") {
+		eventService.sendFinalConfirmation(Parse.User.current(), event, function(error) {
+            if (error == null) {
+                response.success()
+            }
+            else {
+                console.error(error);
+                response.error(error);
+            }
+        });
 	}
                        
     response.success();
@@ -72,7 +83,32 @@ Parse.Cloud.beforeSave("FriendRequest", function(request, response) {
 	// TODO: If it's not new make sure status is valid
     // TODO: Make sure only "to" user can update
 
-    response.success();
+	if (request.object.isNew()) {
+
+		friendService.sendFriendRequestNotification(request.object, function(error) {
+
+            if (error == null) {
+                response.success()
+            }
+            else {
+                console.error(error);
+                response.error(error);
+            }
+	    });
+	 }
+	else {
+		friendService.handleFriendRequestAcceptedNotification(request.object, function(error) {
+
+            if (error == null) {
+                response.success()
+            }
+            else {
+                console.error(error);
+                response.error(error);
+            }
+        });
+	}
+   
 });
 
 

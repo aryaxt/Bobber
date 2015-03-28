@@ -96,6 +96,11 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 			let inviteViewController = destination.topViewController as LocationSearchViewController
 			inviteViewController.delegate = self
 		}
+		else if segue.identifier == "ProfileViewController" {
+			let indexPath = tableView.indexPathForSelectedRow()
+			let destination = segue.destinationViewController as ProfileViewController
+			destination.user = comments[indexPath!.row].from
+		}
 	}
 	
     // MARK: - Private -
@@ -105,7 +110,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
         titleLabel.text = event.title
 		locationLabel.text = event.location == nil ? "Location In Planning, expires in \(event.expirationDate)" : event.location!.formattedAddress
 		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime!.eventFormattedDate()
-		suggestLocationButton.hidden = event.stateEnum == .Initial ? false : true
+		suggestLocationButton.hidden = event.isExpired() ? true : false
     }
 	
 	// MARK: - Actions -

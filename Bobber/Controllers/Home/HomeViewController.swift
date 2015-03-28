@@ -6,12 +6,20 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-public class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate, SlideNavigationControllerDelegate {
-    
+public class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate, FriendRequestCellCellDelegate, SlideNavigationControllerDelegate {
+	
+	public enum Section: Int {
+		case FriendRequest = 0
+		case EventRequests = 1
+		case Events = 2
+	}
+	
     @IBOutlet private weak var tableView: UITableView!
     private lazy var eventService = EventService()
+	private lazy var friendService = FriendService()
     private var events = [Event]()
 	private var invitations = [EventInvitation]()
+	private var friendRequests = [FriendRequest]()
     
     // MARK: - UIViewController -
     
@@ -55,14 +63,18 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
     // MARK: - UITableView Delegate & Datasource -
 	
 	public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-		return 2
+		return 3
 	}
 	
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if section == 0 {
+		switch Section(rawValue: section)! {
+		case .FriendRequest:
+			return friendRequests.count
+			
+		case .EventRequests:
 			return invitations.count
-		}
-		else {
+			
+		case .Events:
 			return events.count
 		}
     }
@@ -73,7 +85,18 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 	
 	public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let header = RoundedHeaderView.instantiateFromNib()
-		header.setTitle(section == 0 ? "Pending Requests" : "Your Events")
+		
+		switch Section(rawValue: section)! {
+		case .FriendRequest:
+			header.setTitle("Friend Requests")
+			
+		case .EventRequests:
+			header.setTitle("Pending Requests")
+			
+		case .Events:
+			header.setTitle("Your Events")
+		}
+		
 		return header
 	}
 	
@@ -88,13 +111,22 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 	// MARK: - Private -
 	
 	public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
-		if indexPath.section == 0 {
+		
+		switch Section(rawValue: indexPath.section)! {
+		case .FriendRequest:
+			let cell = tableView.dequeueReusableCellWithType(FriendRequestCell.self)
+			let friendRequest = friendRequests[indexPath.row]
+			cell.configure(friendRequest)
+			cell.delegate = self
+			return cell
+			
+		case .EventRequests:
 			let cell = tableView.dequeueReusableCellWithType(EventInvitationCell.self)
 			cell.delegate = self
 			cell.configure(invitations[indexPath.row])
 			return cell
-		}
-		else {
+			
+		case .Events:
 			let cell = tableView.dequeueReusableCellWithType(EventCell.self)
 			let event = events[indexPath.row]
 			cell.textLabel?.text = event.title
@@ -109,6 +141,32 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		performSegueWithIdentifier("CreateEventViewController", sender: self)
 	}
 	
+	// MARK: - FriendRequestCellCellDelegate -
+	
+	public func friendRequestCellDidSelectAccept(cell: FriendRequestCell) {
+		let indexPath = tableView.indexPathForCell(cell)!
+		respondToFriendRequest(indexPath, state: .Accepted)
+	}
+	
+	public func friendRequestCellDidSelectDecline(cell: FriendRequestCell) {
+		let indexPath = tableView.indexPathForCell(cell)!
+		respondToFriendRequest(indexPath, state: .Declined)
+	}
+	
+	private func respondToFriendRequest(indexPath: NSIndexPath, state: FriendRequest.State) {
+		let request = friendRequests[indexPath.row]
+		
+		friendService.respondToFriendRequest(request, status: state) { [weak self] error in
+			
+			if error == nil {
+				self?.tableView.beginUpdates()
+				self?.friendRequests.removeAtIndex(indexPath.row)
+				self?.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+				self?.tableView.endUpdates()
+			}
+		}
+	}
+	
 	// MARK: - EvnetInvitationCellDelegate -
 	
 	public func eventInvitationCellDidSelectAccept(cell: EventInvitationCell) {
@@ -121,7 +179,7 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 				self?.invitations.removeAtIndex(indexPath!.row)
 				self?.events.insert(inviation.event, atIndex: 0)
 				self?.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Automatic)
-				self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 1)], withRowAnimation: .Automatic)
+				self?.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: Section.Events.rawValue)], withRowAnimation: .Automatic)
 				self?.tableView.endUpdates()
 			}
 			else {
@@ -192,6 +250,17 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 			
 			if eventsCompleted && invitationsCompleted {
 				self?.fetchCompletion(newEvents, newInvitations: newInvitations)
+			}
+		}
+		
+		friendService.fetchPendingFriendRequests() { [weak self] friendRequests, error in
+			
+			if error == nil {
+				self?.friendRequests = friendRequests!
+				self?.tableView.reloadData()
+			}
+			else {
+				
 			}
 		}
 	}

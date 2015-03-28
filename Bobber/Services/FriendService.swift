@@ -12,6 +12,7 @@ public class FriendService {
         let friendRequest = FriendRequest()
         friendRequest.from = User.currentUser()
         friendRequest.to = user
+		friendRequest.statusEnum = .Pending
         
         friendRequest.saveInBackgroundWithBlock { success, error in
             completion(error)
@@ -20,7 +21,7 @@ public class FriendService {
     
     public func fetchFriends(completion: ([User]? , NSError?)->()) {
         let user = User.currentUser()
-        let prediate = NSPredicate(format: "status == %@ AND (from == %@ OR to == %@)", FriendRequest.Status.Accepted.rawValue, user, user)
+        let prediate = NSPredicate(format: "status == %@ AND (from == %@ OR to == %@)", FriendRequest.State.Accepted.rawValue, user, user)
         let finalQuery = FriendRequest.queryWithPredicate(prediate)
         
         finalQuery.findObjectsInBackgroundWithCompletion(FriendRequest.self) { friendRequests, error in
@@ -34,12 +35,20 @@ public class FriendService {
         }
     }
     
-    public func respondToFriendRequest(friendRequest: FriendRequest, status: FriendRequest.Status, completion: (NSError?)->()) {
+    public func respondToFriendRequest(friendRequest: FriendRequest, status: FriendRequest.State, completion: (NSError?)->()) {
         friendRequest.statusEnum = status
         
         friendRequest.saveInBackgroundWithBlock { success, error in
             completion(error)
         }
     }
+	
+	public func fetchPendingFriendRequests(completion: ([FriendRequest]?, NSError?)->()) {
+		let query = FriendRequest.query()
+		query.whereKey("to", equalTo: User.currentUser())
+		query.whereKey("state", equalTo: FriendRequest.State.Pending.rawValue)
+		query.includeKey("from")
+		query.findObjectsInBackgroundWithCompletion(FriendRequest.self, completion: completion)
+	}
 
 }

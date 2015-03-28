@@ -12,5 +12,19 @@ public class ProfileViewController: BaseViewController {
 	@IBOutlet private var userImageView: UIImageView!
 	@IBOutlet private var addFriendButton: UIButton!
 	@IBOutlet private var blockUserButton: UIButton!
+	public var user: User!
+	private lazy var friendService = FriendService()
 	
+	public override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		title = user.firstName
+	}
+	
+	
+	@IBAction func addFriendSelected() {
+		friendService.sendFriendRequest(user) { error in
+			
+		}
+	}
 }

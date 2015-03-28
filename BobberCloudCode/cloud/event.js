@@ -4,6 +4,7 @@
 var EventCommentNotificationType = "eventComment";
 var EventInviteNotificationType = "eventInvite";
 var EventExpiredNotificationType = "eventExpired";
+var EventFinalConfirmationRequestNotificationType = "finalConfirmation";
 
 var EventFieldCreator = "creator";
 var EventFieldTitle = "title";
@@ -22,7 +23,7 @@ var EventCommentFieldEvent = "event";
 var EventCommentFieldText = "text";
 var EventCommentFieldIsSystem = "isSystem";
 
-var EventStatePlanning = "planning";
+var EventStateInitial = "initial";
 var EventStateCanceled = "canceled";
 var EventStateFinalConfirmation = "finalConfirmation";
 
@@ -40,6 +41,8 @@ exports.respondToInvite = function (user, invitation, completion) {
     // TODO: Send push notification to users
     // TODO: Add notification setting
     // TODO: Check to make sure expiration date has not passed
+	// If accepted or confirmed send notification to all attendees in this gorup
+	// if declined send final notification to creator only
     
     var newState = invitation.get(EventInvitationFieldState);
     var invitationId = invitation.get(EventInvitationFieldId);
@@ -49,7 +52,7 @@ exports.respondToInvite = function (user, invitation, completion) {
 						
         success: function(oldInvitation) {
 						
-   			if (oldInvitation.get(EventInvitationFieldState) != EventStatePlanning) {
+   			if (oldInvitation.get(EventInvitationFieldState) != EventStateInitial) {
         		completion(EventInvitationErrorStateChangeNotallowed);
     		}
     		else if (invitation.get(EventInvitationFieldTo).get(EventInvitationFieldId) != user.get(EventInvitationFieldId)) {
@@ -175,46 +178,94 @@ exports.sendInvite = function(user, invitation, completion) {
 exports.sendCommentNotification = function (user, comment, completion) {
 	
 	var event = comment.get(EventCommentFieldEvent);
-	var invitationQuery = new Parse.Query("EventInvitation");
-	invitationQuery.equalTo(EventInvitationFieldEvent, event);
-	invitationQuery.equalTo(EventInvitationFieldState, EventInvitationStateAccepted);
-	invitationQuery.notEqualTo(EventInvitationFieldTo, user);
-	invitationQuery.exists(EventInvitationFieldTo);
-	invitationQuery.include(EventInvitationFieldTo);
 
-	invitationQuery.find({success: function(invitations) {
-	            
-	    	var users = [];
-			users.push(user);
-					
-			for (var i=0 ; i<invitations.length ; i++) {
-				var invitation = invitations[i];
-				users.push(invitation.get(EventInvitationFieldTo));
+	var pushData = {
+		"alert" : comment.get(EventCommentFieldText),
+		"type" : EventCommentNotificationType,
+		"data" : comment
+	};
+
+	sendNotificationToAttendees(user, event, pushData, true, completion);
+}
+
+exports.sendFinalConfirmation = function (user, event, completion) {
+
+	var pushData = {
+		"alert" : "Bob was planned, time for final confirmation",
+		"type" : EventFinalConfirmationRequestNotificationType,
+		"data" : event
+	};
+
+	sendNotificationToAttendees(user, event, pushData, false, completion);
+}
+
+function sendNotificationToAttendees(user, event, pushData, includeCreator, completion) {
+	
+	// TODO: Fix. expensive call?
+	Parse.Object.fetchAll([event], {
+		success: function(list) {
+			
+			event = list[0];
+			var inviteeState;
+	
+			console.log(event.get(EventFieldState) + " = " + EventStateInitial );
+			
+			if (event.get(EventFieldState) == EventStateInitial) {
+				inviteeState = EventInvitationStateAccepted;
 			}
-
+			else {
+				inviteeState = EventInvitationStateConfirmed;
+			}
+			
 			var push = require("cloud/push.js");
-			var pushData = {
-				"alert" : comment.get(EventCommentFieldText),
-				"type" : EventCommentNotificationType,
-				"data" : comment
-			};
-						 
-			var installationQuery = new Parse.Query("Installation");
-			installationQuery.containedIn("user", users);
-	  		push.sendPushNotification(installationQuery, pushData, null);
-	  		completion(null);
-	    },
-	    error: function(error) {
-	        completion(error);
-	    }
+			console.log(event.get(EventFieldState));
+			var invitationQuery = new Parse.Query("EventInvitation");
+			invitationQuery.equalTo(EventInvitationFieldEvent, event);
+			invitationQuery.equalTo(EventInvitationFieldState, inviteeState);
+			invitationQuery.notEqualTo(EventInvitationFieldTo, user);
+			invitationQuery.exists(EventInvitationFieldTo);
+			invitationQuery.include(EventInvitationFieldTo);
+			
+			invitationQuery.find({success: function(invitations) {
+			            
+			    	var users = [];
+
+					// Don't add if creator is the current user sending a message?
+			    	if (includeCreator)
+						users.push(event.get(EventFieldCreator));
+							
+					for (var i=0 ; i<invitations.length ; i++) {
+						var invitation = invitations[i];
+						users.push(invitation.get(EventInvitationFieldTo));
+					}
+								 
+					var installationQuery = new Parse.Query("Installation");
+					installationQuery.containedIn("user", users);
+			  		push.sendPushNotification(installationQuery, pushData, null);
+
+			  		if (completion != null)
+			  			completion(null);
+			    },
+			    error: function(error) {
+			    	if (completion != null)
+			        	completion(error);
+			    }
+			});
+
+		},
+		error: function(error) {
+			if (completion != null)
+				completion(error);
+		},
 	});
+
 }
 
 //exports.handleExpiredEvents = function (completion) {
 //	var push = require("cloud/push.js");
 //	var now = new Date();
 //	var eventQuery = new Parse.Query("Event");
-//	eventQuery.equalTo(EventFieldState, EventStatePlanning);
+//	eventQuery.equalTo(EventFieldState, EventStateInitial);
 //	eventQuery.lessThanOrEqualTo(EventFieldExpirationDate, now);
 //
 //	eventQuery.find({success: function(events) {

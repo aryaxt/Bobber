@@ -173,6 +173,7 @@ public class EventService {
         invitee.from = User.currentUser()
         invitee.toPhoneNumber = toPhoneNumber
         invitee.to = to
+		invitee.stateEnum = .Pending
         
         invitee.saveInBackgroundWithBlock { success, error in
             completion(error)

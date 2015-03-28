@@ -129,8 +129,7 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		case .Events:
 			let cell = tableView.dequeueReusableCellWithType(EventCell.self)
 			let event = events[indexPath.row]
-			cell.textLabel?.text = event.title
-			cell.detailTextLabel?.text = "\(event.state) \(event.expirationDate)"
+			cell.configure(event)
 			return cell
 		}
 	}

@@ -26,7 +26,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="Bobber" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Bobber" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -180,6 +180,15 @@
                                                                 <action selector="acceptSelected:" destination="fJ5-cb-DS3" eventType="touchUpInside" id="Ldg-xZ-T1v"/>
                                                             </connections>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHX-8X-hRo">
+                                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                                <rect key="frame" x="8" y="14" width="110" height="21"/>
+                                                            </variation>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -193,6 +202,7 @@
                                                         <mask key="subviews">
                                                             <exclude reference="dqI-9x-lH5"/>
                                                             <exclude reference="499-iT-Y9Q"/>
+                                                            <exclude reference="PHX-8X-hRo"/>
                                                         </mask>
                                                         <mask key="constraints">
                                                             <exclude reference="jeO-9f-13Y"/>
@@ -207,6 +217,7 @@
                                                         <mask key="subviews">
                                                             <include reference="dqI-9x-lH5"/>
                                                             <include reference="499-iT-Y9Q"/>
+                                                            <include reference="PHX-8X-hRo"/>
                                                         </mask>
                                                         <mask key="constraints">
                                                             <include reference="jeO-9f-13Y"/>
@@ -217,7 +228,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SX5-wV-CPD">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Invitation" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SX5-wV-CPD">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="51" id="0IS-2C-fNb"/>
@@ -279,35 +290,65 @@
                                             <outlet property="acceptButton" destination="499-iT-Y9Q" id="e6e-ZA-kBw"/>
                                             <outlet property="declineButton" destination="dqI-9x-lH5" id="Ot4-1L-7gp"/>
                                             <outlet property="eventNameLabel" destination="SX5-wV-CPD" id="jwD-YE-kYF"/>
+                                            <outlet property="eventTimerLabel" destination="PHX-8X-hRo" id="Fpg-Gh-EM1"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" textLabel="GPd-9i-s7l" detailTextLabel="ooi-Sg-fFl" style="IBUITableViewCellStyleSubtitle" id="KqJ-TC-1Ku" customClass="EventCell" customModule="Bobber" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventCell" rowHeight="68" id="KqJ-TC-1Ku" customClass="EventCell" customModule="Bobber" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KqJ-TC-1Ku" id="86w-Z1-Cdm">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GPd-9i-s7l">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hY4-9s-mkT">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ooi-Sg-fFl">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-qE-aAk">
+                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hY4-9s-mkT" firstAttribute="leading" secondItem="86w-Z1-Cdm" secondAttribute="leading" constant="8" id="EXb-oG-qS6"/>
+                                                <constraint firstAttribute="trailing" secondItem="hY4-9s-mkT" secondAttribute="trailing" constant="8" id="FHw-YJ-vII"/>
+                                                <constraint firstItem="ygo-qE-aAk" firstAttribute="leading" secondItem="86w-Z1-Cdm" secondAttribute="leading" constant="10" id="Zyb-Jr-lCN"/>
+                                                <constraint firstAttribute="bottom" secondItem="ygo-qE-aAk" secondAttribute="bottom" constant="8" id="bRf-5D-Sc7"/>
+                                                <constraint firstItem="hY4-9s-mkT" firstAttribute="top" secondItem="86w-Z1-Cdm" secondAttribute="top" constant="13" id="v10-hM-bOD"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="hY4-9s-mkT"/>
+                                                    <exclude reference="ygo-qE-aAk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <exclude reference="EXb-oG-qS6"/>
+                                                    <exclude reference="FHw-YJ-vII"/>
+                                                    <exclude reference="v10-hM-bOD"/>
+                                                    <exclude reference="Zyb-Jr-lCN"/>
+                                                    <exclude reference="bRf-5D-Sc7"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="hY4-9s-mkT"/>
+                                                    <include reference="ygo-qE-aAk"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="EXb-oG-qS6"/>
+                                                    <include reference="FHw-YJ-vII"/>
+                                                    <include reference="v10-hM-bOD"/>
+                                                    <include reference="Zyb-Jr-lCN"/>
+                                                    <include reference="bRf-5D-Sc7"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="eventNameLabel" destination="hY4-9s-mkT" id="rtF-Ot-9Dq"/>
+                                            <outlet property="eventTimerLabel" destination="ygo-qE-aAk" id="etK-tm-DJY"/>
                                             <segue destination="Qtu-fT-z4u" kind="show" identifier="EventViewController" id="mdM-9b-4zP"/>
                                         </connections>
                                     </tableViewCell>
@@ -403,7 +444,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQL-7O-Qli">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friend Request" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQL-7O-Qli">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="51" id="pCO-W6-f3F"/>

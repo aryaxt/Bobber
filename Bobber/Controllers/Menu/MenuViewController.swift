@@ -41,8 +41,11 @@ class MenuViewController: UIViewController {
 		case 1:
 			break
 		case 2:
+			UIApplication.sharedApplication().cancelAllLocalNotifications()
 			PFUser.logOut()
-			SlideNavigationController.sharedInstance().popToRootViewControllerAnimated(true)
+			
+			let login = LoginViewController.instantiateFromStoryboard()
+			BobberNavigationController.sharedInstance().popAllAndSwitchToViewController(login) {  }
 		default :
 			break
 		}

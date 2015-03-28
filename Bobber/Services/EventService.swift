@@ -28,7 +28,7 @@ public class EventService {
             completion(event, error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.scheduleEventLocalNotificationForCreator(event)
+				NotificationManager.sharedInstance.scheduleEventLocalNotificationForFiniliingEvent(event)
 			}
         }
     }
@@ -46,8 +46,15 @@ public class EventService {
 		eventInvitation.saveInBackgroundWithBlock { result, error in
 			completion(error)
 			
-			if error == nil && status == .Accepted {
-				NotificationManager.sharedInstance.scheduleEventLocalNotificationForAttendee(eventInvitation.event)
+			if error == nil {
+				
+				if status == .Accepted {
+					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId, action: .InvitationResponseNeeded)
+					NotificationManager.sharedInstance.scheduleEventLocalNotificationForLocationSuggestion(eventInvitation.event)
+				}
+				else if status == .Declined {
+					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId)
+				}
 			}
 		}
 	}
@@ -102,7 +109,17 @@ public class EventService {
 		// TODO: Maybe all attending events with accepted status in the future
 		// And all pending where expiration has not passed
         
-		query.findObjectsInBackgroundWithCompletion(EventInvitation.self, completion: completion)
+		query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
+		
+			completion(invitations, error)
+			
+			
+			if error == nil {
+				for invitation in invitations! {
+					NotificationManager.sharedInstance.scheduleEventLocalNotificationForRespondingToEvent(invitation.event)
+				}
+			}
+		}
     }
 	
 	public func fetchComments(event: Event, var page: Int, perPage: Int, completion: ([Comment]?, NSError?)->()) {

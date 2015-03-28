@@ -13,23 +13,39 @@ public protocol EventInvitationCellDelegate: class {
 
 public class EventInvitationCell: UITableViewCell {
 	
-	@IBOutlet weak var eventNameLabel: UILabel!
-	@IBOutlet weak var declineButton: UIButton!
-	@IBOutlet weak var acceptButton: UIButton!
-	weak var delegate: EventInvitationCellDelegate!
+	@IBOutlet private weak var eventNameLabel: UILabel!
+	@IBOutlet private weak var eventTimerLabel: UILabel!
+	@IBOutlet private weak var declineButton: UIButton!
+	@IBOutlet private weak var acceptButton: UIButton!
+	public weak var delegate: EventInvitationCellDelegate!
+	private var timer: NSTimer!
+	private var invitation: EventInvitation!
 	
 	// MARK: - View Methods -
 	
 	public override func awakeFromNib() {
 		super.awakeFromNib()
 		
+		timer = NSTimer(timeInterval: 1, target: self, selector: "timerTicked", userInfo: nil, repeats: true)
+		timer.fire()
+		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
 		declineButton.setTitleColor(UIColor.redColor(), forState: .Normal)
 		acceptButton.setTitleColor(UIColor.greenColor(), forState: .Normal)
+	}
+	
+	// MARK: - Actions -
+	
+	func timerTicked() {
+		if (invitation != nil) {
+			eventTimerLabel.text = "\(invitation.event.expirationDate.timeIntervalSinceNow/60) minutes"
+		}
 	}
 	
 	// MARK: - Public -
 	
 	public func configure(eventInvitation: EventInvitation) {
+		
+		invitation = eventInvitation
 		
 		let defaultAttributes = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName: UIFont.systemFontOfSize(14)]
 		let fromAttributes = [NSForegroundColorAttributeName: UIColor.blueColor()]

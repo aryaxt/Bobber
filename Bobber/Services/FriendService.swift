@@ -21,10 +21,12 @@ public class FriendService {
     
     public func fetchFriends(completion: ([User]? , NSError?)->()) {
         let user = User.currentUser()
-        let prediate = NSPredicate(format: "status == %@ AND (from == %@ OR to == %@)", FriendRequest.State.Accepted.rawValue, user, user)
-        let finalQuery = FriendRequest.queryWithPredicate(prediate)
+        let prediate = NSPredicate(format: "state == %@ AND (from == %@ OR to == %@)", FriendRequest.State.Accepted.rawValue, user, user)
+        let query = FriendRequest.queryWithPredicate(prediate)
+		query.includeKey("from")
+		query.includeKey("to")
         
-        finalQuery.findObjectsInBackgroundWithCompletion(FriendRequest.self) { friendRequests, error in
+        query.findObjectsInBackgroundWithCompletion(FriendRequest.self) { friendRequests, error in
             if let anError = error {
                 completion(nil, error)
             }

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-class EventInviteViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+public class EventInviteViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     var event: Event!
     var contacts = [Contact]()
@@ -18,7 +18,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
     
     // MARK: - UIViewController names -
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         populateContactList()
@@ -35,7 +35,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventInviteViewController" {
             var destination = segue.destinationViewController as EventInviteViewController
             destination.event = event
@@ -44,11 +44,11 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
 
     // MARK: - UITableView Delegate & Datasource -
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return friends.count
         }
@@ -57,7 +57,7 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         
         if indexPath.section == 0 {
@@ -73,13 +73,31 @@ class EventInviteViewController: BaseViewController, UITableViewDelegate, UITabl
         
         return cell
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        eventService.invite(event, toPhoneNumber: contacts[indexPath.row].phoneNumber!) { error in
-            
-        }
+
+	public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let header = RoundedHeaderView.instantiateFromNib()
+		header.setTitle(section == 0 ? "Bobber Friends" : "Contacts")
+		return header
+	}
+	
+	public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return RoundedHeaderView.height()
+	}
+	
+    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		
+		if indexPath.section == 0 {
+			eventService.invite(event, user: friends[indexPath.row]) { error in
+				
+			}
+		}
+		else {
+			eventService.invite(event, toPhoneNumber: contacts[indexPath.row].phoneNumber!) { error in
+				
+			}
+		}
     }
-    
+	
     // MARK: - Actions -
     
     @IBAction func cancelSelected(sender: AnyObject) {

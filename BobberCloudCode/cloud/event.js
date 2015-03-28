@@ -91,8 +91,7 @@ exports.sendInvite = function(user, invitation, completion) {
 	var push = require("cloud/push.js");
 	var sms = require("cloud/sms.js");
 	var md5 = require("cloud/md5.js");
-	var phoneNumber = invitation.get(EventInvitationFieldToPhoneNumber).replace(/\D/g,"");
-	var phoneNumberHashed = md5.hex_md5(phoneNumber);
+	var phoneNumber = invitation.get(EventInvitationFieldToPhoneNumber);
 	var inviteMessage = "Someone sent you a bob (Fix with better message)"; // TODO: Show a better message
     
     invitation.set(EventInvitationFieldState, EventInvitationStatePending);
@@ -100,6 +99,9 @@ exports.sendInvite = function(user, invitation, completion) {
 	// If attempting to invite a user with phone number
 	if (phoneNumber != null) {
 
+		phoneNumber = phoneNumber.replace(/\D/g,"");
+		var phoneNumberHashed = md5.hex_md5(phoneNumber);
+		
 	    var userQuery = new Parse.Query(Parse.User);
 	    userQuery.equalTo("phoneNumber", phoneNumberHashed);
 	    userQuery.find({success: function(users) {

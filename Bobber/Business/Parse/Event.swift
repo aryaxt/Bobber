@@ -42,13 +42,6 @@ public class Event: PFObject, PFSubclassing {
     }
 	
 	public func isExpired() -> Bool {
-		let comparision = NSDate().compare(expirationDate)
-		
-		if comparision == .OrderedAscending || comparision == .OrderedSame {
-			return true
-		}
-		else   {
-			return true
-		}
+		return expirationDate.timeIntervalSinceNow > 0 ? false : true
 	}
 }

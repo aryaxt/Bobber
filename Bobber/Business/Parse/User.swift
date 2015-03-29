@@ -25,5 +25,9 @@ public class User: PFUser, PFSubclassing {
     override public class func load() {
         registerSubclass()
     }
+	
+	public func isCurrent() -> Bool {
+		return objectId == User.currentUser().objectId
+	}
     
 }

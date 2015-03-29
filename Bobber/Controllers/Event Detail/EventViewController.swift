@@ -29,7 +29,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 		
 		addBarButtonWithTitle("Invite", position: .Right, selector: "inviteSelected:")
 		
-        populateEvent()
+        //populateEvent()
         
         eventService.fetchDetail(event.objectId) { [weak self] event, error in
             if let anError = error {
@@ -108,9 +108,15 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
     private func populateEvent() {
 		
         titleLabel.text = event.title
-		locationLabel.text = event.location == nil ? "Location In Planning, expires in \(event.expirationDate)" : event.location!.formattedAddress
-		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime!.eventFormattedDate()
+		dateLabel.text = event.startTime == nil ? "Time In Planning" : event.startTime?.eventFormattedDate()
 		suggestLocationButton.hidden = event.isExpired() ? true : false
+		
+		if event.location == nil {
+			locationLabel.text =  "Location In Planning, expires in \(event.expirationDate)"
+		}
+		else {
+			locationLabel.text = event.location?.formattedAddress
+		}
     }
 	
 	// MARK: - Actions -
@@ -184,7 +190,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 			let suggestion = suggestedLocations[indexPath.row]
 			
 			 //Creator finalizing event
-			if event.isExpired() && User.currentUser() == event.creator {
+			if event.isExpired() && event.creator.isCurrent() {
 
 				UIActionSheet.showInView(
 					view,
@@ -251,7 +257,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	private func shouldShowSuggestedLocations() -> Bool {
 		if event.stateEnum == .Initial ||
-			(event.isExpired() && event.creator == User.currentUser()) {
+			(event.isExpired() && event.creator.isCurrent()) {
 			return true
 		}
 		

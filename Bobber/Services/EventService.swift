@@ -13,7 +13,7 @@ public class EventService {
         let query = Event.query()
         query.whereKey("objectId", equalTo: eventId)
         query.includeKey("creator")
-        query.includeKey("invitations")
+		query.includeKey("location")
         query.findObjectInBackgroundWithCompletion(Event.self, completion: completion)
     }
     
@@ -49,12 +49,10 @@ public class EventService {
 			if error == nil {
 				
 				if status == .Accepted {
-					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId, action: .InvitationResponseNeeded)
 					NotificationManager.sharedInstance.scheduleEventLocalNotificationForLocationSuggestion(eventInvitation.event)
 				}
-				else if status == .Declined {
-					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId)
-				}
+				
+				NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId, action: .InvitationResponseNeeded)
 			}
 		}
 	}

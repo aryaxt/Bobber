@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 aryaxt. All rights reserved.
 //
 
-public class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate, FriendRequestCellCellDelegate, SlideNavigationControllerDelegate {
+public class HomeViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EventInvitationCellDelegate, FriendRequestCellCellDelegate, SlideNavigationControllerDelegate, CreateEventViewControllerDelegate {
 	
 	public enum Section: Int {
 		case FriendRequest = 0
@@ -29,6 +29,16 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		addBarButtonWithTitle("Create", position: .Right, selector: "createEventSelected:")
 
 		fetchAndPopulateData()
+		
+		NSNotificationCenter.defaultCenter().addObserverForName(
+			NotificationManager.NotificationType.EventInvite.rawValue,
+			object: nil,
+			queue: nil) { [weak self] note in
+				
+				// TODO: Fetch by id instead?
+				self?.fetchAndPopulateData()
+				return
+		}
 	}
 	
 	override public func viewWillAppear(animated: Bool) {
@@ -48,10 +58,15 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 	
     override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventViewController" {
-            var destination = segue.destinationViewController as EventViewController
+            let destination = segue.destinationViewController as EventViewController
             let event = events[tableView.indexPathForSelectedRow()!.row]
             destination.event = event
         }
+		else if segue.identifier == "CreateEventViewController" {
+			let navigationController = segue.destinationViewController as UINavigationController
+			let destination = navigationController.topViewController as CreateEventViewController
+			destination.delegate = self
+		}
     }
 	
 	// MARK: - SlideNavigationControllerDelegate -
@@ -172,7 +187,7 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		let indexPath = tableView.indexPathForCell(cell)
 		let inviation = invitations[indexPath!.row]
 		
-		eventService.respondToInvitation(inviation, status: .Accepted) { [weak self] error in
+		eventService.respondToInvitation(inviation, state: .Accepted) { [weak self] error in
 			if error == nil {
 				self?.tableView.beginUpdates()
 				self?.invitations.removeAtIndex(indexPath!.row)
@@ -191,7 +206,7 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 		let indexPath = tableView.indexPathForCell(cell)
 		let inviation = invitations[indexPath!.row]
 
-		eventService.respondToInvitation(inviation, status: .Declined) { [weak self] error in
+		eventService.respondToInvitation(inviation, state: .Declined) { [weak self] error in
 			if error == nil {
 				self?.tableView.beginUpdates()
 				self?.invitations.removeAtIndex(indexPath!.row)
@@ -202,6 +217,32 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 				UIAlertController.show(self!, title: "Error", message: "Error responding to invitation")
 			}
 		}
+	}
+	
+	public func eventInvitationCellDidExpire(cell: EventInvitationCell) {
+		
+		if let indexPath = tableView.indexPathForCell(cell) {
+			
+			let inviation = invitations[indexPath.row]
+			
+			tableView.beginUpdates()
+			invitations.removeAtIndex(indexPath.row)
+			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+			tableView.endUpdates()
+		}
+	}
+	
+	// MARK: - CreateEventViewControllerDelegate -
+	
+	public func createEventViewControllerDidSelectCancel(controller: CreateEventViewController) {
+		dismissViewControllerAnimated(true, completion: nil)
+	}
+	
+	public func createEventViewController(controller: CreateEventViewController, didCreateEvent event: Event) {
+		tableView.beginUpdates()
+		events.insert(event, atIndex: 0)
+		tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: Section.Events.rawValue)], withRowAnimation: .Automatic)
+		tableView.endUpdates()
 	}
 	
 	// MARK: - Private -

@@ -28,7 +28,7 @@ public class EventService {
             completion(event, error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.scheduleEventLocalNotificationForFiniliingEvent(event)
+				NotificationManager.sharedInstance.scheduleEventLocalNotificationForFinalizingEvent(event)
 			}
         }
     }
@@ -41,18 +41,19 @@ public class EventService {
         invite(event, to: nil, toPhoneNumber: toPhoneNumber, completion: completion)
     }
 	
-	public func respondToInvitation(eventInvitation: EventInvitation, status: EventInvitation.State, completion: (NSError?)->()) {
-		eventInvitation.stateEnum = status
+	public func respondToInvitation(eventInvitation: EventInvitation, state: EventInvitation.State, completion: (NSError?)->()) {
+		eventInvitation.stateEnum = state
 		eventInvitation.saveInBackgroundWithBlock { result, error in
 			completion(error)
 			
 			if error == nil {
 				
-				if status == .Accepted {
+				if state == .Accepted {
 					NotificationManager.sharedInstance.scheduleEventLocalNotificationForLocationSuggestion(eventInvitation.event)
 				}
-				
-				NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId, action: .InvitationResponseNeeded)
+				else if state == .Declined {
+					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId)
+				}
 			}
 		}
 	}
@@ -61,6 +62,10 @@ public class EventService {
         event.stateEnum = .Canceled
         event.saveInBackgroundWithBlock { success, error in
             completion(error)
+			
+			if error == nil {
+				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId)
+			}
         }
     }
     
@@ -83,6 +88,16 @@ public class EventService {
     public func fetchMyInvitations(completion: ([EventInvitation]?, NSError?)->()) {
         // TODO: Accepted and pending, use NSPredicate
 		// Think about this, what about expiration time?
+//		let predicate = NSPredicate(format: "to == %@ AND (state == %@ OR (state == %@ AND event.expirationDate > %@))",
+//			User.currentUser(),
+//			EventInvitation.State.Accepted.rawValue,
+//			EventInvitation.State.Pending.rawValue,
+//			NSDate())
+//		
+//		let query = EventInvitation.queryWithPredicate(predicate)
+//		query.includeKey("event")
+//		query.includeKey("from")
+		
         let query = EventInvitation.query()
         query.whereKey("to", equalTo: User.currentUser())
 		query.includeKey("event")
@@ -98,11 +113,16 @@ public class EventService {
 			
 			if error == nil {
 				for invitation in invitations! {
-					NotificationManager.sharedInstance.scheduleEventLocalNotificationForRespondingToEvent(invitation.event)
+					//NotificationManager.sharedInstance.scheduleEventLocalNotificationForRespondingToEvent(invitation.event)
+					// Schedule either location picking or respond
 				}
 			}
 		}
     }
+	
+	public func fetchInvitationById(id: String, completion: (EventInvitation?, NSError?)->()) {
+		EventInvitation.query().getObjectInBackgroundWithId(id) { completion($0 as? EventInvitation, $1) }
+	}
 	
 	public func fetchComments(event: Event, var page: Int, perPage: Int, completion: ([Comment]?, NSError?)->()) {
 		page-- // UI thinks of first page as 1, data thinks of first page as 0
@@ -113,6 +133,10 @@ public class EventService {
 		query.skip = page * perPage
 		query.includeKey("from")
 		query.findObjectsInBackgroundWithCompletion(Comment.self, completion: completion)
+	}
+	
+	public func fetchCommentById(id: String, completion: (Comment?, NSError?)->()) {
+		Comment.query().getObjectInBackgroundWithId(id) { completion($0 as? Comment, $1) }
 	}
 	
     public func addComment(event: Event, text: String, completion: (Comment?, NSError?)->()) {

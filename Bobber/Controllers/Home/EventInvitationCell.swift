@@ -9,6 +9,7 @@
 public protocol EventInvitationCellDelegate: class {
 	func eventInvitationCellDidSelectDecline(cell: EventInvitationCell)
 	func eventInvitationCellDidSelectAccept(cell: EventInvitationCell)
+	func eventInvitationCellDidExpire(cell: EventInvitationCell)
 }
 
 public class EventInvitationCell: UITableViewCell {
@@ -27,7 +28,6 @@ public class EventInvitationCell: UITableViewCell {
 		super.awakeFromNib()
 		
 		timer = NSTimer(timeInterval: 1, target: self, selector: "timerTicked", userInfo: nil, repeats: true)
-		timer.fire()
 		NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
 		declineButton.setTitleColor(UIColor.redColor(), forState: .Normal)
 		acceptButton.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -37,7 +37,7 @@ public class EventInvitationCell: UITableViewCell {
 	
 	func timerTicked() {
 		if (invitation != nil) {
-			eventTimerLabel.text = "\(invitation.event.expirationDate.timeIntervalSinceNow/60) minutes"
+			configure(invitation!)
 		}
 	}
 	
@@ -53,6 +53,16 @@ public class EventInvitationCell: UITableViewCell {
 		let attributedString = NSMutableAttributedString(string: string, attributes: defaultAttributes)
 		attributedString.addAttributes(fromAttributes, range: NSMakeRange(0, countElements(eventInvitation.from.firstName)))
 		eventNameLabel.attributedText = attributedString
+		
+		let timeInterval = invitation.event.expirationDate.timeIntervalSinceNow
+			
+		if timeInterval > 0 {
+			eventTimerLabel.text = "\(timeInterval/60) minutes"
+		}
+		else {
+			eventTimerLabel.text = "Expired"
+			delegate.eventInvitationCellDidExpire(self)
+		}
 	}
 	
 	// MARK: - Actions -

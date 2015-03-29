@@ -101,7 +101,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 					UIAlertView.showAlert("Final Confirmation", message: "Organizer has picked location and time", buttons: ["YES"], cancelButton: "NO") { alert, index in
 						
 						let state: EventInvitation.State = index == alert.cancelButtonIndex ? .Declined : .Confirmed
-						self!.eventService.respondToInvitation(myAttendance!, status: state) { error in
+						self!.eventService.respondToInvitation(myAttendance!, state: state) { error in
 							
 						}
 					}

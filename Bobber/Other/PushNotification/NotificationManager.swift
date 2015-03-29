@@ -68,7 +68,7 @@ public class NotificationManager {
         }
     }
 	
-	public func scheduleEventLocalNotificationForFiniliingEvent(event: Event) {
+	public func scheduleEventLocalNotificationForFinalizingEvent(event: Event) {
 		
 		if let existingNotitication = localNotificationByEventId(event.objectId, action: LocalNotificationAction.FinilizingNeeded) {
 			return

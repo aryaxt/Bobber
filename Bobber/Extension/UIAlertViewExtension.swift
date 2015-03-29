@@ -8,15 +8,15 @@
 
 extension UIAlertView {
 	
-	public class func show(title: String, message: String, cancelButton: String = "Ok", completion: (()->())? = nil) {
-		show(title, message: message, buttons: [], cancelButton: cancelButton) { alert, index in
+	public class func showAlert(title: String, message: String, cancelButton: String = "Ok", completion: (()->())? = nil) {
+		showAlert(title, message: message, buttons: [], cancelButton: cancelButton) { alert, index in
 			if completion != nil {
 				completion!()
 			}
 		}
 	}
 	
-	public class func show(title: String, message: String, buttons: [String], cancelButton: String? = nil, completion: UIAlertViewCompletionBlock? = nil) {
+	public class func showAlert(title: String, message: String, buttons: [String], cancelButton: String? = nil, completion: UIAlertViewCompletionBlock? = nil) {
 		let alert = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: cancelButton)
 		
 		alert.tapBlock = completion

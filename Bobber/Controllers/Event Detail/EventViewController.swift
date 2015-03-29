@@ -29,53 +29,6 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 		
 		addBarButtonWithTitle("Invite", position: .Right, selector: "inviteSelected:")
 		
-        //populateEvent()
-        
-        eventService.fetchDetail(event.objectId) { [weak self] event, error in
-            if let anError = error {
-                // Error
-            }
-            else {
-                self?.event = event!
-                self?.populateEvent()
-            }
-        }
-		
-		eventService.fetchComments(event, page: 1, perPage: 25) { [weak self] comments, error in
-			if error == nil {
-				self!.comments.append(comments!)
-				self!.tableView.reloadData()
-			}
-			else {
-				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
-			}
-		}
-		
-		eventService.fetchAttendees(event, page: 1, perPage: 100) { [weak self] users, error in
-			if error == nil {
-				if users!.count == 0 {
-					self?.attendeesLabel.text = "No attendees yet"
-				}
-				else {
-					self?.attendeesLabel.text = ",".join(users!.map { $0.firstName })
-				}
-			}
-			else {
-				
-			}
-		}
-		
-		// No need to fetch these if event is already planned to event has a location
-		eventService.fetchSuggestedLocations(event) { [weak self] suggestedLocations, error in
-			if error == nil {
-				self!.suggestedLocations.append(suggestedLocations!)
-				self!.tableView.reloadData()
-			}
-			else {
-				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
-			}
-		}
-		
 		NSNotificationCenter.defaultCenter().addObserverForName(
 			NotificationManager.NotificationType.EventComment.rawValue,
 			object: nil,
@@ -83,6 +36,8 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 				
 			// reload if the new comment is not visible, then display a view after the view clicked take user to top of the page
 		}
+		
+		fetchEventInformation()
     }
 	
 	override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -118,6 +73,66 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 			locationLabel.text = event.location?.formattedAddress
 		}
     }
+	
+	private func fetchEventInformation() {
+		eventService.fetchDetail(event.objectId) { [weak self] event, error in
+			if let anError = error {
+				// Error
+			}
+			else {
+				self?.event = event!
+				self?.populateEvent()
+			}
+		}
+		
+		eventService.fetchAttendees(event) { [weak self] invitations, error in
+			if error == nil {
+				if invitations!.count == 0 {
+					self?.attendeesLabel.text = "No attendees yet"
+				}
+				else {
+					self?.attendeesLabel.text = ",".join(invitations!.map { $0.to!.firstName })
+				}
+				
+				let myAttendance = invitations!.filter { $0.to!.isCurrent() }.first
+				
+				// Event is set for final confirmation and attendee should confirm
+				if self!.event.stateEnum == .FinalConfirmation && !self!.event.creator.isCurrent() && myAttendance!.stateEnum == .Accepted {
+					UIAlertView.showAlert("Final Confirmation", message: "Organizer has picked location and time", buttons: ["YES"], cancelButton: "NO") { alert, index in
+						
+						let state: EventInvitation.State = index == alert.cancelButtonIndex ? .Declined : .Confirmed
+						self!.eventService.respondToInvitation(myAttendance!, status: state) { error in
+							
+						}
+					}
+				}
+			}
+			else {
+				
+			}
+		}
+		
+		eventService.fetchComments(event, page: 1, perPage: 25) { [weak self] comments, error in
+			if error == nil {
+				self!.comments.append(comments!)
+				self!.tableView.reloadData()
+			}
+			else {
+				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
+			}
+		}
+		
+		// No need to fetch these if event is already planned to event has a location
+		eventService.fetchSuggestedLocations(event) { [weak self] suggestedLocations, error in
+			if error == nil {
+				self!.suggestedLocations.append(suggestedLocations!)
+				self!.tableView.reloadData()
+			}
+			else {
+				UIAlertController.show(self!, title: "Error", message: "Error posting comment")
+			}
+		}
+	}
 	
 	// MARK: - Actions -
 	

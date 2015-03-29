@@ -64,29 +64,13 @@ public class EventService {
         }
     }
     
-	public func fetchAttendees(event: Event, var page: Int, perPage: Int, completion: ([User]?, NSError?)->()) {
-		page-- // UI thinks of first page as 1, data thinks of first page as 0
+	public func fetchAttendees(event: Event, completion: ([EventInvitation]?, NSError?)->()) {
         let query = EventInvitation.query()
         query.whereKey("event", equalTo: event)
+		query.whereKey("status", notEqualTo: EventInvitation.State.Declined.rawValue)
         query.includeKey("to")
-		query.limit = perPage
-		query.skip = page * perPage
-		
-		if event.stateEnum == .Initial {
-			query.whereKey("status", equalTo: EventInvitation.State.Accepted.rawValue)
-		}
-		
-		// TODO: Handler final confirmes, if event is sent for final confirmation, diplay confirmed instead of accepted
-		
-        query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
-            if error == nil {
-                let users = invitations!.map { $0.to! }
-                completion(users, nil)
-            }
-            else {
-                completion(nil, error)
-            }
-        }
+
+		query.findObjectsInBackgroundWithCompletion(EventInvitation.self, completion: completion)
     }
 	
     public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
@@ -157,7 +141,7 @@ public class EventService {
 			completion(suggestion, error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId)
+				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId, action: .SuggestLocation)
 			}
 		}
 	}

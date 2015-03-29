@@ -86,6 +86,7 @@
 		1541F4CC1AB154FD005D6CA2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */; };
 		1541F4CD1AB154FD005D6CA2 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1541F4CB1AB154FD005D6CA2 /* NotificationManager.swift */; };
 		15426A5B1ABDE40700F4CD67 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A5A1ABDE40700F4CD67 /* UIAlertViewExtension.swift */; };
+		15721BAA1AC87A8D003F5694 /* UIAlertViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15426A5A1ABDE40700F4CD67 /* UIAlertViewExtension.swift */; };
 		159C030E1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C030F1A905D0300EAA342 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03011A905D0300EAA342 /* CreateEventViewController.swift */; };
 		159C03101A905D0300EAA342 /* EventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159C03031A905D0300EAA342 /* EventViewController.swift */; };
@@ -967,6 +968,7 @@
 				159C03311A9176E500EAA342 /* EventLocationSuggestion.swift in Sources */,
 				159C03191A905D0300EAA342 /* LoginViewController.swift in Sources */,
 				15258A6D1A75C02E00944268 /* InstallationService.swift in Sources */,
+				15721BAA1AC87A8D003F5694 /* UIAlertViewExtension.swift in Sources */,
 				151ECB231AC652D3000DD67B /* ProfileViewController.swift in Sources */,
 				92C7F1931A5C714100259218 /* BobberTests.swift in Sources */,
 				1541F4C11AB154DA005D6CA2 /* ContactsManager.swift in Sources */,

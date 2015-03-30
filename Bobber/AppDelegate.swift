@@ -98,5 +98,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
 		NotificationManager.sharedInstance.handleLocalNotification(notification)
 	}
+	
+	func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+		
+	}
+	
+	func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+		NotificationManager.sharedInstance.handlePushNotificationAction(identifier, userInfo: userInfo, completion: completionHandler)
+	}
 }
 

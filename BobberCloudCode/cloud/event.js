@@ -6,6 +6,8 @@ var EventInviteNotificationType = "eventInvite";
 var EventExpiredNotificationType = "eventExpired";
 var EventFinalConfirmationRequestNotificationType = "finalConfirmation";
 
+var EventNotificationCategoryRespond = "respond";
+
 var EventFieldCreator = "creator";
 var EventFieldTitle = "title";
 var EventFieldExpirationDate = "expirationDate";
@@ -131,6 +133,8 @@ exports.sendInvite = function(user, invitation, completion) {
 
 	                var pushData = {
 					   "alert" : inviteMessage,
+					   "sound": "default",
+					   "category": EventNotificationCategoryRespond,
 					   "type" : EventInviteNotificationType,
 					   "data" : invitation
 					   };
@@ -183,6 +187,7 @@ exports.sendCommentNotification = function (user, comment, completion) {
 
 	var pushData = {
 		"alert" : comment.get(EventCommentFieldText),
+		"sound": "default",
 		"type" : EventCommentNotificationType,
 		"data" : comment
 	};
@@ -194,6 +199,7 @@ exports.sendFinalConfirmation = function (user, event, completion) {
 
 	var pushData = {
 		"alert" : "Bob was planned, time for final confirmation",
+		"sound": "default",
 		"type" : EventFinalConfirmationRequestNotificationType,
 		"data" : event
 	};

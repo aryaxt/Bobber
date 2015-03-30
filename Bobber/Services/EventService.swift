@@ -113,8 +113,9 @@ public class EventService {
 			
 			if error == nil {
 				for invitation in invitations! {
-					//NotificationManager.sharedInstance.scheduleEventLocalNotificationForRespondingToEvent(invitation.event)
-					// Schedule either location picking or respond
+					if invitation.stateEnum == .Pending {
+						NotificationManager.sharedInstance.scheduleEventLocalNotificationForRespondingToEvent(invitation.event)
+					}
 				}
 			}
 		}

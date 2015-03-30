@@ -23,14 +23,18 @@ public class NotificationManager {
 	
 	public enum NotificationCategory: String {
 		case Respond = "respond"
+		case Confirm = "confirm"
 	}
 	
 	public enum NotificationAction: String {
 		case RespondAccept = "respondAccept"
 		case RespondDecline = "respondDecline"
+		case ConfirmAccept = "confirmAccept"
+		case ConfirmDecline = "confirmDecline"
 	}
     
     private lazy var installationService = InstallationService()
+	private lazy var eventService = EventService()
     
     public var deviceToken: NSData? {
         didSet {
@@ -52,7 +56,7 @@ public class NotificationManager {
 
 
         if UIApplication.sharedApplication().respondsToSelector(Selector("registerUserNotificationSettings:")) {
-			let categories = NSSet(objects: respondToEventNotificationCategory())
+			let categories = NSSet(objects: respondToEventNotificationCategory(), confirmEventNotificationCategory())
 			
             let notificationTypes: UIUserNotificationType = .Alert | .Sound | .Badge
             let userSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categories)
@@ -73,7 +77,13 @@ public class NotificationManager {
     }
 	
 	public func handlePushNotificationAction(identifier: String?, userInfo: [NSObject: AnyObject]?, completion: ()->()) {
-		
+		if let dictionary = userInfo?["data"] as? [NSObject: AnyObject] {
+			handleNotificationAction(identifier, userInfo: dictionary, completion: completion)
+		}
+	}
+	
+	public func handleLocalNotificationAction(identifier: String?, notification: UILocalNotification, completion: ()->()) {
+		handleNotificationAction(identifier, userInfo: notification.userInfo, completion: completion)
 	}
 	
 	public func handleLocalNotification(localNotification: UILocalNotification) {
@@ -100,7 +110,7 @@ public class NotificationManager {
 		notification.alertAction = "Go to Bob"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate
-		notification.userInfo = ["eventId": event.objectId, "action": LocalNotificationAction.FinilizingNeeded.rawValue]
+		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.FinilizingNeeded.rawValue]
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
 	}
@@ -117,7 +127,8 @@ public class NotificationManager {
 		notification.alertAction = "Suggest Location"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate.dateByAddingTimeInterval(NSTimeInterval(60 * 5 * -1))
-		notification.userInfo = ["eventId": event.objectId, "action": LocalNotificationAction.SuggestLocation.rawValue]
+		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.SuggestLocation.rawValue]
+		notification.category = NotificationCategory.Respond.rawValue
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
 	}
@@ -134,7 +145,7 @@ public class NotificationManager {
 		notification.alertAction = "Respond"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate.dateByAddingTimeInterval(NSTimeInterval(60 * 5 * -1))
-		notification.userInfo = ["eventId": event.objectId, "action": LocalNotificationAction.InvitationResponseNeeded.rawValue]
+		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.InvitationResponseNeeded.rawValue]
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
 	}
@@ -146,6 +157,40 @@ public class NotificationManager {
 	}
 	
 	// MARK: - Private -
+	
+	private func handleNotificationAction(identifier: String?, userInfo: [NSObject: AnyObject]?, completion: ()->()) {
+		if (identifier == nil || userInfo == nil) {
+			completion()
+			return
+		}
+		
+		if let action = NotificationAction(rawValue: identifier!) {
+			
+			switch action {
+			case .RespondAccept, .RespondDecline:
+				if let eventId = userInfo?["id"] as? String {
+					eventService.fetchInvitationByEventId(eventId){ [weak self] invitation, error in
+						if error == nil {
+							let state: EventInvitation.State = action == .RespondAccept ? .Accepted : .Declined
+							self!.eventService.respondToInvitation(invitation!, state: state, completion: { error in
+								completion()
+							})
+						}
+						else {
+							completion();
+						}
+					}
+				}
+				
+			default:
+				completion()
+			}
+			
+		}
+		else {
+			completion()
+		}
+	}
 	
 	private func respondToEventNotificationCategory() -> UIMutableUserNotificationCategory {
 		
@@ -170,12 +215,35 @@ public class NotificationManager {
 		return respondToEventNotificationCategory
 	}
 	
+	private func confirmEventNotificationCategory() -> UIMutableUserNotificationCategory {
+		
+		let confirmYesToEventNotificationAction = UIMutableUserNotificationAction()
+		confirmYesToEventNotificationAction.activationMode = .Background
+		confirmYesToEventNotificationAction.title = "Yes"
+		confirmYesToEventNotificationAction.identifier = NotificationAction.ConfirmAccept.rawValue
+		confirmYesToEventNotificationAction.destructive = false
+		confirmYesToEventNotificationAction.authenticationRequired = false
+		
+		let confirmNoToEventNotificationAction = UIMutableUserNotificationAction()
+		confirmNoToEventNotificationAction.activationMode = .Background
+		confirmNoToEventNotificationAction.title = "No"
+		confirmNoToEventNotificationAction.identifier = NotificationAction.ConfirmDecline.rawValue
+		confirmNoToEventNotificationAction.destructive = true
+		confirmNoToEventNotificationAction.authenticationRequired = false
+		
+		let respondToEventNotificationCategory = UIMutableUserNotificationCategory()
+		respondToEventNotificationCategory.identifier = NotificationCategory.Confirm.rawValue
+		respondToEventNotificationCategory.setActions([confirmYesToEventNotificationAction, confirmNoToEventNotificationAction], forContext: .Default)
+		
+		return respondToEventNotificationCategory
+	}
+	
 	private func localNotificationsByEventId(eventId: String, action: LocalNotificationAction? = nil) -> [UILocalNotification] {
 		
 		var notifications = [UILocalNotification]()
 		
 		for notification in UIApplication.sharedApplication().scheduledLocalNotifications as [UILocalNotification] {
-			if let id = notification.userInfo?["eventId"] as? String {
+			if let id = notification.userInfo?["id"] as? String {
 				if id == eventId {
 					
 					if action != nil {

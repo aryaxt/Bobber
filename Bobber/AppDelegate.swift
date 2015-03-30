@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 	
 	func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-		
+		NotificationManager.sharedInstance.handleLocalNotificationAction(identifier, notification: notification, completion: completionHandler)
 	}
 	
 	func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], completionHandler: () -> Void) {

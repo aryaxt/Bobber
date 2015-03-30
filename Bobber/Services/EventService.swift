@@ -125,6 +125,22 @@ public class EventService {
 		EventInvitation.query().getObjectInBackgroundWithId(id) { completion($0 as? EventInvitation, $1) }
 	}
 	
+	public func fetchInvitationByEventId(eventId: String, completion: (EventInvitation?, NSError?)->()) {
+		
+		let event = Event(withoutDataWithObjectId: eventId)
+		let query = EventInvitation.query()
+		query.whereKey("to", equalTo: User.currentUser())
+		query.whereKey("event", equalTo: event)
+		query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
+			if error == nil {
+				completion(invitations!.first, nil)
+			}
+			else {
+				completion(nil, error)
+			}
+		}
+	}
+	
 	public func fetchComments(event: Event, var page: Int, perPage: Int, completion: ([Comment]?, NSError?)->()) {
 		page-- // UI thinks of first page as 1, data thinks of first page as 0
 		let query = Comment.query()

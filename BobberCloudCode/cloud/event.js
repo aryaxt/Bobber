@@ -7,6 +7,7 @@ var EventExpiredNotificationType = "eventExpired";
 var EventFinalConfirmationRequestNotificationType = "finalConfirmation";
 
 var EventNotificationCategoryRespond = "respond";
+var EventNotificationCategoryConfirm = "confirm";
 
 var EventFieldCreator = "creator";
 var EventFieldTitle = "title";
@@ -90,6 +91,8 @@ exports.sendInvite = function(user, invitation, completion) {
     // TODO: Don't allow invite after response time is expired
     // TODO: Send push to confirmed attendees registered for new attendees when someone accepts (send reject to owner only?)
 
+	
+	var event = invitation.get(EventInvitationFieldEvent);
 	var push = require("cloud/push.js");
 	var sms = require("cloud/sms.js");
 	var md5 = require("cloud/md5.js");
@@ -136,8 +139,8 @@ exports.sendInvite = function(user, invitation, completion) {
 					   "sound": "default",
 					   "category": EventNotificationCategoryRespond,
 					   "type" : EventInviteNotificationType,
-					   "data" : invitation
-					   };
+					   "data" : { "id" : event.id }
+					};
 					   
 	                var installationQuery = new Parse.Query("Installation");
 	                installationQuery.equalTo("user", user);
@@ -159,8 +162,16 @@ exports.sendInvite = function(user, invitation, completion) {
 	}
 	// If attempting to invite an existing user
 	else if (invitation.get("to") != null) {
-	            
-	    var pushData = { "alert": inviteMessage };
+		
+		var pushData = {
+			"alert" : inviteMessage,
+			"sound": "default",
+			"category": EventNotificationCategoryRespond,
+			"type" : EventInviteNotificationType,
+			"data" : { "id" : event.id }
+		};
+		
+		
 	    var user = invitation.get(EventInvitationFieldTo);
 	    var installationQuery = new Parse.Query("Installation");
 	    installationQuery.equalTo("user", user);

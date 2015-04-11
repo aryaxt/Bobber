@@ -9,7 +9,7 @@
 public class BobberNavigationController: SlideNavigationController {
     
     public override class func sharedInstance() -> BobberNavigationController {
-        return super.sharedInstance() as BobberNavigationController
+        return super.sharedInstance() as! BobberNavigationController
     }
     
     public func applyLoggedInState() {

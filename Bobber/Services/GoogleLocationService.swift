@@ -18,9 +18,9 @@ public class GoogleLocationService {
             }
             else {
                 var autocompleteResult = [GoogleAutocompleteLocation]()
-                var data = result.dataUsingEncoding(NSUTF8StringEncoding)!
+                var data = result!.dataUsingEncoding(NSUTF8StringEncoding)!
                 var error: NSError?;
-                var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as NSDictionary
+                var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as! NSDictionary
 				
 				if let error = self!.validateStatus(dictionary) {
 					block(nil, error)
@@ -31,12 +31,12 @@ public class GoogleLocationService {
 					
                     for prediction in predictions {
 						
-						let firstTerms = prediction["terms"] as [NSDictionary]
+						let firstTerms = prediction["terms"] as! [NSDictionary]
 						
                         var autoComplere = GoogleAutocompleteLocation(
-							name: prediction["description"] as String,
-							placeId: prediction["place_id"] as String,
-							firstTerm: firstTerms[0].objectForKey("value") as String
+							name: prediction["description"] as! String,
+							placeId: prediction["place_id"] as! String,
+							firstTerm: firstTerms[0].objectForKey("value") as! String
 						)
 						
                         autocompleteResult.append(autoComplere)
@@ -55,16 +55,16 @@ public class GoogleLocationService {
 				block(nil, error)
 			}
 			else {
-				var data = result.dataUsingEncoding(NSUTF8StringEncoding)!
+				var data = result!.dataUsingEncoding(NSUTF8StringEncoding)!
 				var error: NSError?;
-				var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as NSDictionary
+				var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as! NSDictionary
 
 				if let error = self!.validateStatus(dictionary) {
 					block(nil, error)
 					return
 				}
 				
-				var results = dictionary.objectForKey("results") as [NSDictionary]
+				var results = dictionary.objectForKey("results") as! [NSDictionary]
 				var placeDetails = [GooglePlaceDetail]()
 				
 				for placeDict in results {
@@ -83,9 +83,9 @@ public class GoogleLocationService {
                 block(nil, error)
             }
             else {
-                var data = result.dataUsingEncoding(NSUTF8StringEncoding)!
+                var data = result!.dataUsingEncoding(NSUTF8StringEncoding)!
                 var error: NSError?;
-                var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as NSDictionary
+                var dictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers , error: &error) as! NSDictionary
 				
 				if let error = self!.validateStatus(dictionary) {
 					block(nil, error)
@@ -103,10 +103,10 @@ public class GoogleLocationService {
 	
 	
 	private func validateStatus(dictionary: NSDictionary) -> NSError? {
-		let status = dictionary.objectForKey("status") as String
+		let status = dictionary.objectForKey("status") as! String
 		
 		if status != "OK" && status != "ZERO_RESULTS" {
-			return NSError(domain: status, code: 0, userInfo: dictionary)
+			return NSError(domain: status, code: 0, userInfo: dictionary as? [NSObject : AnyObject])
 		}
 		
 		return nil
@@ -124,8 +124,8 @@ public class GoogleLocationService {
 		if let addressComponents = dictionary.objectForKey("address_components") as? [NSDictionary] {
 			
 			for component in addressComponents {
-				var type = component["types"] as [String]
-				var longName = component["long_name"] as String?
+				var type = component["types"] as! [String]
+				var longName = component["long_name"] as! String?
 				
 				if (contains(type, "street_number")) {
 					location.streetNumber = longName;

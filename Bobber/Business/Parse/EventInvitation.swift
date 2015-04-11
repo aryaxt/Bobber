@@ -30,7 +30,7 @@ public class EventInvitation: PFObject, PFSubclassing {
         return "EventInvitation"
     }
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

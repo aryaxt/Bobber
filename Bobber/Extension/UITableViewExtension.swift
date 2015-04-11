@@ -9,7 +9,7 @@
 public extension UITableView {
 	
 	public func dequeueReusableCellWithType<T: UITableViewCell>(type: T.Type) -> T {
-		return dequeueReusableCellWithIdentifier(NSStringFromClass(type).pathExtension) as T
+		return dequeueReusableCellWithIdentifier(NSStringFromClass(type).pathExtension) as! T
 	}
 	
 	public func deselectRowAnimated(animated: Bool) {

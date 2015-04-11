@@ -42,18 +42,18 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "EventInviteViewController" {
-			let destination = segue.destinationViewController as UINavigationController
-			let inviteViewController = destination.topViewController as EventInviteViewController
+			let destination = segue.destinationViewController as! UINavigationController
+			let inviteViewController = destination.topViewController as! EventInviteViewController
 			inviteViewController.event = event
 		}
 		else if segue.identifier == "LocationSearchViewController" {
-			let destination = segue.destinationViewController as UINavigationController
-			let inviteViewController = destination.topViewController as LocationSearchViewController
+			let destination = segue.destinationViewController as! UINavigationController
+			let inviteViewController = destination.topViewController as! LocationSearchViewController
 			inviteViewController.delegate = self
 		}
 		else if segue.identifier == "ProfileViewController" {
 			let indexPath = tableView.indexPathForSelectedRow()
-			let destination = segue.destinationViewController as ProfileViewController
+			let destination = segue.destinationViewController as! ProfileViewController
 			destination.user = comments[indexPath!.row].from
 		}
 	}
@@ -75,7 +75,7 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
     }
 	
 	private func fetchEventInformation() {
-		eventService.fetchDetail(event.objectId) { [weak self] event, error in
+		eventService.fetchDetail(event.objectId!) { [weak self] event, error in
 			if let anError = error {
 				// Error
 			}
@@ -175,13 +175,13 @@ public class EventViewController: BaseViewController, UITableViewDelegate, UITab
 	
 	public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		if indexPath.section == 0 {
-			let cell = tableView.dequeueReusableCellWithIdentifier("SuggestedLocationCell") as UITableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("SuggestedLocationCell") as! UITableViewCell
 			let suggestedLocation = suggestedLocations[indexPath.row]
 			cell.textLabel?.text = suggestedLocation.location.formattedAddress
 			return cell
 		}
 		else {
-			let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell") as UITableViewCell
+			let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell") as! UITableViewCell
 			let comment = comments[indexPath.row]
 			cell.textLabel?.text = comment.from.firstName
 			cell.detailTextLabel?.text = comment.text

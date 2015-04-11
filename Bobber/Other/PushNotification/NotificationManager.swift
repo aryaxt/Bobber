@@ -59,7 +59,7 @@ public class NotificationManager {
 			let categories = NSSet(objects: respondToEventNotificationCategory(), confirmEventNotificationCategory())
 			
             let notificationTypes: UIUserNotificationType = .Alert | .Sound | .Badge
-            let userSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categories)
+            let userSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: categories as Set<NSObject>)
             UIApplication.sharedApplication().registerUserNotificationSettings(userSettings)
             UIApplication.sharedApplication().registerForRemoteNotifications()
         }
@@ -100,7 +100,7 @@ public class NotificationManager {
 	
 	public func scheduleEventLocalNotificationForFinalizingEvent(event: Event) {
 		
-		if localNotificationsByEventId(event.objectId, action: LocalNotificationAction.FinilizingNeeded).count > 0 {
+		if localNotificationsByEventId(event.objectId!, action: LocalNotificationAction.FinilizingNeeded).count > 0 {
 			return
 		}
 		
@@ -110,14 +110,14 @@ public class NotificationManager {
 		notification.alertAction = "Go to Bob"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate
-		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.FinilizingNeeded.rawValue]
+		notification.userInfo = ["id": event.objectId!, "action": LocalNotificationAction.FinilizingNeeded.rawValue]
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
 	}
 	
 	public func scheduleEventLocalNotificationForLocationSuggestion(event: Event) {
 		
-		if localNotificationsByEventId(event.objectId, action: LocalNotificationAction.SuggestLocation).count > 0 {
+		if localNotificationsByEventId(event.objectId!, action: LocalNotificationAction.SuggestLocation).count > 0 {
 			return
 		}
 		
@@ -127,7 +127,7 @@ public class NotificationManager {
 		notification.alertAction = "Suggest Location"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate.dateByAddingTimeInterval(NSTimeInterval(60 * 5 * -1))
-		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.SuggestLocation.rawValue]
+		notification.userInfo = ["id": event.objectId!, "action": LocalNotificationAction.SuggestLocation.rawValue]
 		notification.category = NotificationCategory.Respond.rawValue
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -135,7 +135,7 @@ public class NotificationManager {
 	
 	public func scheduleEventLocalNotificationForRespondingToEvent(event: Event) {
 		
-		if localNotificationsByEventId(event.objectId, action: LocalNotificationAction.InvitationResponseNeeded).count > 0 {
+		if localNotificationsByEventId(event.objectId!, action: LocalNotificationAction.InvitationResponseNeeded).count > 0 {
 			return
 		}
 		
@@ -145,7 +145,7 @@ public class NotificationManager {
 		notification.alertAction = "Respond"
 		notification.soundName = UILocalNotificationDefaultSoundName
 		notification.fireDate = event.expirationDate.dateByAddingTimeInterval(NSTimeInterval(60 * 5 * -1))
-		notification.userInfo = ["id": event.objectId, "action": LocalNotificationAction.InvitationResponseNeeded.rawValue]
+		notification.userInfo = ["id": event.objectId!, "action": LocalNotificationAction.InvitationResponseNeeded.rawValue]
 		
 		UIApplication.sharedApplication().scheduleLocalNotification(notification)
 	}
@@ -242,7 +242,7 @@ public class NotificationManager {
 		
 		var notifications = [UILocalNotification]()
 		
-		for notification in UIApplication.sharedApplication().scheduledLocalNotifications as [UILocalNotification] {
+		for notification in UIApplication.sharedApplication().scheduledLocalNotifications as! [UILocalNotification] {
 			if let id = notification.userInfo?["id"] as? String {
 				if id == eventId {
 					

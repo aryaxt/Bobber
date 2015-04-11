@@ -51,7 +51,7 @@ public class EventInvitationCell: UITableViewCell {
 		let fromAttributes = [NSForegroundColorAttributeName: UIColor.blueColor()]
 		let string = "\(eventInvitation.from.firstName) wants to \(eventInvitation.event.title)"
 		let attributedString = NSMutableAttributedString(string: string, attributes: defaultAttributes)
-		attributedString.addAttributes(fromAttributes, range: NSMakeRange(0, countElements(eventInvitation.from.firstName)))
+		attributedString.addAttributes(fromAttributes, range: NSMakeRange(0, count(eventInvitation.from.firstName)))
 		eventNameLabel.attributedText = attributedString
 		
 		let timeInterval = invitation.event.expirationDate.timeIntervalSinceNow

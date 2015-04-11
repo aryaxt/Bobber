@@ -55,7 +55,7 @@ class LocationSearchViewController: BaseViewController, UISearchBarDelegate {
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell") as UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell") as! UITableViewCell
 		cell.textLabel?.text = locations[indexPath.row].name
 		return cell
 	}

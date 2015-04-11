@@ -17,7 +17,7 @@ public class Comment: PFObject, PFSubclassing {
         return "Comment"
     }
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

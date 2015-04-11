@@ -16,7 +16,7 @@ public class UserNotificationSetting: PFObject, PFSubclassing {
         return "UserNotificationSetting"
     }
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

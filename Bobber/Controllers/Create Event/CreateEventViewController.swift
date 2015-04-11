@@ -42,8 +42,8 @@ public class CreateEventViewController: BaseViewController {
 	
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateEventInviteViewController" {
-            let destination = segue.destinationViewController as EventInviteViewController
-			destination.event = sender as Event
+            let destination = segue.destinationViewController as! EventInviteViewController
+			destination.event = sender as! Event
         }
     }
 

@@ -9,12 +9,16 @@
 public class PhoneVerification: PFObject, PFSubclassing {
     
     @NSManaged var phoneNumber: String
+	
+	override init() {
+		super.init()
+	}
     
     public class func parseClassName() -> String {
         return "PhoneVerification"
     }
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

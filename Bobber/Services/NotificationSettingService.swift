@@ -19,8 +19,8 @@ public class NotificationSettingService {
             else {
                 var userSettings = [UserNotificationSetting]()
                 
-                for object in result as [PFObject] {
-                    userSettings.append(object as UserNotificationSetting)
+                for object in result as! [PFObject] {
+                    userSettings.append(object as! UserNotificationSetting)
                 }
                 
                 block(userSettings, nil)

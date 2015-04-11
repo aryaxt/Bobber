@@ -11,15 +11,15 @@ import Foundation
 extension PFQuery {
     
     public func findObjectsInBackgroundWithCompletion <T> (type:T.Type, completion: ([T]?, NSError?) -> Void) {
-        findObjectsInBackgroundWithBlock { (result, error) in
+        findObjectsInBackgroundWithBlock { result, error in
             if (error != nil) {
                 completion(nil, error)
             }
             else {
                 var castedResults = [T]()
                 
-                for object in result {
-                    castedResults.append(object as T)
+                for object in result! {
+                    castedResults.append(object as! T)
                 }
                 
                 completion(castedResults, nil)
@@ -33,8 +33,8 @@ extension PFQuery {
                 completion(nil, error)
             }
             else {
-                if result.count == 1 {
-                    var castedObject = result[0] as T
+                if result!.count == 1 {
+                    var castedObject = result![0] as! T
                     completion(castedObject, nil)
                 }
                 else {

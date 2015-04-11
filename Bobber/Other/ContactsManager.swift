@@ -22,9 +22,9 @@ public class ContactsManager {
                 let allContacts : NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
                 
                 for contactRef: ABRecordRef in allContacts {
-                    var firstName = ABRecordCopyValue(contactRef, kABPersonFirstNameProperty).takeUnretainedValue() as? NSString
-                    var lastNAme = ABRecordCopyValue(contactRef, kABPersonLastNameProperty).takeUnretainedValue() as? NSString
-                    var phoneNumber: NSString?
+                    var firstName = ABRecordCopyValue(contactRef, kABPersonFirstNameProperty).takeUnretainedValue() as? String
+                    var lastNAme = ABRecordCopyValue(contactRef, kABPersonLastNameProperty).takeUnretainedValue() as? String
+                    var phoneNumber: String?
                     
                     let unmanagedPhones = ABRecordCopyValue(contactRef, kABPersonPhoneProperty)
                     let phones: ABMultiValueRef = Unmanaged.fromOpaque(unmanagedPhones.toOpaque()).takeUnretainedValue() as NSObject as ABMultiValueRef
@@ -33,11 +33,11 @@ public class ContactsManager {
                         let unmanagedPhoneLabel = ABMultiValueCopyLabelAtIndex(phones, index)
                         
                         if unmanagedPhoneLabel != nil {
-                            let phoneLabel = Unmanaged.fromOpaque(unmanagedPhoneLabel.toOpaque()).takeUnretainedValue() as NSObject as String
+                            let phoneLabel = Unmanaged.fromOpaque(unmanagedPhoneLabel.toOpaque()).takeUnretainedValue() as NSObject as! String
                             
-                            if phoneLabel == kABPersonPhoneMobileLabel {
+                            if phoneLabel == kABPersonPhoneMobileLabel as! String {
                                 let unmanagedPhone = ABMultiValueCopyValueAtIndex(phones, index)
-                                phoneNumber = Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject as String
+                                phoneNumber = Unmanaged.fromOpaque(unmanagedPhone.toOpaque()).takeUnretainedValue() as NSObject as? String
                                 break
                             }
                         }

@@ -15,7 +15,7 @@ extension UIStoryboard {
     
     public func instantiateViewController <T: UIViewController>(type: T.Type) -> T {
         let controllerIdentifier = NSStringFromClass(type).pathExtension
-        return instantiateViewControllerWithIdentifier(controllerIdentifier) as T
+        return instantiateViewControllerWithIdentifier(controllerIdentifier) as! T
     }
     
 }

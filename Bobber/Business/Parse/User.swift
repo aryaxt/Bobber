@@ -22,12 +22,12 @@ public class User: PFUser, PFSubclassing {
     @NSManaged var birthday: NSDate?
     @NSManaged var gender: NSNumber?
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 	
 	public func isCurrent() -> Bool {
-		return objectId == User.currentUser().objectId
+		return objectId == User.currentUser()!.objectId
 	}
     
 }

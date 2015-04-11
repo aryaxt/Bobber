@@ -10,7 +10,7 @@ public class Installation: PFInstallation {
     
     @NSManaged var user: User
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

@@ -45,7 +45,7 @@ public class Location: PFObject, PFSubclassing {
         return "Location"
     }
     
-    override public class func load() {
+    override public class func initialize() {
         registerSubclass()
     }
 }

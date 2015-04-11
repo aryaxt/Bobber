@@ -37,7 +37,7 @@ public class EventInviteViewController: BaseViewController, UITableViewDelegate,
     
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventInviteViewController" {
-            var destination = segue.destinationViewController as EventInviteViewController
+            var destination = segue.destinationViewController as! EventInviteViewController
             destination.event = event
         }
     }
@@ -68,7 +68,7 @@ public class EventInviteViewController: BaseViewController, UITableViewDelegate,
         else {
             let identifier = "PersonCell"
             cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
-            cell.textLabel?.text = "\(contacts[indexPath.row].firstName?) \(contacts[indexPath.row].lastName?) \(contacts[indexPath.row].phoneNumber!)"
+            cell.textLabel?.text = "\(contacts[indexPath.row].firstName) \(contacts[indexPath.row].lastName) \(contacts[indexPath.row].phoneNumber!)"
         }
         
         return cell

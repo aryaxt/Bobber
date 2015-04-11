@@ -43,11 +43,11 @@ public class UserService {
             
             if let userResult = result as? NSDictionary {
                 
-                var user = User.currentUser()
-                user.firstName = userResult["first_name"] as String
-                user.lastName = userResult["last_name"] as String
-                user.socialId = userResult["id"] as String?
-                user.email = userResult["email"] as String?
+                var user = User.currentUser()!
+                user.firstName = userResult["first_name"] as! String
+                user.lastName = userResult["last_name"] as! String
+                user.socialId = userResult["id"] as? String
+                user.email = userResult["email"] as? String
                 
                 if let dateString = userResult["birthday"] as? String {
                     var dateFormatter = NSDateFormatter()
@@ -55,7 +55,7 @@ public class UserService {
                     user.birthday = dateFormatter.dateFromString(dateString)
                 }
                 
-                switch userResult["gender"] as String {
+                switch userResult["gender"] as! String {
                 case "male":
                     user.gender = 1
                     
@@ -67,7 +67,7 @@ public class UserService {
                     
                 }
                 
-                var facebookId = userResult["id"] as String
+                var facebookId = userResult["id"] as! String
                 user.photoUrl = "https://graph.facebook.com/\(facebookId)/picture"
                 
                 user.saveInBackgroundWithBlock { (success, error) in

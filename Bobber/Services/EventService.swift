@@ -10,7 +10,7 @@ public class EventService {
     
     public func fetchDetail(eventId: String, completion: (Event?, NSError?)->()) {
         // TODO: Add attendees to event as PFRelation?
-        let query = Event.query()
+        let query = Event.query()!
         query.whereKey("objectId", equalTo: eventId)
         query.includeKey("creator")
 		query.includeKey("location")
@@ -19,7 +19,7 @@ public class EventService {
     
 	public func createEvent(title: String, expirationDate: NSDate, completion: (Event?, NSError?)->()) {
 		let event = Event()
-		event.creator = User.currentUser()
+		event.creator = User.currentUser()!
 		event.stateEnum = .Initial
 		event.title = title
 		event.expirationDate = expirationDate
@@ -52,7 +52,7 @@ public class EventService {
 					NotificationManager.sharedInstance.scheduleEventLocalNotificationForLocationSuggestion(eventInvitation.event)
 				}
 				else if state == .Declined {
-					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId)
+					NotificationManager.sharedInstance.unscheduleEventNotification(eventInvitation.event.objectId!)
 				}
 			}
 		}
@@ -64,13 +64,13 @@ public class EventService {
             completion(error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId)
+				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId!)
 			}
         }
     }
     
 	public func fetchAttendees(event: Event, completion: ([EventInvitation]?, NSError?)->()) {
-        let query = EventInvitation.query()
+        let query = EventInvitation.query()!
         query.whereKey("event", equalTo: event)
 		query.whereKey("status", notEqualTo: EventInvitation.State.Declined.rawValue)
         query.includeKey("to")
@@ -79,34 +79,30 @@ public class EventService {
     }
 	
     public func fetchMyEvents(completion: ([Event]?, NSError?)->()) {
-        let query = Event.query()
-        query.whereKey("creator", equalTo: User.currentUser())
-        query.whereKey("createdAt", greaterThanOrEqualTo: NSDate().dateByAddingTimeInterval(60 * 60 * 24 * 2 * -1))
+        let query = Event.query()!
+			.whereKey("creator", equalTo: User.currentUser()!)
+			.whereKey("createdAt", greaterThanOrEqualTo: NSDate().dateByAddingTimeInterval(60 * 60 * 24 * 2 * -1))
+			.includeKey("creator") // TODO: Do i need creator
         query.findObjectsInBackgroundWithCompletion(Event.self, completion: completion)
     }
 
     public func fetchMyInvitations(completion: ([EventInvitation]?, NSError?)->()) {
-        // TODO: Accepted and pending, use NSPredicate
-		// Think about this, what about expiration time?
-//		let predicate = NSPredicate(format: "to == %@ AND (state == %@ OR (state == %@ AND event.expirationDate > %@))",
-//			User.currentUser(),
-//			EventInvitation.State.Accepted.rawValue,
-//			EventInvitation.State.Pending.rawValue,
-//			NSDate())
-//		
-//		let query = EventInvitation.queryWithPredicate(predicate)
-//		query.includeKey("event")
-//		query.includeKey("from")
+
+		let acceptedQuery = EventInvitation.query()!
+			.whereKey("state", equalTo: EventInvitation.State.Accepted.rawValue)
+			.whereKey("to", equalTo: User.currentUser()!)
 		
-        let query = EventInvitation.query()
-        query.whereKey("to", equalTo: User.currentUser())
-		query.includeKey("event")
-		query.includeKey("from")
+		let pendingQuery = EventInvitation.query()!
+			.whereKey("state", equalTo: EventInvitation.State.Pending.rawValue)
+			.whereKey("event", matchesQuery: Event.query()!.whereKey("expirationDate", greaterThan: NSDate()))
+			.whereKey("to", equalTo: User.currentUser()!)
 		
-		// TODO: Maybe all attending events with accepted status in the future
-		// And all pending where expiration has not passed
-        
-		query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
+		let finalQuery = PFQuery.orQueryWithSubqueries([acceptedQuery, pendingQuery])
+			.includeKey("from")
+			.includeKey("event")
+			.includeKey("event.creator")
+
+		finalQuery.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
 		
 			completion(invitations, error)
 			
@@ -122,14 +118,14 @@ public class EventService {
     }
 	
 	public func fetchInvitationById(id: String, completion: (EventInvitation?, NSError?)->()) {
-		EventInvitation.query().getObjectInBackgroundWithId(id) { completion($0 as? EventInvitation, $1) }
+		EventInvitation.query()!.getObjectInBackgroundWithId(id) { completion($0 as? EventInvitation, $1) }
 	}
 	
 	public func fetchInvitationByEventId(eventId: String, completion: (EventInvitation?, NSError?)->()) {
 		
 		let event = Event(withoutDataWithObjectId: eventId)
-		let query = EventInvitation.query()
-		query.whereKey("to", equalTo: User.currentUser())
+		let query = EventInvitation.query()!
+		query.whereKey("to", equalTo: User.currentUser()!)
 		query.whereKey("event", equalTo: event)
 		query.findObjectsInBackgroundWithCompletion(EventInvitation.self) { invitations, error in
 			if error == nil {
@@ -143,7 +139,7 @@ public class EventService {
 	
 	public func fetchComments(event: Event, var page: Int, perPage: Int, completion: ([Comment]?, NSError?)->()) {
 		page-- // UI thinks of first page as 1, data thinks of first page as 0
-		let query = Comment.query()
+		let query = Comment.query()!
 		query.whereKey("event", equalTo: event)
 		query.orderByDescending("createdAt")
 		query.limit = perPage
@@ -153,12 +149,12 @@ public class EventService {
 	}
 	
 	public func fetchCommentById(id: String, completion: (Comment?, NSError?)->()) {
-		Comment.query().getObjectInBackgroundWithId(id) { completion($0 as? Comment, $1) }
+		Comment.query()!.getObjectInBackgroundWithId(id) { completion($0 as? Comment, $1) }
 	}
 	
     public func addComment(event: Event, text: String, completion: (Comment?, NSError?)->()) {
         let comment = Comment()
-        comment.from = User.currentUser()
+        comment.from = User.currentUser()!
         comment.text = text
         comment.event = event
         
@@ -174,7 +170,7 @@ public class EventService {
 	
 	public func suggestLocation(event: Event, location: Location, completion: (EventLocationSuggestion?, NSError?)->()) {
 		let suggestion = EventLocationSuggestion()
-		suggestion.suggester = User.currentUser()
+		suggestion.suggester = User.currentUser()!
 		suggestion.event = event
 		suggestion.location = location
 		
@@ -182,13 +178,13 @@ public class EventService {
 			completion(suggestion, error)
 			
 			if error == nil {
-				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId, action: .SuggestLocation)
+				NotificationManager.sharedInstance.unscheduleEventNotification(event.objectId!, action: .SuggestLocation)
 			}
 		}
 	}
 	
 	public func fetchSuggestedLocations(event: Event, completion: ([EventLocationSuggestion]?, NSError?)->()) {
-		let query = EventLocationSuggestion.query()
+		let query = EventLocationSuggestion.query()!
 		query.whereKey("event", equalTo: event)
 		query.includeKey("location")
 		query.findObjectsInBackgroundWithCompletion(EventLocationSuggestion.self, completion: completion)
@@ -196,7 +192,7 @@ public class EventService {
 	
 	public func suggestDate(event: Event, date: NSDate, completion: (NSError?)->()) {
 		let suggestion = EventDateSuggestion()
-		suggestion.suggester = User.currentUser()
+		suggestion.suggester = User.currentUser()!
 		suggestion.event = event
 		suggestion.date = date
 		
@@ -218,7 +214,7 @@ public class EventService {
     private func invite(event: Event, to: User?, toPhoneNumber: String?, completion: (NSError?)->()) {
         let invitee = EventInvitation()
         invitee.event = event
-        invitee.from = User.currentUser()
+        invitee.from = User.currentUser()!
         invitee.toPhoneNumber = toPhoneNumber
         invitee.to = to
 		invitee.stateEnum = .Pending

@@ -28,13 +28,4 @@ public extension UIViewController {
 		return UIStoryboard.instantiateViewController(self)
 	}
 	
-	public func presentModalViewController(contorller: UIViewController) {
-		let navigationController = UINavigationController(rootViewController: contorller)
-		presentViewController(navigationController, animated: true, completion: nil)
-	}
-	
-	public func presentModalViewController(type: UIViewController.Type) {
-		presentModalViewController(type.instantiateFromStoryboard())
-	}
-	
 }

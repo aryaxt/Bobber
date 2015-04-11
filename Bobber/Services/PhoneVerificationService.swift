@@ -24,7 +24,7 @@ public class PhoneVerificationService {
         
             if (error == nil) {
                 // Make sure user phoneNumber field is updated on the client
-                User.currentUser().fetchInBackgroundWithBlock() { user, error in
+                User.currentUser()!.fetchInBackgroundWithBlock() { user, error in
                     completion(error)
                 }
             }

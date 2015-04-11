@@ -17,7 +17,7 @@ class MenuViewController: UIViewController {
 	}
 	
 	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell") as UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("MenuCell") as! UITableViewCell
 		
 		switch indexPath.row {
 		case 0:

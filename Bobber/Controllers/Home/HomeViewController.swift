@@ -26,6 +26,9 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
     override public func viewDidLoad() {
         super.viewDidLoad()
 		
+		tableView.tableFooterView = UIView()
+		tableView.estimatedRowHeight = 100.0
+		
 		addBarButtonWithTitle("Create", position: .Right, selector: "createEventSelected:")
 
 		fetchAndPopulateData()
@@ -58,13 +61,13 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
 	
     override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EventViewController" {
-            let destination = segue.destinationViewController as EventViewController
+            let destination = segue.destinationViewController as! EventViewController
             let event = events[tableView.indexPathForSelectedRow()!.row]
             destination.event = event
         }
 		else if segue.identifier == "CreateEventViewController" {
-			let navigationController = segue.destinationViewController as UINavigationController
-			let destination = navigationController.topViewController as CreateEventViewController
+			let navigationController = segue.destinationViewController as! UINavigationController
+			let destination = navigationController.topViewController as! CreateEventViewController
 			destination.delegate = self
 		}
     }
@@ -99,28 +102,33 @@ public class HomeViewController: BaseViewController, UITableViewDelegate, UITabl
     }
 	
 	public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let header = RoundedHeaderView.instantiateFromNib()
+		let header = HeaderView.instantiateFromNib()
 		
 		switch Section(rawValue: section)! {
 		case .FriendRequest:
-			header.setTitle("Friend Requests")
+			header.configure(.Users, title: "Friend Requests")
 			
 		case .EventRequests:
-			header.setTitle("Pending Requests")
+			header.configure(Icomoon.Alarm, title: "Pending Requests")
 			
 		case .Events:
-			header.setTitle("Your Events")
+			header.configure(Icomoon.Calendar, title: "Your Events")
 		}
 		
 		return header
 	}
 	
-	public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return 100
-	}
+//	public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//		let cell = cellForRowAtIndexPath(indexPath)
+//		cell.contentView.setNeedsLayout()
+//		cell.contentView.layoutIfNeeded()
+//		let size = cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)
+//		println(size)
+//		return size.height
+//	}
 	
 	public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return RoundedHeaderView.height()
+		return HeaderView.height()
 	}
 	
 	// MARK: - Private -

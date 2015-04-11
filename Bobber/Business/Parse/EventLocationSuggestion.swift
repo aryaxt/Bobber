@@ -16,7 +16,7 @@ public class EventLocationSuggestion: PFObject, PFSubclassing {
 		return "EventLocationSuggestion"
 	}
 	
-	override public class func load() {
+	override public class func initialize() {
 		registerSubclass()
 	}
 }

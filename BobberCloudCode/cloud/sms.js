@@ -1,5 +1,5 @@
 
-var twilio = require("twilio")("ACb8e7c20f71bc52e069567bb436edeb30", "03d2d4e99036f661c9fd5ed74b5de9a8");
+var twilio = require("twilio")("", "");
 var TwilloPhoneVerificationNumber = "+18587719306";
 
 exports.sendSms = function(phoneNumber, message, completion) {

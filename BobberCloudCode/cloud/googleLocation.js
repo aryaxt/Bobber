@@ -1,5 +1,5 @@
 
-var GoogleAutocompleteApiKey = "AIzaSyC52xwGjuNVfBq4yHlQiGrlswCERkZZ16w";
+var GoogleAutocompleteApiKey = "";
 
 exports.autocomplete = function(query, completion) {
     
